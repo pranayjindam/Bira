@@ -1,0 +1,13 @@
+# Visual Studio cache files
+.vs/
+*.user
+*.suo
+*.cache
+*.pdb
+*.obj
+*.dll
+*.exe
+
+# Build folders
+bin/
+obj/
