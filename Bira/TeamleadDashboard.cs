@@ -209,7 +209,10 @@ namespace Bira
                     Text = names[i],
                     TextAlign = ContentAlignment.MiddleLeft,
                     //Dock = DockStyle.Top,
-                    Margin = new Padding(20, 0, 0, 10)
+                    // Margin = new Padding(20, 0, 0, 10)
+                    Padding = new Padding(35, 0, 0, 0),  // Apply padding for indentation
+                    Height = 40,
+                    Dock = DockStyle.Fill
 
 
                 };
@@ -268,11 +271,227 @@ namespace Bira
 
 
         #endregion
+        private static readonly Random _rnd = new Random();
+        private Color GetRandomColor()
+        {
+            return Color.FromArgb(_rnd.Next(100, 256), _rnd.Next(100, 256), _rnd.Next(100, 256));
+        }
+        private Panel CreateAvatar(string name, Color bgColor)
+        {
+            Panel avatar = new Panel
+            {
+                Width = 50,
+                Height = 50,
+                BackColor = bgColor,
+                Margin = new Padding(10),
+            };
+
+            avatar.Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, avatar.Width, avatar.Height, 50, 50));
+
+            Label lbl = new Label
+            {
+                Text = string.IsNullOrEmpty(name) ? "?" : name.Substring(0, 1).ToUpper(),
+                Dock = DockStyle.Fill,
+                Font = new Font("Segoe UI", 16, FontStyle.Bold),
+                TextAlign = ContentAlignment.MiddleCenter,
+                ForeColor = Color.White
+            };
+
+            avatar.Controls.Add(lbl);
+            return avatar;
+        }
+
+        private void Card_ClickHandler(Panel card)
+        {
+            if (card.Tag is ProjectModel p)
+                OpenProject(p.ProjectId, p.Name, p.Description, p.StartDate, p.EndDate);
+            else if (card.Tag is TeamModel t)
+                OpenTeam(t.TeamId, t.Name, t.Members);
+            else if (card.Tag is TaskModel task)
+                OpenTask(task.TaskId, task.Name, task.ProjectName, task.Description, task.startDate, task.endDate, task.Priority, task.Status);
+        }
 
         #region Show More Handlers
-        private void buttonProjectsShowMore_Click(object sender, EventArgs e) => MessageBox.Show("Load more projects...");
-        private void buttonTeamsShowMore_Click(object sender, EventArgs e) => MessageBox.Show("Load more teams...");
-        private void buttonTasksShowMore_Click(object sender, EventArgs e) => MessageBox.Show("Load more tasks...");
+        private async void buttonProjectsShowMore_Click(object sender, EventArgs e)
+        {
+            var projects = await _projectService.GetProjectsAsync();
+
+            panelMain.Controls.Clear();
+
+            FlowLayoutPanel flow = new FlowLayoutPanel
+            {
+                Dock = DockStyle.Fill,
+                AutoScroll = true,
+                WrapContents = true
+            };
+
+            foreach (var project in projects)
+            {
+                Panel card = new Panel
+                {
+                    Width = 250,
+                    Height = 180,
+                    BackColor = Color.FromArgb(40, 40, 60),
+                    Margin = new Padding(10),
+                    Padding = new Padding(10),
+                    Cursor = Cursors.Hand,
+                    Tag = project // store full object for later use
+                };
+
+                card.Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, card.Width, card.Height, 15, 15));
+
+                // Avatar
+                Panel avatar = CreateAvatar(project.Name, GetRandomColor());
+
+                Label lblName = new Label
+                {
+                    Text = project.Name,
+                    Font = new Font("Segoe UI", 12, FontStyle.Bold),
+                    ForeColor = Color.DeepSkyBlue,
+                    Dock = DockStyle.Top
+                };
+
+                Label lblDates = new Label
+                {
+                    Text = $"{project.StartDate:dd MMM} ➝ {project.EndDate:dd MMM}",
+                    Font = new Font("Segoe UI", 9),
+                    ForeColor = Color.LightGray,
+                    Dock = DockStyle.Top
+                };
+
+                Label lblDesc = new Label
+                {
+                    Text = project.Description,
+                    Font = new Font("Segoe UI", 9),
+                    ForeColor = Color.White,
+                    Dock = DockStyle.Fill,
+                    AutoEllipsis = true
+                };
+
+                card.Controls.Add(lblDesc);
+                card.Controls.Add(lblDates);
+                card.Controls.Add(lblName);
+                card.Controls.Add(avatar);
+
+                // 🔹 Card Click → OpenProject
+                card.Click += (s, ev) =>
+                {
+                    var p = (ProjectModel)((Panel)s).Tag;
+                    OpenProject(p.ProjectId, p.Name, p.Description, p.StartDate, p.EndDate);
+                };
+
+                // 🔹 Make inner labels clickable too
+                foreach (Control ctrl in card.Controls)
+                {
+                    ctrl.Click += (s, ev) => Card_ClickHandler(card);
+                }
+
+
+                flow.Controls.Add(card);
+            }
+
+            panelMain.Controls.Add(flow);
+        }
+
+
+        private async void buttonTeamsShowMore_Click(object sender, EventArgs e)
+        {
+            var teams = await _teamService.GetTeamsAsync();
+
+            panelMain.Controls.Clear();
+            FlowLayoutPanel flow = new FlowLayoutPanel { Dock = DockStyle.Fill, AutoScroll = true, WrapContents = true };
+
+            foreach (var team in teams)
+            {
+                Panel card = new Panel
+                {
+                    Width = 250,
+                    Height = 150,
+                    BackColor = Color.FromArgb(30, 80, 50),
+                    Margin = new Padding(10),
+                    Padding = new Padding(10),
+                    Cursor = Cursors.Hand,
+                    Tag = team
+                };
+
+                card.Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, card.Width, card.Height, 15, 15));
+
+                Panel avatar = CreateAvatar(team.Name, GetRandomColor());
+                Label lblName = new Label { Text = team.Name, Font = new Font("Segoe UI", 12, FontStyle.Bold), ForeColor = Color.White, Dock = DockStyle.Top };
+                Label lblCount = new Label { Text = $"Members: {team.Members.Count}", Font = new Font("Segoe UI", 9), ForeColor = Color.LightGray, Dock = DockStyle.Top };
+
+                card.Controls.Add(lblCount);
+                card.Controls.Add(lblName);
+                card.Controls.Add(avatar);
+
+                // 🔹 Card Click → OpenTeam
+                card.Click += (s, ev) =>
+                {
+                    var t = (TeamModel)((Panel)s).Tag;
+                    OpenTeam(t.TeamId, t.Name, t.Members);
+                };
+                foreach (Control ctrl in card.Controls)
+                {
+                    ctrl.Click += (s, ev) => Card_ClickHandler(card);
+                }
+
+
+                flow.Controls.Add(card);
+            }
+
+            panelMain.Controls.Add(flow);
+        }
+
+
+        private async void buttonTasksShowMore_Click(object sender, EventArgs e)
+        {
+            var tasks = await _taskService.GetTasksAsync();
+
+            panelMain.Controls.Clear();
+            FlowLayoutPanel flow = new FlowLayoutPanel { Dock = DockStyle.Fill, AutoScroll = true, WrapContents = true };
+
+            foreach (var task in tasks)
+            {
+                Panel card = new Panel
+                {
+                    Width = 250,
+                    Height = 170,
+                    BackColor = Color.FromArgb(80, 40, 40),
+                    Margin = new Padding(10),
+                    Padding = new Padding(10),
+                    Cursor = Cursors.Hand,
+                    Tag = task
+                };
+
+                card.Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, card.Width, card.Height, 15, 15));
+
+                Panel avatar = CreateAvatar(task.Name, GetRandomColor());
+                Label lblName = new Label { Text = task.Name, Font = new Font("Segoe UI", 12, FontStyle.Bold), ForeColor = Color.White, Dock = DockStyle.Top };
+                Label lblProject = new Label { Text = $"📂 {task.ProjectName}", Font = new Font("Segoe UI", 9), ForeColor = Color.LightGray, Dock = DockStyle.Top };
+                Label lblStatus = new Label { Text = $"✅ {task.Status}", Font = new Font("Segoe UI", 9), ForeColor = Color.LightGreen, Dock = DockStyle.Top };
+
+                card.Controls.Add(lblStatus);
+                card.Controls.Add(lblProject);
+                card.Controls.Add(lblName);
+                card.Controls.Add(avatar);
+
+                // 🔹 Card Click → OpenTask
+                card.Click += (s, ev) =>
+                {
+                    var t = (TaskModel)((Panel)s).Tag;
+                    OpenTask(t.TaskId, t.Name, t.ProjectName, t.Description, t.startDate, t.endDate, t.Priority, t.Status);
+                };
+                foreach (Control ctrl in card.Controls)
+                {
+                    ctrl.Click += (s, ev) => Card_ClickHandler(card);
+                }
+
+
+                flow.Controls.Add(card);
+            }
+
+            panelMain.Controls.Add(flow);
+        }
         #endregion
 
         #region Item Click Handlers
