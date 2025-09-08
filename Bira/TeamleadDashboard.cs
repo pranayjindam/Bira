@@ -209,7 +209,10 @@ namespace Bira
                     Text = names[i],
                     TextAlign = ContentAlignment.MiddleLeft,
                     //Dock = DockStyle.Top,
-                    Margin = new Padding(20, 0, 0, 10)
+                    // Margin = new Padding(20, 0, 0, 10)
+                    Padding = new Padding(35, 0, 0, 0),  // Apply padding for indentation
+                    Height = 40,
+                    Dock = DockStyle.Fill
 
 
                 };
