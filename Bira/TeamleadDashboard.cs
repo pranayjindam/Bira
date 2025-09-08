@@ -19,10 +19,59 @@ namespace Bira
         private readonly TeamService _teamService = new TeamService();
         private readonly TaskService _taskService = new TaskService();
 
+        private ContextMenuStrip _contextMenu;
+        private int _currentItemId;
+        private string _currentItemType;
+
+        private void InitializeContextMenu()
+        {
+            _contextMenu = new ContextMenuStrip();
+
+            var editItem = new ToolStripMenuItem("✏️ Edit");
+            editItem.Click += (s, e) => HandleEdit();
+
+            var deleteItem = new ToolStripMenuItem("🗑️ Delete");
+            deleteItem.Click += (s, e) => HandleDelete();
+
+            _contextMenu.Items.AddRange(new ToolStripItem[] { editItem, deleteItem });
+        }
+
+        private void HandleEdit()
+        {
+            switch (_currentItemType)
+            {
+                case "Project":
+                    EditProject(_currentItemId);
+                    break;
+                case "Team":
+                    EditTeam(_currentItemId);
+                    break;
+                case "Task":
+                    EditTask(_currentItemId);
+                    break;
+            }
+        }
+
+        private void HandleDelete()
+        {
+            switch (_currentItemType)
+            {
+                case "Project":
+                    DeleteProject(_currentItemId);
+                    break;
+                case "Team":
+                    DeleteTeam(_currentItemId);
+                    break;
+                case "Task":
+                    DeleteTask(_currentItemId);
+                    break;
+            }
+        }
         public TeamleadDashboard()
         {
             InitializeComponent();
             CustomizeSidebar();
+            InitializeContextMenu();
             LoadAllData();
         }
 
@@ -41,6 +90,10 @@ namespace Bira
             panelTasksMenu.Visible = false;
         }
 
+        private void btn2_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Button 2 clicked!");
+        }
         private void ShowSubMenu(Panel subMenu)
         {
             if (!subMenu.Visible)
@@ -99,45 +152,121 @@ namespace Bira
         }
 
         // Generic submenu population for any type (Project, Team, Task)
-        private async Task PopulateSubMenu<T>(Panel panel, Button showMoreBtn, List<T> items, List<string> names, Action<T> onClick)
+        private async Task PopulateSubMenu<T>(
+     Panel panel, Button showMoreBtn,
+     List<T> items, List<string> names,
+     Action<T> onClick)
         {
-            // Remove existing buttons except "Show More"
-            var existing = panel.Controls.OfType<Button>().Where(b => b != showMoreBtn).ToList();
-            foreach (var btn in existing)
+            // Clear old dynamic items
+            var existing = panel.Controls.OfType<Panel>()
+                .Where(p => p.Tag?.ToString() == "DynamicItem")
+                .ToList();
+
+            foreach (var ctrl in existing)
             {
-                panel.Controls.Remove(btn);
-                btn.Dispose();
+                panel.Controls.Remove(ctrl);
+                ctrl.Dispose();
             }
 
-            // Add new buttons for items
             int i = 0;
             foreach (var item in items)
-
             {
+                int itemId = 0;
+                string itemType = "";
+
+                // Safe type checks
+                if (item is ProjectModel project)
+                {
+                    itemId = project.ProjectId;
+                    itemType = "Project";
+                }
+                else if (item is TeamModel team)
+                {
+                    itemId = team.TeamId;
+                    itemType = "Team";
+                }
+                else if (item is TaskModel task)
+                {
+                    itemId = task.TaskId;
+                    itemType = "Task";
+                }
+
+                Panel pn = new Panel
+                {
+                    Size = new Size(panel.Width - 5, 40),
+                    Dock = DockStyle.Top,
+                    Tag = "DynamicItem",
+                  
+                };
+
+                // Main button
                 Button btn = new Button
                 {
-                    Dock = DockStyle.Top,
                     FlatStyle = FlatStyle.Flat,
                     FlatAppearance = { BorderSize = 0 },
                     Font = new Font("Segoe UI", 9F, FontStyle.Bold),
                     ForeColor = Color.LightGray,
-                    Padding = new Padding(35, 0, 0, 0),
-                    Height = 40,
-                    Text = names[i].ToString(), // Make sure ToString() gives meaningful text (e.g., project name)
-                    TextAlign = ContentAlignment.MiddleLeft
+                    Text = names[i],
+                    TextAlign = ContentAlignment.MiddleLeft,
+                    //Dock = DockStyle.Top,
+                    Margin = new Padding(20, 0, 0, 10)
+
+
                 };
                 btn.Click += (s, e) => onClick(item);
 
-                panel.Controls.Add(btn);
-                panel.Controls.SetChildIndex(btn, panel.Controls.GetChildIndex(showMoreBtn));
+                // 3-dot button
+                Button btn2 = new Button
+                {
+                    FlatStyle = FlatStyle.Flat,
+                    FlatAppearance = { BorderSize = 0 },
+                    Font = new Font("Segoe UI", 9F, FontStyle.Bold),
+                    ForeColor = Color.LightGray,
+                    Text = "⋮", // vertical ellipsis
+                    Width = 40,
+                    Dock = DockStyle.Right,
+                    Tag = new Tuple<int, string>(itemId, itemType) // store safely
+                };
+                btn2.Click += Btn2_Click;
+
+                pn.Controls.Add(btn);
+                pn.Controls.Add(btn2);
+                panel.Controls.Add(pn);
+
+                panel.Controls.SetChildIndex(pn, 0);
                 i++;
             }
 
-            // Ensure "Show More" button stays at bottom
-            panel.Controls.SetChildIndex(showMoreBtn, 0);
-
             await Task.CompletedTask;
         }
+
+        private void EditProject(int projectId) => MessageBox.Show($"Edit Project {projectId}");
+        private void DeleteProject(int projectId) => MessageBox.Show($"Delete Project {projectId}");
+
+        private void EditTeam(int teamId) => MessageBox.Show($"Edit Team {teamId}");
+        private void DeleteTeam(int teamId) => MessageBox.Show($"Delete Team {teamId}");
+
+        private void EditTask(int taskId) => MessageBox.Show($"Edit Task {taskId}");
+        private void DeleteTask(int taskId) => MessageBox.Show($"Delete Task {taskId}");
+
+
+      
+
+
+        private void Btn2_Click(object sender, EventArgs e)
+        {
+            if (sender is Button btn && btn.Tag is Tuple<int, string> info)
+            {
+                _currentItemId = info.Item1;
+                _currentItemType = info.Item2;
+
+                _contextMenu.Show(btn, new Point(0, btn.Height));
+            }
+        }
+
+
+
+
         #endregion
 
         #region Show More Handlers
