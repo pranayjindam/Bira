@@ -76,7 +76,6 @@
             panelTasksMenu.Name = "panelTasksMenu";
             panelTasksMenu.Size = new Size(250, 40);
             panelTasksMenu.TabIndex = 12;
-           
             // 
             // buttonTasksShowMore
             // 
@@ -251,6 +250,7 @@
             buttonProjectsAdd.Text = "+";
             buttonProjectsAdd.TextAlign = ContentAlignment.TopCenter;
             buttonProjectsAdd.UseVisualStyleBackColor = false;
+            buttonProjectsAdd.Click += buttonProjectsAdd_Click;
             // 
             // buttonProjects
             // 
@@ -261,16 +261,12 @@
             buttonProjects.Location = new Point(0, 0);
             buttonProjects.Name = "buttonProjects";
             buttonProjects.Padding = new Padding(10, 0, 0, 0);
-            buttonProjects.Size = new Size(150, 40);
+            buttonProjects.Size = new Size(250, 40);
             buttonProjects.TabIndex = 7;
             buttonProjects.Text = "Projects";
             buttonProjects.TextAlign = ContentAlignment.MiddleLeft;
             buttonProjects.Click += buttonProjects_Click;
             // 
-            // buttonProjects
-            // 
-          
-
             // panelForyou
             // 
             panelForyou.Controls.Add(buttonForyou);

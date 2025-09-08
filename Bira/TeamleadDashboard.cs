@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Bira.Services;
 using Bira.Models;
+using Bira.Naveen;
 
 namespace Bira
 {
@@ -196,7 +197,7 @@ namespace Bira
                     Size = new Size(panel.Width - 5, 40),
                     Dock = DockStyle.Top,
                     Tag = "DynamicItem",
-                  
+
                 };
 
                 // Main button
@@ -253,7 +254,7 @@ namespace Bira
         private void DeleteTask(int taskId) => MessageBox.Show($"Delete Task {taskId}");
 
 
-      
+
 
 
         private void Btn2_Click(object sender, EventArgs e)
@@ -783,6 +784,21 @@ namespace Bira
         }
 
         #endregion
+
+        private void buttonProjectsAdd_Click(object sender, EventArgs e)
+        {
+            panelMain.Controls.Clear();  // Clear any existing controls in panelMain (or use panel2)
+
+            ProjectForm projectForm = new ProjectForm
+            {
+                TopLevel = false,         // Make the form a child control, not a top-level window
+                FormBorderStyle = FormBorderStyle.None,
+                Dock = DockStyle.Fill     // Fill the panel fully
+            };
+
+            panelMain.Controls.Add(projectForm);  // Add to panel2 (or panelMain, depending on your design)
+            projectForm.Show();
+        }
     }
     //public static class WinApi
     //{
