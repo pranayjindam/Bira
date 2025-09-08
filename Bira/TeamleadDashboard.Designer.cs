@@ -289,6 +289,7 @@
             buttonForyou.TabIndex = 7;
             buttonForyou.Text = "Foryou";
             buttonForyou.TextAlign = ContentAlignment.MiddleLeft;
+            buttonForyou.Click += buttonForyou_Click;
             // 
             // panelMain
             // 

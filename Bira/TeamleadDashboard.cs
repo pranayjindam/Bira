@@ -107,7 +107,7 @@ namespace Bira
                 subMenu.Visible = false;
             }
         }
-
+        
         private void buttonProjects_Click(object sender, EventArgs e) => ShowSubMenu(panelProjectsMenu);
         private void buttonTeams_Click(object sender, EventArgs e) => ShowSubMenu(panelTeamsMenu);
         private void buttonTasks_Click(object sender, EventArgs e) => ShowSubMenu(panelTasksMenu);
@@ -798,6 +798,21 @@ namespace Bira
 
             panelMain.Controls.Add(projectForm);  // Add to panel2 (or panelMain, depending on your design)
             projectForm.Show();
+        }
+
+        private void buttonForyou_Click(object sender, EventArgs e)
+        {
+            panelMain.Controls.Clear();
+
+            ForYouDashboard oForyouDashboard = new ForYouDashboard
+            {
+                TopLevel = false,
+                FormBorderStyle = FormBorderStyle.None,
+                Dock = DockStyle.Fill
+            };
+
+            panelMain.Controls.Add(oForyouDashboard);
+            oForyouDashboard.Show();
         }
     }
     //public static class WinApi
