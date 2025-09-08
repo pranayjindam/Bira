@@ -13,6 +13,7 @@ namespace Bira.Services
             {
                 new ProjectModel
                 {
+                    ProjectId = 1,
                     Name = "Project Alpha",
                     Description = "This is a dummy description for Project Alpha",
                     StartDate = System.DateTime.Now.AddDays(-10),
@@ -20,6 +21,7 @@ namespace Bira.Services
                 },
                 new ProjectModel
                 {
+                    ProjectId = 2,
                     Name = "Project Beta",
                     Description = "This is a dummy description for Project Beta",
                     StartDate = System.DateTime.Now.AddDays(-5),
@@ -27,6 +29,7 @@ namespace Bira.Services
                 },
                 new ProjectModel
                 {
+                    ProjectId = 3,
                     Name = "Project Gamma",
                     Description = "This is a dummy description for Project Gamma",
                     StartDate = System.DateTime.Now.AddDays(-6),
