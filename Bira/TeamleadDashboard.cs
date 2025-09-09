@@ -274,7 +274,20 @@ namespace Bira
         }
 
 
-        private void EditProject(int projectId) => MessageBox.Show($"Edit Project {projectId}");
+        private void EditProject(int projectId)
+        {
+            panelMain.Controls.Clear();  // Clear any existing controls in panelMain (or use panel2)
+
+            EditProject EditprojectForm = new EditProject(projectId);
+
+                EditprojectForm.TopLevel = false;     // Make the form a child control, not a top-level window
+                EditprojectForm.FormBorderStyle = FormBorderStyle.None;
+                EditprojectForm.Dock = DockStyle.Fill; // Fill the panel fully
+            
+
+            panelMain.Controls.Add(EditprojectForm);  // Add to panel2 (or panelMain, depending on your design)
+            EditprojectForm.Show();
+        }
         private void DeleteProject(int projectId)
         {
             DialogResult result = MessageBox.Show(
@@ -322,7 +335,20 @@ namespace Bira
             }
         }
 
-        private void EditTask(int taskId) => MessageBox.Show($"Edit Task {taskId}");
+        private void EditTask(int taskId)
+        {
+            panelMain.Controls.Clear();  // Clear any existing controls in panelMain (or use panel2)
+
+            EditTask EditTaskForm = new EditTask(taskId)
+            {
+                TopLevel = false,         // Make the form a child control, not a top-level window
+                FormBorderStyle = FormBorderStyle.None,
+                Dock = DockStyle.Fill     // Fill the panel fully
+            };
+
+            panelMain.Controls.Add(EditTaskForm);  // Add to panel2 (or panelMain, depending on your design)
+            EditTaskForm.Show();
+        }
         private void DeleteTask(int taskId)
         {
             DialogResult result = MessageBox.Show(
@@ -1257,8 +1283,23 @@ namespace Bira
                 loginForm.Show();
 
                 // Optionally dispose the current form
-               
+
             }
+        }
+
+        private void buttonTasksAdd_Click(object sender, EventArgs e)
+        {
+            panelMain.Controls.Clear();
+
+            TasksForm oTasksForm = new TasksForm
+            {
+                TopLevel = false,
+                FormBorderStyle = FormBorderStyle.None,
+                Dock = DockStyle.Fill
+            };
+
+            panelMain.Controls.Add(oTasksForm);
+            oTasksForm.Show();
         }
     }
     //public static class WinApi

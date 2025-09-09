@@ -7,17 +7,23 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Bira.Models;
+using Bira.Services;
 
 namespace Bira.Naveen
 {
     public partial class TasksForm : Form
     {
         private ToolTip toolTip1;
+        private readonly ProjectService _projectService = new ProjectService();
+        private readonly TeamService _teamService = new TeamService();
+        private readonly TaskService _taskService = new TaskService();
 
         public TasksForm()
         {
             InitializeComponent();
             toolTip1 = new ToolTip();
+            
         }
 
         private void TasksSubmitBtn_Click(object sender, EventArgs e)
@@ -90,6 +96,44 @@ namespace Bira.Naveen
             );
 
             // TODO: Save to database here
+        }
+
+        private async void TasksForm_Load(object sender, EventArgs e)
+        {
+            // Populate Project ComboBox with dummy data
+            var projects = await _projectService.GetProjectsAsync();
+            List<string> names = new List<string>();
+            foreach (var project in projects)
+            {
+                TasksProjectNameComboBox.Items.Add(project.Name);
+
+            }
+
+            // Populate Priority ComboBox
+            TasksPriorityComboBox.Items.AddRange(new string[]
+            {
+                "Low",
+                "Medium",
+                "High",
+                "Critical"
+            });
+            // Populate Status ComboBox
+            TasksStatusComboBox.Items.AddRange(new string[]
+            {
+                "Not Started",
+                "In Progress",
+                "Completed",
+                "On Hold"
+            });
+            // Set default selections
+            TasksPriorityComboBox.SelectedIndex = 0; // Default to Low
+            TasksStatusComboBox.SelectedIndex = 0;   // Default to Not Started
+            // Set up tooltips
+            toolTip1.SetToolTip(TasksNameTxtBox, "Enter the name of the task (min 3 characters).");
+            toolTip1.SetToolTip(TasksProjectNameComboBox, "Select the project this task belongs to.");
+            toolTip1.SetToolTip(TasksDesTxtBox, "Enter a detailed description of the task (min 10 characters).");
+            toolTip1.SetToolTip(TasksPriorityComboBox, "Select the priority level of the task.");
+            toolTip1.SetToolTip(TasksStatusComboBox, "Select the current status of the task.");
         }
     }
 }

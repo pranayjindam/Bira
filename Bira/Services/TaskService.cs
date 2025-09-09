@@ -18,7 +18,7 @@ namespace Bira.Services
                     ProjectId = 1,
                     ProjectName = "Project Alpha",
                     Description = "Dummy task description",
-                    Priority = "High",
+                    Priority = "Low",
                     Status = "Pending"
                 },
                 new TaskModel

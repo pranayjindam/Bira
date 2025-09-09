@@ -16,6 +16,7 @@
         private void InitializeComponent()
         {
             panelSidebar = new Panel();
+            buttonLogout = new Button();
             panelBacklogs = new Panel();
             buttonBacklogs = new Button();
             panelTasksMenu = new Panel();
@@ -39,7 +40,6 @@
             panelWrapTasks = new Panel();
             panelWrapTeams = new Panel();
             panelWrapProjects = new Panel();
-            buttonLogout = new Button();
             panelSidebar.SuspendLayout();
             panelBacklogs.SuspendLayout();
             panelTasksMenu.SuspendLayout();
@@ -70,6 +70,22 @@
             panelSidebar.Name = "panelSidebar";
             panelSidebar.Size = new Size(250, 749);
             panelSidebar.TabIndex = 1;
+            // 
+            // buttonLogout
+            // 
+            buttonLogout.BackColor = Color.Red;
+            buttonLogout.Dock = DockStyle.Bottom;
+            buttonLogout.FlatAppearance.BorderSize = 0;
+            buttonLogout.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            buttonLogout.ForeColor = Color.White;
+            buttonLogout.Location = new Point(0, 708);
+            buttonLogout.Name = "buttonLogout";
+            buttonLogout.Size = new Size(250, 41);
+            buttonLogout.TabIndex = 14;
+            buttonLogout.Text = "Logout";
+            buttonLogout.TextAlign = ContentAlignment.TopCenter;
+            buttonLogout.UseVisualStyleBackColor = false;
+            buttonLogout.Click += buttonLogout_Click_1;
             // 
             // panelBacklogs
             // 
@@ -146,6 +162,7 @@
             buttonTasksAdd.Text = "+";
             buttonTasksAdd.TextAlign = ContentAlignment.TopCenter;
             buttonTasksAdd.UseVisualStyleBackColor = false;
+            buttonTasksAdd.Click += buttonTasksAdd_Click;
             // 
             // buttonTasks
             // 
@@ -363,22 +380,6 @@
             panelWrapProjects.RightToLeft = RightToLeft.No;
             panelWrapProjects.Size = new Size(1050, 0);
             panelWrapProjects.TabIndex = 5;
-            // 
-            // buttonLogout
-            // 
-            buttonLogout.BackColor = Color.Red;
-            buttonLogout.Dock = DockStyle.Bottom;
-            buttonLogout.FlatAppearance.BorderSize = 0;
-            buttonLogout.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            buttonLogout.ForeColor = Color.White;
-            buttonLogout.Location = new Point(0, 708);
-            buttonLogout.Name = "buttonLogout";
-            buttonLogout.Size = new Size(250, 41);
-            buttonLogout.TabIndex = 14;
-            buttonLogout.Text = "Logout";
-            buttonLogout.TextAlign = ContentAlignment.TopCenter;
-            buttonLogout.UseVisualStyleBackColor = false;
-            buttonLogout.Click += buttonLogout_Click_1;
             // 
             // TeamleadDashboard
             // 
