@@ -22,69 +22,87 @@ namespace Bira
 
         private async void ForYouDashboard_Load(object sender, EventArgs e)
         {
-            await LoadRecentTasks();
+            //await LoadRecentTasks();
             await LoadTaskProgressOverview();
+            await LoadUserInfo();
         }
 
-      
-        private async Task LoadRecentTasks()
-        {
-            var _taskService = new TaskService();
-            var tasks = await _taskService.GetTasksAsync();
 
-            if (tasks == null || tasks.Count == 0)
+        private async Task LoadUserInfo()
+        {
+            var _userService = new UserService();
+            var users = await _userService.GetUsersAsync();
+            if (users == null || users.Count == 0)
             {
-                MessageBox.Show("No tasks found.");
+                MessageBox.Show("No users found.");
                 return;
             }
-
-            panelRecentTasks.Controls.Clear();
-            panelRecentTasks.FlowDirection = FlowDirection.TopDown;
-            panelRecentTasks.WrapContents = false;
-            panelRecentTasks.AutoScroll = true;
-
-            foreach (var task in tasks.Take(5))
-            {
-                // CHANGE 1: Use FlowLayoutPanel instead of Panel
-                FlowLayoutPanel taskCard = new FlowLayoutPanel
-                {
-                    Width = 300,
-                    AutoSize = true,
-                    AutoSizeMode = AutoSizeMode.GrowAndShrink,
-                    BackColor = Color.Chocolate,
-                    Margin = new Padding(5),
-                    Padding = new Padding(10),
-                    // CHANGE 2: Set its FlowDirection to stack controls vertically
-                    FlowDirection = FlowDirection.TopDown
-                };
-
-                Label lblTaskName = new Label
-                {
-                    Text = $" {task.ProjectName}",
-                    Font = new Font("Segoe UI", 12, FontStyle.Bold),
-                    ForeColor = Color.White,
-                    AutoSize = true,
-                    // Add a little margin to separate the labels
-                    Margin = new Padding(0, 0, 0, 5)
-                };
-
-                Label lblTaskStatus = new Label
-                {
-                    // Using Task Name for more context
-                    Text = $"Status: {task.Status}",
-                    Font = new Font("Segoe UI", 10, FontStyle.Regular),
-                    ForeColor = Color.LightGray,
-                    AutoSize = true
-                };
-
-                taskCard.Controls.Add(lblTaskName);
-                taskCard.Controls.Add(lblTaskStatus); // Now this will appear below the first label
-
-                panelRecentTasks.Controls.Add(taskCard);
-            }
+            var user = users.First(); // Just get the first user for demo purposes
+            labelWelcome.Text = $"Welcome, {user.FirstName}!";
+            labelFirstname.Text = $"First Name : {user.FirstName}";
+            labelLastname.Text = $"Last Name : {user.LastName}";
+            labelEmail.Text = $"Email : {user.Email}";
+            labelRole.Text = $"Role : {user.Role}";
         }
 
-        
+        //private async Task LoadRecentTasks()
+        //{
+        //    var _taskService = new TaskService();
+        //    var tasks = await _taskService.GetTasksAsync();
+
+        //    if (tasks == null || tasks.Count == 0)
+        //    {
+        //        MessageBox.Show("No tasks found.");
+        //        return;
+        //    }
+
+        //    panelRecentTasks.Controls.Clear();
+        //    panelRecentTasks.FlowDirection = FlowDirection.TopDown;
+        //    panelRecentTasks.WrapContents = false;
+        //    panelRecentTasks.AutoScroll = true;
+
+        //    foreach (var task in tasks.Take(5))
+        //    {
+        //        // CHANGE 1: Use FlowLayoutPanel instead of Panel
+        //        FlowLayoutPanel taskCard = new FlowLayoutPanel
+        //        {
+        //            Width = 300,
+        //            AutoSize = true,
+        //            AutoSizeMode = AutoSizeMode.GrowAndShrink,
+        //            BackColor = Color.Chocolate,
+        //            Margin = new Padding(5),
+        //            Padding = new Padding(10),
+        //            // CHANGE 2: Set its FlowDirection to stack controls vertically
+        //            FlowDirection = FlowDirection.TopDown
+        //        };
+
+        //        Label lblTaskName = new Label
+        //        {
+        //            Text = $" {task.Name}",
+        //            Font = new Font("Segoe UI", 12, FontStyle.Bold),
+        //            ForeColor = Color.White,
+        //            AutoSize = true,
+        //            // Add a little margin to separate the labels
+        //            Margin = new Padding(0, 0, 0, 5)
+        //        };
+
+        //        Label lblTaskStatus = new Label
+        //        {
+        //            // Using Task Name for more context
+        //            Text = $"Status: {task.Status}",
+        //            Font = new Font("Segoe UI", 10, FontStyle.Regular),
+        //            ForeColor = Color.LightGray,
+        //            AutoSize = true
+        //        };
+
+        //        taskCard.Controls.Add(lblTaskName);
+        //        taskCard.Controls.Add(lblTaskStatus); // Now this will appear below the first label
+
+        //        panelRecentTasks.Controls.Add(taskCard);
+        //    }
+        //}
+
+
 
         private async Task LoadTaskProgressOverview()
         {

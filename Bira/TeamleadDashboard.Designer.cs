@@ -37,6 +37,8 @@
             panelWrapTasks = new Panel();
             panelWrapTeams = new Panel();
             panelWrapProjects = new Panel();
+            panelBacklogs = new Panel();
+            buttonBacklogs = new Button();
             panelSidebar.SuspendLayout();
             panelTasksMenu.SuspendLayout();
             panelTasks.SuspendLayout();
@@ -46,12 +48,14 @@
             panelProjects.SuspendLayout();
             panelForyou.SuspendLayout();
             panelMain.SuspendLayout();
+            panelBacklogs.SuspendLayout();
             SuspendLayout();
             // 
             // panelSidebar
             // 
             panelSidebar.AutoScroll = true;
             panelSidebar.BackColor = Color.FromArgb(11, 7, 17);
+            panelSidebar.Controls.Add(panelBacklogs);
             panelSidebar.Controls.Add(panelTasksMenu);
             panelSidebar.Controls.Add(panelTasks);
             panelSidebar.Controls.Add(panelTeamsMenu);
@@ -330,8 +334,33 @@
             panelWrapProjects.Dock = DockStyle.Top;
             panelWrapProjects.Location = new Point(0, 0);
             panelWrapProjects.Name = "panelWrapProjects";
+            panelWrapProjects.RightToLeft = RightToLeft.No;
             panelWrapProjects.Size = new Size(1050, 0);
             panelWrapProjects.TabIndex = 5;
+            // 
+            // panelBacklogs
+            // 
+            panelBacklogs.Controls.Add(buttonBacklogs);
+            panelBacklogs.Dock = DockStyle.Top;
+            panelBacklogs.Location = new Point(0, 280);
+            panelBacklogs.Name = "panelBacklogs";
+            panelBacklogs.Size = new Size(250, 40);
+            panelBacklogs.TabIndex = 13;
+            // 
+            // buttonBacklogs
+            // 
+            buttonBacklogs.Dock = DockStyle.Top;
+            buttonBacklogs.FlatAppearance.BorderSize = 0;
+            buttonBacklogs.FlatStyle = FlatStyle.Flat;
+            buttonBacklogs.ForeColor = Color.Gainsboro;
+            buttonBacklogs.Location = new Point(0, 0);
+            buttonBacklogs.Name = "buttonBacklogs";
+            buttonBacklogs.Padding = new Padding(10, 0, 0, 0);
+            buttonBacklogs.Size = new Size(250, 40);
+            buttonBacklogs.TabIndex = 3;
+            buttonBacklogs.Text = "Backlogs";
+            buttonBacklogs.TextAlign = ContentAlignment.MiddleLeft;
+            buttonBacklogs.Click += buttonBacklogs_Click;
             // 
             // TeamleadDashboard
             // 
@@ -351,6 +380,7 @@
             panelForyou.ResumeLayout(false);
             panelMain.ResumeLayout(false);
             panelMain.PerformLayout();
+            panelBacklogs.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -381,5 +411,7 @@
         private Button buttonTeamsShowMore;
         private Button buttonTeamsAdd;
         private Button buttonProjectsAdd;
+        private Panel panelBacklogs;
+        private Button buttonBacklogs;
     }
 }
