@@ -15,6 +15,7 @@
 
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TeamleadDashboard));
             panelSidebar = new Panel();
             panelTasksMenu = new Panel();
             buttonTasksShowMore = new Button();
@@ -37,6 +38,7 @@
             panelWrapTasks = new Panel();
             panelWrapTeams = new Panel();
             panelWrapProjects = new Panel();
+            buttonLogout = new Button();
             panelSidebar.SuspendLayout();
             panelTasksMenu.SuspendLayout();
             panelTasks.SuspendLayout();
@@ -52,6 +54,7 @@
             // 
             panelSidebar.AutoScroll = true;
             panelSidebar.BackColor = Color.FromArgb(11, 7, 17);
+            panelSidebar.Controls.Add(buttonLogout);
             panelSidebar.Controls.Add(panelTasksMenu);
             panelSidebar.Controls.Add(panelTasks);
             panelSidebar.Controls.Add(panelTeamsMenu);
@@ -121,6 +124,8 @@
             // 
             buttonTasks.Dock = DockStyle.Top;
             buttonTasks.FlatAppearance.BorderSize = 0;
+            buttonTasks.FlatAppearance.MouseDownBackColor = Color.IndianRed;
+            buttonTasks.FlatAppearance.MouseOverBackColor = Color.LightCoral;
             buttonTasks.FlatStyle = FlatStyle.Flat;
             buttonTasks.ForeColor = Color.Gainsboro;
             buttonTasks.Location = new Point(0, 0);
@@ -188,6 +193,8 @@
             // 
             buttonTeams.Dock = DockStyle.Top;
             buttonTeams.FlatAppearance.BorderSize = 0;
+            buttonTeams.FlatAppearance.MouseDownBackColor = Color.IndianRed;
+            buttonTeams.FlatAppearance.MouseOverBackColor = Color.LightCoral;
             buttonTeams.FlatStyle = FlatStyle.Flat;
             buttonTeams.ForeColor = Color.Gainsboro;
             buttonTeams.Location = new Point(0, 0);
@@ -256,6 +263,8 @@
             // 
             buttonProjects.Dock = DockStyle.Top;
             buttonProjects.FlatAppearance.BorderSize = 0;
+            buttonProjects.FlatAppearance.MouseDownBackColor = Color.IndianRed;
+            buttonProjects.FlatAppearance.MouseOverBackColor = Color.LightCoral;
             buttonProjects.FlatStyle = FlatStyle.Flat;
             buttonProjects.ForeColor = Color.Gainsboro;
             buttonProjects.Location = new Point(0, 0);
@@ -280,6 +289,8 @@
             // 
             buttonForyou.Dock = DockStyle.Top;
             buttonForyou.FlatAppearance.BorderSize = 0;
+            buttonForyou.FlatAppearance.MouseDownBackColor = Color.IndianRed;
+            buttonForyou.FlatAppearance.MouseOverBackColor = Color.LightCoral;
             buttonForyou.FlatStyle = FlatStyle.Flat;
             buttonForyou.ForeColor = Color.Gainsboro;
             buttonForyou.Location = new Point(0, 0);
@@ -333,13 +344,31 @@
             panelWrapProjects.Size = new Size(1050, 0);
             panelWrapProjects.TabIndex = 5;
             // 
+            // buttonLogout
+            // 
+            buttonLogout.BackColor = Color.Red;
+            buttonLogout.Dock = DockStyle.Bottom;
+            buttonLogout.FlatAppearance.BorderSize = 0;
+            buttonLogout.FlatAppearance.MouseDownBackColor = Color.LightCoral;
+            buttonLogout.FlatAppearance.MouseOverBackColor = Color.IndianRed;
+            buttonLogout.FlatStyle = FlatStyle.Flat;
+            buttonLogout.ForeColor = SystemColors.ButtonHighlight;
+            buttonLogout.Location = new Point(0, 720);
+            buttonLogout.Name = "buttonLogout";
+            buttonLogout.Size = new Size(250, 29);
+            buttonLogout.TabIndex = 13;
+            buttonLogout.Text = "Logout";
+            buttonLogout.UseVisualStyleBackColor = false;
+            buttonLogout.Click += buttonLogout_Click;
+            // 
             // TeamleadDashboard
             // 
             ClientSize = new Size(1300, 749);
             Controls.Add(panelMain);
             Controls.Add(panelSidebar);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "TeamleadDashboard";
-            Text = "Member Dashboard";
+            Text = "TeamLead Dashboard";
             panelSidebar.ResumeLayout(false);
             panelSidebar.PerformLayout();
             panelTasksMenu.ResumeLayout(false);
@@ -381,5 +410,6 @@
         private Button buttonTeamsShowMore;
         private Button buttonTeamsAdd;
         private Button buttonProjectsAdd;
+        private Button buttonLogout;
     }
 }

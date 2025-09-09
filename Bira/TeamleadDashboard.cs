@@ -107,7 +107,7 @@ namespace Bira
                 subMenu.Visible = false;
             }
         }
-        
+
         private void buttonProjects_Click(object sender, EventArgs e) => ShowSubMenu(panelProjectsMenu);
         private void buttonTeams_Click(object sender, EventArgs e) => ShowSubMenu(panelTeamsMenu);
         private void buttonTasks_Click(object sender, EventArgs e) => ShowSubMenu(panelTasksMenu);
@@ -153,10 +153,7 @@ namespace Bira
         }
 
         // Generic submenu population for any type (Project, Team, Task)
-        private async Task PopulateSubMenu<T>(
-     Panel panel, Button showMoreBtn,
-     List<T> items, List<string> names,
-     Action<T> onClick)
+        private async Task PopulateSubMenu<T>(Panel panel, Button showMoreBtn, List<T> items, List<string> names, Action<T> onClick)
         {
             // Clear old dynamic items
             var existing = panel.Controls.OfType<Panel>()
@@ -168,6 +165,11 @@ namespace Bira
                 panel.Controls.Remove(ctrl);
                 ctrl.Dispose();
             }
+
+            // Define colors
+            Color defaultBack = Color.Transparent;
+            Color hoverBack = Color.FromArgb(45, 45, 48);   // hover gray
+            Color activeBack = Color.FromArgb(28, 151, 234); // active blue
 
             int i = 0;
             foreach (var item in items)
@@ -197,7 +199,6 @@ namespace Bira
                     Size = new Size(panel.Width - 5, 40),
                     Dock = DockStyle.Top,
                     Tag = "DynamicItem",
-
                 };
 
                 // Main button
@@ -209,15 +210,42 @@ namespace Bira
                     ForeColor = Color.LightGray,
                     Text = names[i],
                     TextAlign = ContentAlignment.MiddleLeft,
-                    //Dock = DockStyle.Top,
-                    // Margin = new Padding(20, 0, 0, 10)
-                    Padding = new Padding(35, 0, 0, 0),  // Apply padding for indentation
+                    Padding = new Padding(35, 0, 0, 0),
                     Height = 40,
-                    Dock = DockStyle.Fill
-
-
+                    Dock = DockStyle.Fill,
+                    BackColor = defaultBack,
+                    Tag = "inactive"
                 };
-                btn.Click += (s, e) => onClick(item);
+
+                // Hover events
+                btn.MouseEnter += (s, e) =>
+                {
+                    if (btn.Tag.ToString() != "active")
+                        btn.BackColor = hoverBack;
+                };
+                btn.MouseLeave += (s, e) =>
+                {
+                    if (btn.Tag.ToString() != "active")
+                        btn.BackColor = defaultBack;
+                };
+
+                // Active click
+                btn.Click += (s, e) =>
+                {
+                    foreach (var otherPn in panel.Controls.OfType<Panel>().Where(p => p.Tag?.ToString() == "DynamicItem"))
+                    {
+                        foreach (var otherBtn in otherPn.Controls.OfType<Button>().Where(b => b.Dock == DockStyle.Fill))
+                        {
+                            otherBtn.Tag = "inactive";
+                            otherBtn.BackColor = defaultBack;
+                        }
+                    }
+
+                    btn.Tag = "active";
+                    btn.BackColor = activeBack;
+
+                    onClick(item);
+                };
 
                 // 3-dot button
                 Button btn2 = new Button
@@ -229,7 +257,7 @@ namespace Bira
                     Text = "⋮", // vertical ellipsis
                     Width = 40,
                     Dock = DockStyle.Right,
-                    Tag = new Tuple<int, string>(itemId, itemType) // store safely
+                    Tag = new Tuple<int, string>(itemId, itemType)
                 };
                 btn2.Click += Btn2_Click;
 
@@ -243,6 +271,7 @@ namespace Bira
 
             await Task.CompletedTask;
         }
+
 
         private void EditProject(int projectId) => MessageBox.Show($"Edit Project {projectId}");
         private void DeleteProject(int projectId) => MessageBox.Show($"Delete Project {projectId}");
@@ -813,6 +842,29 @@ namespace Bira
 
             panelMain.Controls.Add(oForyouDashboard);
             oForyouDashboard.Show();
+        }
+
+        private void buttonLogout_Click(object sender, EventArgs e)
+        {
+            DialogResult result = MessageBox.Show(
+                "Are you sure you want to log out?",
+                "Confirm Logout",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question
+            );
+
+            if (result == DialogResult.Yes)
+            {
+                // Close current dashboard
+                this.Hide();
+
+                // Open Login form again
+                Login loginForm = new Login();
+                loginForm.Show();
+
+                // Optionally dispose the current form
+                this.Close();
+            }
         }
     }
     //public static class WinApi

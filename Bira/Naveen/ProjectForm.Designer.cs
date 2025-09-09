@@ -18,6 +18,7 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ProjectForm));
             ProjectHeadTxt = new Label();
             ProjectNameTxt = new Label();
             ProjectNameBox = new TextBox();
@@ -35,17 +36,18 @@
             // 
             ProjectHeadTxt.AutoSize = true;
             ProjectHeadTxt.Font = new Font("Segoe UI", 16F, FontStyle.Bold);
-            ProjectHeadTxt.Location = new Point(408, 50);
+            ProjectHeadTxt.Location = new Point(135, 22);
             ProjectHeadTxt.Name = "ProjectHeadTxt";
-            ProjectHeadTxt.Size = new Size(121, 37);
+            ProjectHeadTxt.Size = new Size(174, 37);
             ProjectHeadTxt.TabIndex = 0;
-            ProjectHeadTxt.Text = "Projects";
+            ProjectHeadTxt.Text = "New Project";
+            ProjectHeadTxt.Click += ProjectHeadTxt_Click;
             // 
             // ProjectNameTxt
             // 
             ProjectNameTxt.AutoSize = true;
             ProjectNameTxt.Font = new Font("Segoe UI", 12F);
-            ProjectNameTxt.Location = new Point(212, 153);
+            ProjectNameTxt.Location = new Point(15, 100);
             ProjectNameTxt.Name = "ProjectNameTxt";
             ProjectNameTxt.Size = new Size(130, 28);
             ProjectNameTxt.TabIndex = 1;
@@ -53,7 +55,7 @@
             // 
             // ProjectNameBox
             // 
-            ProjectNameBox.Location = new Point(527, 157);
+            ProjectNameBox.Location = new Point(163, 104);
             ProjectNameBox.Name = "ProjectNameBox";
             ProjectNameBox.Size = new Size(259, 27);
             ProjectNameBox.TabIndex = 2;
@@ -63,7 +65,7 @@
             // 
             StartDateTxt.AutoSize = true;
             StartDateTxt.Font = new Font("Segoe UI", 12F);
-            StartDateTxt.Location = new Point(212, 263);
+            StartDateTxt.Location = new Point(37, 167);
             StartDateTxt.Name = "StartDateTxt";
             StartDateTxt.Size = new Size(99, 28);
             StartDateTxt.TabIndex = 3;
@@ -77,7 +79,7 @@
             // 
             // StarttextBox
             // 
-            StarttextBox.Location = new Point(527, 267);
+            StarttextBox.Location = new Point(163, 167);
             StarttextBox.Name = "StarttextBox";
             StarttextBox.Size = new Size(259, 27);
             StarttextBox.TabIndex = 5;
@@ -87,15 +89,16 @@
             // 
             EndDateTxt.AutoSize = true;
             EndDateTxt.Font = new Font("Segoe UI", 12F);
-            EndDateTxt.Location = new Point(212, 368);
+            EndDateTxt.Location = new Point(45, 231);
             EndDateTxt.Name = "EndDateTxt";
             EndDateTxt.Size = new Size(91, 28);
             EndDateTxt.TabIndex = 6;
             EndDateTxt.Text = "End Date";
+            EndDateTxt.Click += EndDateTxt_Click;
             // 
             // EndDateTxtBox
             // 
-            EndDateTxtBox.Location = new Point(527, 372);
+            EndDateTxtBox.Location = new Point(163, 232);
             EndDateTxtBox.Name = "EndDateTxtBox";
             EndDateTxtBox.Size = new Size(259, 27);
             EndDateTxtBox.TabIndex = 7;
@@ -105,7 +108,7 @@
             // 
             DescriptionTxt.AutoSize = true;
             DescriptionTxt.Font = new Font("Segoe UI", 12F);
-            DescriptionTxt.Location = new Point(212, 472);
+            DescriptionTxt.Location = new Point(17, 290);
             DescriptionTxt.Name = "DescriptionTxt";
             DescriptionTxt.Size = new Size(112, 28);
             DescriptionTxt.TabIndex = 8;
@@ -113,7 +116,7 @@
             // 
             // ProjectDescriptionBox
             // 
-            ProjectDescriptionBox.Location = new Point(527, 441);
+            ProjectDescriptionBox.Location = new Point(163, 300);
             ProjectDescriptionBox.Multiline = true;
             ProjectDescriptionBox.Name = "ProjectDescriptionBox";
             ProjectDescriptionBox.Size = new Size(259, 110);
@@ -123,9 +126,9 @@
             // ProjectSubmitBtn
             // 
             ProjectSubmitBtn.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
-            ProjectSubmitBtn.Location = new Point(408, 597);
+            ProjectSubmitBtn.Location = new Point(163, 427);
             ProjectSubmitBtn.Name = "ProjectSubmitBtn";
-            ProjectSubmitBtn.Size = new Size(121, 56);
+            ProjectSubmitBtn.Size = new Size(97, 39);
             ProjectSubmitBtn.TabIndex = 10;
             ProjectSubmitBtn.Text = "Submit";
             ProjectSubmitBtn.UseVisualStyleBackColor = true;
@@ -135,7 +138,8 @@
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(977, 682);
+            BackColor = Color.RosyBrown;
+            ClientSize = new Size(454, 490);
             Controls.Add(ProjectSubmitBtn);
             Controls.Add(ProjectDescriptionBox);
             Controls.Add(DescriptionTxt);
@@ -146,8 +150,9 @@
             Controls.Add(ProjectNameBox);
             Controls.Add(ProjectNameTxt);
             Controls.Add(ProjectHeadTxt);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "ProjectForm";
-            Text = "ProjectForm";
+            Text = "New Project";
             ResumeLayout(false);
             PerformLayout();
         }

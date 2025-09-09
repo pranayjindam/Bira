@@ -15,7 +15,9 @@
 
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MemberDashboard));
             panelSidebar = new Panel();
+            buttonLogout = new Button();
             panelWrapTasks = new Panel();
             panelTasksMenu = new Panel();
             buttonTasksShowMore = new Button();
@@ -42,6 +44,7 @@
             // 
             panelSidebar.AutoScroll = true;
             panelSidebar.BackColor = Color.FromArgb(11, 7, 17);
+            panelSidebar.Controls.Add(buttonLogout);
             panelSidebar.Controls.Add(panelWrapTasks);
             panelSidebar.Controls.Add(panelWrapTeams);
             panelSidebar.Controls.Add(panelWrapProjects);
@@ -50,6 +53,23 @@
             panelSidebar.Name = "panelSidebar";
             panelSidebar.Size = new Size(250, 749);
             panelSidebar.TabIndex = 1;
+            // 
+            // buttonLogout
+            // 
+            buttonLogout.BackColor = Color.Red;
+            buttonLogout.Dock = DockStyle.Bottom;
+            buttonLogout.FlatAppearance.BorderSize = 0;
+            buttonLogout.FlatAppearance.MouseDownBackColor = Color.LightCoral;
+            buttonLogout.FlatAppearance.MouseOverBackColor = Color.IndianRed;
+            buttonLogout.FlatStyle = FlatStyle.Flat;
+            buttonLogout.ForeColor = SystemColors.ButtonHighlight;
+            buttonLogout.Location = new Point(0, 720);
+            buttonLogout.Name = "buttonLogout";
+            buttonLogout.Size = new Size(250, 29);
+            buttonLogout.TabIndex = 0;
+            buttonLogout.Text = "Logout";
+            buttonLogout.UseVisualStyleBackColor = false;
+            buttonLogout.Click += buttonLogout_Click;
             // 
             // panelWrapTasks
             // 
@@ -79,6 +99,8 @@
             // 
             buttonTasksShowMore.Dock = DockStyle.Top;
             buttonTasksShowMore.FlatAppearance.BorderSize = 0;
+            buttonTasksShowMore.FlatAppearance.MouseDownBackColor = Color.FromArgb(28, 151, 234);
+            buttonTasksShowMore.FlatAppearance.MouseOverBackColor = Color.FromArgb(28, 151, 234);
             buttonTasksShowMore.FlatStyle = FlatStyle.Flat;
             buttonTasksShowMore.ForeColor = Color.LightGray;
             buttonTasksShowMore.Location = new Point(0, 0);
@@ -94,6 +116,8 @@
             // 
             buttonTasks.Dock = DockStyle.Top;
             buttonTasks.FlatAppearance.BorderSize = 0;
+            buttonTasks.FlatAppearance.MouseDownBackColor = Color.IndianRed;
+            buttonTasks.FlatAppearance.MouseOverBackColor = Color.LightCoral;
             buttonTasks.FlatStyle = FlatStyle.Flat;
             buttonTasks.ForeColor = Color.Gainsboro;
             buttonTasks.Location = new Point(0, 0);
@@ -133,6 +157,8 @@
             // 
             buttonTeamsShowMore.Dock = DockStyle.Top;
             buttonTeamsShowMore.FlatAppearance.BorderSize = 0;
+            buttonTeamsShowMore.FlatAppearance.MouseDownBackColor = Color.FromArgb(28, 151, 234);
+            buttonTeamsShowMore.FlatAppearance.MouseOverBackColor = Color.FromArgb(28, 151, 234);
             buttonTeamsShowMore.FlatStyle = FlatStyle.Flat;
             buttonTeamsShowMore.ForeColor = Color.LightGray;
             buttonTeamsShowMore.Location = new Point(0, 0);
@@ -148,6 +174,8 @@
             // 
             buttonTeams.Dock = DockStyle.Top;
             buttonTeams.FlatAppearance.BorderSize = 0;
+            buttonTeams.FlatAppearance.MouseDownBackColor = Color.IndianRed;
+            buttonTeams.FlatAppearance.MouseOverBackColor = Color.LightCoral;
             buttonTeams.FlatStyle = FlatStyle.Flat;
             buttonTeams.ForeColor = Color.Gainsboro;
             buttonTeams.Location = new Point(0, 0);
@@ -187,6 +215,8 @@
             // 
             buttonProjectsShowMore.Dock = DockStyle.Top;
             buttonProjectsShowMore.FlatAppearance.BorderSize = 0;
+            buttonProjectsShowMore.FlatAppearance.MouseDownBackColor = Color.FromArgb(28, 151, 234);
+            buttonProjectsShowMore.FlatAppearance.MouseOverBackColor = Color.FromArgb(28, 151, 234);
             buttonProjectsShowMore.FlatStyle = FlatStyle.Flat;
             buttonProjectsShowMore.ForeColor = Color.LightGray;
             buttonProjectsShowMore.Location = new Point(0, 0);
@@ -202,6 +232,8 @@
             // 
             buttonProjects.Dock = DockStyle.Top;
             buttonProjects.FlatAppearance.BorderSize = 0;
+            buttonProjects.FlatAppearance.MouseDownBackColor = Color.IndianRed;
+            buttonProjects.FlatAppearance.MouseOverBackColor = Color.LightCoral;
             buttonProjects.FlatStyle = FlatStyle.Flat;
             buttonProjects.ForeColor = Color.Gainsboro;
             buttonProjects.Location = new Point(0, 0);
@@ -227,6 +259,7 @@
             ClientSize = new Size(1300, 749);
             Controls.Add(panelMain);
             Controls.Add(panelSidebar);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "MemberDashboard";
             Text = "Member Dashboard";
             panelSidebar.ResumeLayout(false);
@@ -262,5 +295,6 @@
         private Button buttonTasksShowMore;
 
         private Panel panelMain;
+        private Button buttonLogout;
     }
 }

@@ -35,9 +35,12 @@
             PasswordTxt = new Label();
             PasswordTxtBox = new TextBox();
             LoginBtn = new Button();
-            ForgettonPasswordTxt = new Label();
             LoginTransparentPanel = new Panel();
+            pictureBox1 = new PictureBox();
+            labellogsignupdesc = new Label();
+            linkLabelloginsignup = new LinkLabel();
             LoginTransparentPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
             // LoginTxt
@@ -46,7 +49,7 @@
             LoginTxt.BackColor = Color.Transparent;
             LoginTxt.Font = new Font("Segoe UI", 20F, FontStyle.Bold);
             LoginTxt.ForeColor = Color.White;
-            LoginTxt.Location = new Point(256, 17);
+            LoginTxt.Location = new Point(236, 73);
             LoginTxt.Name = "LoginTxt";
             LoginTxt.Size = new Size(110, 46);
             LoginTxt.TabIndex = 0;
@@ -59,7 +62,7 @@
             UserNameTxt.BackColor = Color.Transparent;
             UserNameTxt.Font = new Font("Segoe UI", 12F);
             UserNameTxt.ForeColor = Color.White;
-            UserNameTxt.Location = new Point(101, 90);
+            UserNameTxt.Location = new Point(88, 174);
             UserNameTxt.Name = "UserNameTxt";
             UserNameTxt.Size = new Size(103, 28);
             UserNameTxt.TabIndex = 1;
@@ -68,10 +71,10 @@
             // UserNameTxtBox
             // 
             UserNameTxtBox.Font = new Font("Segoe UI", 12F);
-            UserNameTxtBox.Location = new Point(100, 143);
+            UserNameTxtBox.Location = new Point(243, 168);
             UserNameTxtBox.Name = "UserNameTxtBox";
             UserNameTxtBox.PlaceholderText = "Username";
-            UserNameTxtBox.Size = new Size(390, 34);
+            UserNameTxtBox.Size = new Size(266, 34);
             UserNameTxtBox.TabIndex = 2;
             UserNameTxtBox.TextChanged += UserNameTxtBox_TextChanged_1;
             // 
@@ -81,7 +84,7 @@
             PasswordTxt.BackColor = Color.Transparent;
             PasswordTxt.Font = new Font("Segoe UI", 12F);
             PasswordTxt.ForeColor = Color.White;
-            PasswordTxt.Location = new Point(101, 230);
+            PasswordTxt.Location = new Point(88, 230);
             PasswordTxt.Name = "PasswordTxt";
             PasswordTxt.Size = new Size(93, 28);
             PasswordTxt.TabIndex = 3;
@@ -90,20 +93,21 @@
             // PasswordTxtBox
             // 
             PasswordTxtBox.Font = new Font("Segoe UI", 12F);
-            PasswordTxtBox.Location = new Point(100, 275);
+            PasswordTxtBox.Location = new Point(243, 230);
             PasswordTxtBox.Name = "PasswordTxtBox";
             PasswordTxtBox.PlaceholderText = "password";
-            PasswordTxtBox.Size = new Size(390, 34);
+            PasswordTxtBox.Size = new Size(266, 34);
             PasswordTxtBox.TabIndex = 4;
             PasswordTxtBox.TextChanged += PasswordTxtBox_TextChanged;
             // 
             // LoginBtn
             // 
-            LoginBtn.BackColor = Color.Transparent;
+            LoginBtn.BackColor = Color.Crimson;
             LoginBtn.Cursor = Cursors.Hand;
+            LoginBtn.FlatAppearance.BorderColor = Color.OldLace;
             LoginBtn.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
-            LoginBtn.ForeColor = Color.Black;
-            LoginBtn.Location = new Point(256, 363);
+            LoginBtn.ForeColor = SystemColors.ButtonHighlight;
+            LoginBtn.Location = new Point(236, 324);
             LoginBtn.Name = "LoginBtn";
             LoginBtn.Size = new Size(110, 45);
             LoginBtn.TabIndex = 5;
@@ -111,44 +115,72 @@
             LoginBtn.UseVisualStyleBackColor = false;
             LoginBtn.Click += LoginBtn_Click;
             // 
-            // ForgettonPasswordTxt
-            // 
-            ForgettonPasswordTxt.AutoSize = true;
-            ForgettonPasswordTxt.Cursor = Cursors.Hand;
-            ForgettonPasswordTxt.ForeColor = Color.White;
-            ForgettonPasswordTxt.Location = new Point(100, 345);
-            ForgettonPasswordTxt.Name = "ForgettonPasswordTxt";
-            ForgettonPasswordTxt.Size = new Size(135, 20);
-            ForgettonPasswordTxt.TabIndex = 6;
-            ForgettonPasswordTxt.Text = "ForgettonPassword";
-            // 
             // LoginTransparentPanel
             // 
+            LoginTransparentPanel.BackColor = Color.Indigo;
+            LoginTransparentPanel.Controls.Add(linkLabelloginsignup);
+            LoginTransparentPanel.Controls.Add(labellogsignupdesc);
             LoginTransparentPanel.Controls.Add(LoginTxt);
             LoginTransparentPanel.Controls.Add(LoginBtn);
-            LoginTransparentPanel.Controls.Add(ForgettonPasswordTxt);
             LoginTransparentPanel.Controls.Add(UserNameTxt);
             LoginTransparentPanel.Controls.Add(PasswordTxt);
             LoginTransparentPanel.Controls.Add(PasswordTxtBox);
             LoginTransparentPanel.Controls.Add(UserNameTxtBox);
-            LoginTransparentPanel.Location = new Point(127, 21);
+            LoginTransparentPanel.Location = new Point(278, 0);
             LoginTransparentPanel.Name = "LoginTransparentPanel";
-            LoginTransparentPanel.Size = new Size(616, 427);
+            LoginTransparentPanel.Size = new Size(582, 489);
             LoginTransparentPanel.TabIndex = 7;
+            // 
+            // pictureBox1
+            // 
+            pictureBox1.BackColor = SystemColors.ControlLightLight;
+            pictureBox1.BackgroundImage = (Image)resources.GetObject("pictureBox1.BackgroundImage");
+            pictureBox1.BackgroundImageLayout = ImageLayout.Center;
+            pictureBox1.Location = new Point(0, 0);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(280, 489);
+            pictureBox1.TabIndex = 8;
+            pictureBox1.TabStop = false;
+            // 
+            // labellogsignupdesc
+            // 
+            labellogsignupdesc.AutoSize = true;
+            labellogsignupdesc.Font = new Font("Segoe UI", 8F, FontStyle.Italic);
+            labellogsignupdesc.ForeColor = SystemColors.ButtonHighlight;
+            labellogsignupdesc.Location = new Point(305, 286);
+            labellogsignupdesc.Name = "labellogsignupdesc";
+            labellogsignupdesc.Size = new Size(157, 19);
+            labellogsignupdesc.TabIndex = 6;
+            labellogsignupdesc.Text = "Dont have an account ?";
+            // 
+            // linkLabelloginsignup
+            // 
+            linkLabelloginsignup.AutoSize = true;
+            linkLabelloginsignup.Cursor = Cursors.Hand;
+            linkLabelloginsignup.ForeColor = SystemColors.ButtonHighlight;
+            linkLabelloginsignup.Location = new Point(468, 286);
+            linkLabelloginsignup.Name = "linkLabelloginsignup";
+            linkLabelloginsignup.Size = new Size(55, 20);
+            linkLabelloginsignup.TabIndex = 7;
+            linkLabelloginsignup.TabStop = true;
+            linkLabelloginsignup.Text = "Signup";
             // 
             // Login
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackgroundImage = (Image)resources.GetObject("$this.BackgroundImage");
+            BackColor = SystemColors.ActiveCaptionText;
             BackgroundImageLayout = ImageLayout.Stretch;
             ClientSize = new Size(855, 488);
+            Controls.Add(pictureBox1);
             Controls.Add(LoginTransparentPanel);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "Login";
-            Text = "Login";
+            Text = "Bira Login";
             Load += Login_Load;
             LoginTransparentPanel.ResumeLayout(false);
             LoginTransparentPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
         }
 
@@ -160,7 +192,9 @@
         private Label PasswordTxt;
         private TextBox PasswordTxtBox;
         private Button LoginBtn;
-        private Label ForgettonPasswordTxt;
         private Panel LoginTransparentPanel;
+        private PictureBox pictureBox1;
+        private Label labellogsignupdesc;
+        private LinkLabel linkLabelloginsignup;
     }
 }

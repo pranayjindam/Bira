@@ -20,7 +20,6 @@ namespace Bira.Naveen
             InitializeComponent();
             toolTip1 = new ToolTip();
             LoginBtn.Click += LoginBtn_Click;
-            ForgettonPasswordTxt.Click += ForgettonPasswordTxt_Click;
             PasswordTxtBox.UseSystemPasswordChar = true; // hide password input
         }
 

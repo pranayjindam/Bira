@@ -118,5 +118,15 @@ namespace Bira.Naveen
 
             // TODO: Save project details to database here
         }
+
+        private void EndDateTxt_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ProjectHeadTxt_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
