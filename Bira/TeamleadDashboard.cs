@@ -310,8 +310,8 @@ namespace Bira
         {
             Panel avatar = new Panel
             {
-                Width = 50,
-                Height = 50,
+                Width = 60,
+                Height = 60,
                 BackColor = bgColor,
                 Margin = new Padding(10),
             };
