@@ -73,7 +73,7 @@ namespace Bira.Naveen
             else
             {
                 ProjectDescriptionBox.BackColor = Color.LightGreen;
-                toolTip1.SetToolTip(ProjectDescriptionBox, "Valid description.");
+                toolTip1.SetToolTip(ProjectDescriptionBox, "Valid  description.");
             }
         }
 

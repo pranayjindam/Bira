@@ -36,7 +36,7 @@ namespace Bira.Naveen
             else
             {
                 UserNameTxtBox.BackColor = Color.LightGreen;
-                toolTip1.SetToolTip(UserNameTxtBox, "Valid username.");
+                toolTip1.SetToolTip(UserNameTxtBox, "Valid  username.");
             }
         }
 
