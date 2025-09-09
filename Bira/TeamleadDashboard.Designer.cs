@@ -368,7 +368,7 @@
             Controls.Add(panelMain);
             Controls.Add(panelSidebar);
             Name = "TeamleadDashboard";
-            Text = "Member Dashboard";
+            Text = "TeamLead Dashboard";
             panelSidebar.ResumeLayout(false);
             panelSidebar.PerformLayout();
             panelBacklogs.ResumeLayout(false);
