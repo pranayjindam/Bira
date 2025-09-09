@@ -275,17 +275,76 @@ namespace Bira
 
 
         private void EditProject(int projectId) => MessageBox.Show($"Edit Project {projectId}");
-        private void DeleteProject(int projectId) => MessageBox.Show($"Delete Project {projectId}");
+        private void DeleteProject(int projectId)
+        {
+            DialogResult result = MessageBox.Show(
+               "Are you sure you want to Delete This Project Permanently?",
+               "Delete Project",
+               MessageBoxButtons.YesNo,
+               MessageBoxIcon.Question
+           );
+
+            if (result == DialogResult.Yes)
+            {
+                // Call the service to delete the project data
+                // await _projectService.DeleteProjectAsync(projectId);
+
+                // Inform the user of success
+                MessageBox.Show("Project has been deleted successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                // Refresh the UI to reflect the changes
+                panelMain.Controls.Clear(); // Clear the main view
+                LoadAllData(); // Reload the sidebar menus
+            }
+        }
 
         private void EditTeam(int teamId) => MessageBox.Show($"Edit Team {teamId}");
-        private void DeleteTeam(int teamId) => MessageBox.Show($"Delete Team {teamId}");
+        private void DeleteTeam(int teamId)
+        {
+            DialogResult result = MessageBox.Show(
+               "Are you sure you want to Delete This Team Permanently?",
+               "Delete Team",
+               MessageBoxButtons.YesNo,
+               MessageBoxIcon.Question
+           );
+
+            if (result == DialogResult.Yes)
+            {
+                // Call the service to delete the project data
+                // await _projectService.DeleteProjectAsync(projectId);
+
+                // Inform the user of success
+                MessageBox.Show("Team has been deleted successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                // Refresh the UI to reflect the changes
+                panelMain.Controls.Clear(); // Clear the main view
+                LoadAllData(); // Reload the sidebar menus
+            }
+        }
 
         private void EditTask(int taskId) => MessageBox.Show($"Edit Task {taskId}");
-        private void DeleteTask(int taskId) => MessageBox.Show($"Delete Task {taskId}");
+        private void DeleteTask(int taskId)
+        {
+            DialogResult result = MessageBox.Show(
+               "Are you sure you want to Delete This Task Permanently?",
+               "Delete Task",
+               MessageBoxButtons.YesNo,
+               MessageBoxIcon.Question
+           );
 
+            if (result == DialogResult.Yes)
+            {
+                // Call the service to delete the project data
+                // await _projectService.DeleteProjectAsync(projectId);
 
+                // Inform the user of success
+                MessageBox.Show("Task has been deleted successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-
+                // Refresh the UI to reflect the changes
+                panelMain.Controls.Clear(); // Clear the main view
+                LoadAllData(); // Reload the sidebar menus
+            }
+        }
 
         private void Btn2_Click(object sender, EventArgs e)
         {
@@ -1177,6 +1236,29 @@ namespace Bira
         private void buttonBacklogs_Click(object sender, EventArgs e)
         {
             DisplayAllBacklogCards();
+        }
+
+        private void buttonLogout_Click_1(object sender, EventArgs e)
+        {
+            DialogResult result = MessageBox.Show(
+                "Are you sure you want to log out?",
+                "Confirm Logout",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question
+            );
+
+            if (result == DialogResult.Yes)
+            {
+                // Close current dashboard
+                this.Hide();
+
+                // Open Login form again
+                Login loginForm = new Login();
+                loginForm.Show();
+
+                // Optionally dispose the current form
+               
+            }
         }
     }
     //public static class WinApi

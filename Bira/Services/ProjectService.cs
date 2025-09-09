@@ -38,6 +38,16 @@ namespace Bira.Services
 
             };
         }
+        //public async Task DeleteProjectAsync(int projectId)
+        //{
+        //    await Task.Delay(100); // Simulate async database call
+
+        //    var projectToRemove = _projects.FirstOrDefault(p => p.ProjectId == projectId);
+        //    if (projectToRemove != null)
+        //    {
+        //        _projects.Remove(projectToRemove);
+        //    }
+        //}
 
         /// <summary>
         /// Simulates fetching a list of users asynchronously.

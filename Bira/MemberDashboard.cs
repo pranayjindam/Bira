@@ -733,7 +733,7 @@ namespace Bira
                 loginForm.Show();
 
                 // Optionally dispose the current form
-                this.Close();
+              
             }
         }
 
