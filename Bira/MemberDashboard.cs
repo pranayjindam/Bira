@@ -254,7 +254,7 @@ namespace Bira
             Panel card = new Panel
             {
                 Width = panelMain.Width -0,
-                Height = 300,
+                Height = 250,
                 BackColor = Color.FromArgb(4, 40, 55), // dark theme style
                 Padding = new Padding(20),
                 Margin = new Padding(15),
