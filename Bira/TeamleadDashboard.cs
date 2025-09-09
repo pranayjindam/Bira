@@ -19,6 +19,7 @@ namespace Bira
         private readonly ProjectService _projectService = new ProjectService();
         private readonly TeamService _teamService = new TeamService();
         private readonly TaskService _taskService = new TaskService();
+        private readonly BacklogService _backlogService = new BacklogService();
 
         private ContextMenuStrip _contextMenu;
         private int _currentItemId;
@@ -331,6 +332,139 @@ namespace Bira
             return avatar;
         }
 
+        #region Display All Backlogs (Grid View)
+
+        /// <summary>
+        /// Fetches all backlog items and displays them as a grid of cards in the main panel.
+        /// This replaces the previous "Show More" button functionality.
+        /// </summary>
+        /// 
+        // Helper function to assign colors based on priority
+        private Color GetPriorityColor(string priority)
+        {
+
+            switch (priority?.ToLower())
+            {
+                case "high":
+                    return Color.FromArgb(255, 128, 128); // Light Red
+                case "medium":
+                    return Color.FromArgb(255, 192, 128); // Light Orange
+                case "low":
+                    return Color.FromArgb(144, 238, 144); // Light Green
+                default:
+                    return Color.LightGray;
+            }
+        }
+
+        private async void DisplayAllBacklogCards()
+        {
+            // Get all backlog items (assuming this method now exists in the service)
+            var backlogItems = await _backlogService.GetBacklogItemsAsync();
+
+            // MODIFIED: Target panel is now panelMain
+            panelMain.Controls.Clear();
+
+            FlowLayoutPanel flow = new FlowLayoutPanel
+            {
+                Dock = DockStyle.Fill,
+                AutoScroll = true,
+                WrapContents = true,
+                Padding = new Padding(20) // MODIFIED: Increased padding
+            };
+
+            foreach (var item in backlogItems)
+            {
+                Panel card = new Panel
+                {
+                    Width = 350, // MODIFIED: Increased width for more content
+                    Height = 300, // MODIFIED: Increased height for the description
+                    BackColor = Color.FromArgb(45, 65, 90), // Enhanced color
+                    Margin = new Padding(15),
+                    Padding = new Padding(20),
+                    Cursor = Cursors.Hand,
+                    Tag = item
+                };
+
+                card.Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, card.Width, card.Height, 20, 20));
+
+                // --- ENHANCED LAYOUT ---
+
+                // 1. Header Panel for Title
+                Label lblName = new Label
+                {
+                    Text = item.Title,
+                    // MODIFIED: Larger, bolder font for the title
+                    Font = new Font("Segoe UI", 18F, FontStyle.Bold),
+                    ForeColor = Color.White,
+                    Dock = DockStyle.Top,
+                    Height = 50, // MODIFIED: Increased height
+                    AutoEllipsis = true
+                };
+
+                // 2. Description Label (takes up the middle space)
+                Label lblDesc = new Label
+                {
+                    Text = item.Description,
+                    // MODIFIED: Larger italic font for description
+                    Font = new Font("Segoe UI", 11F, FontStyle.Italic),
+                    ForeColor = Color.LightGray,
+                    Dock = DockStyle.Fill, // Fills the remaining space
+                    Padding = new Padding(0, 5, 0, 5)
+                };
+
+                // 3. Footer Panel for Status and Priority
+                Panel footerPanel = new Panel { Dock = DockStyle.Bottom, Height = 30 }; // MODIFIED: Increased height
+
+                Label lblStatus = new Label
+                {
+                    Text = $"Status: {item.Status}",
+                    // MODIFIED: Larger font
+                    Font = new Font("Segoe UI", 10F, FontStyle.Regular),
+                    ForeColor = Color.LightCyan,
+                    Dock = DockStyle.Left,
+                    AutoSize = true
+                };
+
+                Label lblPriority = new Label
+                {
+                    Text = $"Priority: {item.Priority}",
+                    // MODIFIED: Larger font
+                    Font = new Font("Segoe UI", 10F, FontStyle.Bold),
+                    ForeColor = GetPriorityColor(item.Priority),
+                    Dock = DockStyle.Right,
+                    AutoSize = true
+                };
+
+                footerPanel.Controls.Add(lblStatus);
+                footerPanel.Controls.Add(lblPriority);
+
+                // Add controls in reverse order of docking (Fill, Bottom, Top)
+                card.Controls.Add(lblDesc);
+                card.Controls.Add(footerPanel);
+                card.Controls.Add(lblName);
+
+                // Make the entire card clickable
+                card.Click += (s, ev) => Card_ClickHandler(card);
+                foreach (Control ctrl in card.Controls)
+                {
+                    // Make child controls also trigger the main card click
+                    ctrl.Click += (s, ev) => Card_ClickHandler(card);
+                    if (ctrl is Panel p) // Also handle clicks on panels within the card
+                    {
+                        foreach (Control innerCtrl in p.Controls)
+                        {
+                            innerCtrl.Click += (s, ev) => Card_ClickHandler(card);
+                        }
+                    }
+                }
+
+                flow.Controls.Add(card);
+            }
+
+            panelMain.Controls.Add(flow);
+        }
+        #endregion
+
         private void Card_ClickHandler(Panel card)
         {
             if (card.Tag is ProjectModel p)
@@ -339,6 +473,8 @@ namespace Bira
                 OpenTeam(t.TeamId, t.Name, t.Members);
             else if (card.Tag is TaskModel task)
                 OpenTask(task.TaskId, task.Name, task.ProjectName, task.Description, task.startDate, task.endDate, task.Priority, task.Status);
+            else if (card.Tag is BacklogModel item)
+                OpenBacklog(item.ItemId, item.Title, item.Description, item.Status, item.Priority);
         }
 
         #region Show More Handlers
@@ -541,6 +677,177 @@ namespace Bira
         {
             DisplayTaskCard(taskId, taskName, projectName, desc, startDate, endDate, priority, status, Color.FromArgb(231, 76, 60));
         }
+
+        private void OpenBacklog(int itemId, string title, string description, string status, string priority)
+        {
+            // CORRECTED: This now calls the correct method 'DisplayBacklogItemCard' to show a single item's details.
+            DisplayBacklogCard(itemId, title, description, status, priority, Color.FromArgb(91, 147, 189));
+        }
+
+
+        private void DisplayBacklogCard(int itemId, string title, string description, string status, string priority, Color color)
+        {
+            panelMain.Controls.Clear();
+
+            Panel card = new Panel
+            {
+                Width = panelMain.Width - 20,
+                Height = 300,
+                BackColor = color,
+                Padding = new Padding(15),
+                Margin = new Padding(10),
+                BorderStyle = BorderStyle.None,
+            };
+
+            card.Region = Region.FromHrgn(
+                WinApi.CreateRoundRectRgn(0, 0, card.Width, card.Height, 20, 20)
+            );
+
+            Label lblTitle = new Label
+            {
+                Text = $"📝 {title} (ID: {itemId})",
+                Font = new Font("Segoe UI", 14, FontStyle.Bold),
+                ForeColor = Color.White,
+                Dock = DockStyle.Top,
+                Height = 40
+            };
+
+            Label lblStatusLabel = new Label
+            {
+                Text = $"Status: {status}",
+                Font = new Font("Segoe UI", 11),
+                ForeColor = Color.White,
+                Dock = DockStyle.Top,
+                Height = 30
+            };
+
+            Label lblPriorityLabel = new Label
+            {
+                Text = $"Priority: {priority}",
+                Font = new Font("Segoe UI", 11),
+                ForeColor = Color.White,
+                Dock = DockStyle.Top,
+                Height = 30
+            };
+
+            Label lblDesc = new Label
+            {
+                Text = description,
+                Font = new Font("Segoe UI", 10, FontStyle.Italic),
+                ForeColor = Color.White,
+                Dock = DockStyle.Fill
+            };
+
+            card.Controls.Add(lblDesc);
+            card.Controls.Add(lblPriorityLabel);
+            card.Controls.Add(lblStatusLabel);
+            card.Controls.Add(lblTitle);
+
+            panelMain.Controls.Add(card);
+        }
+
+        #endregion
+
+        #region Detailed View Display Methods (New)
+
+        /// <summary>
+        /// Displays a detailed card showing the entire backlog for a specific project.
+        /// </summary>
+        private void DisplayProjectBacklogCard(int projectId, string projectName, List<BacklogModel> backlogItems, Color color)
+        {
+            panelMain.Controls.Clear();
+
+            Panel card = new Panel
+            {
+                Width = panelMain.Width - 20,
+                Height = 350, // Increased height for better backlog view
+                BackColor = color,
+                Padding = new Padding(15),
+                Margin = new Padding(10),
+                BorderStyle = BorderStyle.None,
+                AutoScroll = true
+            };
+
+            // Apply rounded corners
+            card.Region = Region.FromHrgn(
+                WinApi.CreateRoundRectRgn(0, 0, card.Width, card.Height, 20, 20)
+            );
+
+            Label lblBacklogTitle = new Label
+            {
+                Text = $"📋 Backlog: {projectName} (ID: {projectId})",
+                Font = new Font("Segoe UI", 14, FontStyle.Bold),
+                ForeColor = Color.White,
+                Dock = DockStyle.Top,
+                Height = 40
+            };
+
+            FlowLayoutPanel itemsPanel = new FlowLayoutPanel
+            {
+                Dock = DockStyle.Fill,
+                AutoScroll = true,
+                WrapContents = false, // Set to false to prevent wrapping
+                FlowDirection = FlowDirection.TopDown, // Stack items vertically
+                BackColor = Color.FromArgb(50, color)
+            };
+
+            foreach (var item in backlogItems)
+            {
+                Panel itemCard = new Panel
+                {
+                    Width = itemsPanel.Width - 25, // Adjust width to fit FlowLayoutPanel
+                    Height = 90,
+                    BackColor = Color.FromArgb(80, color),
+                    Margin = new Padding(5),
+                    Padding = new Padding(8)
+                };
+
+                itemCard.Region = Region.FromHrgn(
+                    WinApi.CreateRoundRectRgn(0, 0, itemCard.Width, itemCard.Height, 15, 15)
+                );
+
+                Label lblItemTitle = new Label
+                {
+                    Text = $"📝 {item.Title}",
+                    Font = new Font("Segoe UI", 11, FontStyle.Bold),
+                    ForeColor = Color.White,
+                    Dock = DockStyle.Top,
+                    Height = 30
+                };
+
+                Label lblItemStatus = new Label
+                {
+                    Text = $"📊 Status: {item.Status}",
+                    Font = new Font("Segoe UI", 10, FontStyle.Regular),
+                    ForeColor = Color.White,
+                    Dock = DockStyle.Top,
+                    Height = 25
+                };
+
+                Label lblItemPriority = new Label
+                {
+                    Text = $"🔺 Priority: {item.Priority}",
+                    Font = new Font("Segoe UI", 10, FontStyle.Regular),
+                    ForeColor = Color.White,
+                    Dock = DockStyle.Top,
+                    Height = 25
+                };
+
+                itemCard.Controls.Add(lblItemPriority);
+                itemCard.Controls.Add(lblItemStatus);
+                itemCard.Controls.Add(lblItemTitle);
+
+                itemsPanel.Controls.Add(itemCard);
+            }
+
+            card.Controls.Add(itemsPanel);
+            card.Controls.Add(lblBacklogTitle);
+
+            panelMain.Controls.Add(card);
+        }
+        #endregion
+
+
 
         private void DisplayTeamCard(int teamId, string teamName, List<MemberModel> teamMembers, Color color)
         {
@@ -812,7 +1119,7 @@ namespace Bira
             panelMain.Controls.Add(card);
         }
 
-        #endregion
+
 
         private void buttonProjectsAdd_Click(object sender, EventArgs e)
         {
@@ -865,6 +1172,11 @@ namespace Bira
                 // Optionally dispose the current form
                 this.Close();
             }
+        }
+
+        private void buttonBacklogs_Click(object sender, EventArgs e)
+        {
+            DisplayAllBacklogCards();
         }
     }
     //public static class WinApi
