@@ -29,17 +29,25 @@
         private void InitializeComponent()
         {
             NewTeamPanel = new Panel();
+            labelNonTeamMembers = new Label();
+            labelTeamMembers = new Label();
+            panelNonTeamMembers = new FlowLayoutPanel();
+            panelTeamMembers = new FlowLayoutPanel();
             EditTeamAddBtn = new Button();
+            EditTeamDesTxtBox = new TextBox();
+            NewTeamDesTxt = new Label();
             EditTeamTxtBox = new TextBox();
             NewTeamTxt = new Label();
             EditTeamHeadTxt = new Label();
-            NewTeamDesTxt = new Label();
-            EditTeamDesTxtBox = new TextBox();
             NewTeamPanel.SuspendLayout();
             SuspendLayout();
             // 
             // NewTeamPanel
             // 
+            NewTeamPanel.Controls.Add(labelNonTeamMembers);
+            NewTeamPanel.Controls.Add(labelTeamMembers);
+            NewTeamPanel.Controls.Add(panelNonTeamMembers);
+            NewTeamPanel.Controls.Add(panelTeamMembers);
             NewTeamPanel.Controls.Add(EditTeamAddBtn);
             NewTeamPanel.Controls.Add(EditTeamDesTxtBox);
             NewTeamPanel.Controls.Add(NewTeamDesTxt);
@@ -54,10 +62,46 @@
             NewTeamPanel.TabIndex = 1;
             NewTeamPanel.Paint += NewTeamPanel_Paint;
             // 
+            // labelNonTeamMembers
+            // 
+            labelNonTeamMembers.AutoSize = true;
+            labelNonTeamMembers.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
+            labelNonTeamMembers.Location = new Point(704, 322);
+            labelNonTeamMembers.Name = "labelNonTeamMembers";
+            labelNonTeamMembers.Size = new Size(273, 38);
+            labelNonTeamMembers.TabIndex = 9;
+            labelNonTeamMembers.Text = "Non TeamMembers";
+            // 
+            // labelTeamMembers
+            // 
+            labelTeamMembers.AutoSize = true;
+            labelTeamMembers.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
+            labelTeamMembers.Location = new Point(199, 322);
+            labelTeamMembers.Name = "labelTeamMembers";
+            labelTeamMembers.Size = new Size(209, 38);
+            labelTeamMembers.TabIndex = 8;
+            labelTeamMembers.Text = "TeamMembers";
+            // 
+            // panelNonTeamMembers
+            // 
+            panelNonTeamMembers.BackColor = Color.White;
+            panelNonTeamMembers.Location = new Point(642, 387);
+            panelNonTeamMembers.Name = "panelNonTeamMembers";
+            panelNonTeamMembers.Size = new Size(389, 360);
+            panelNonTeamMembers.TabIndex = 7;
+            // 
+            // panelTeamMembers
+            // 
+            panelTeamMembers.BackColor = Color.White;
+            panelTeamMembers.Location = new Point(112, 387);
+            panelTeamMembers.Name = "panelTeamMembers";
+            panelTeamMembers.Size = new Size(388, 360);
+            panelTeamMembers.TabIndex = 6;
+            // 
             // EditTeamAddBtn
             // 
             EditTeamAddBtn.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
-            EditTeamAddBtn.Location = new Point(674, 754);
+            EditTeamAddBtn.Location = new Point(1034, 767);
             EditTeamAddBtn.Margin = new Padding(5);
             EditTeamAddBtn.Name = "EditTeamAddBtn";
             EditTeamAddBtn.Size = new Size(205, 74);
@@ -66,10 +110,34 @@
             EditTeamAddBtn.UseVisualStyleBackColor = true;
             EditTeamAddBtn.Click += NewTeamAddBtn_Click;
             // 
+            // EditTeamDesTxtBox
+            // 
+            EditTeamDesTxtBox.Font = new Font("Segoe UI", 12F);
+            EditTeamDesTxtBox.Location = new Point(367, 190);
+            EditTeamDesTxtBox.Margin = new Padding(5);
+            EditTeamDesTxtBox.Multiline = true;
+            EditTeamDesTxtBox.Name = "EditTeamDesTxtBox";
+            EditTeamDesTxtBox.PlaceholderText = "Description";
+            EditTeamDesTxtBox.Size = new Size(393, 96);
+            EditTeamDesTxtBox.TabIndex = 4;
+            EditTeamDesTxtBox.TextChanged += EditTeamDesTxtBox_TextChanged;
+            // 
+            // NewTeamDesTxt
+            // 
+            NewTeamDesTxt.AutoSize = true;
+            NewTeamDesTxt.Font = new Font("Segoe UI", 12F);
+            NewTeamDesTxt.Location = new Point(112, 220);
+            NewTeamDesTxt.Margin = new Padding(5, 0, 5, 0);
+            NewTeamDesTxt.Name = "NewTeamDesTxt";
+            NewTeamDesTxt.Size = new Size(135, 32);
+            NewTeamDesTxt.TabIndex = 3;
+            NewTeamDesTxt.Text = "Description";
+            NewTeamDesTxt.Click += NewTeamDesTxt_Click;
+            // 
             // EditTeamTxtBox
             // 
             EditTeamTxtBox.Font = new Font("Segoe UI", 12F);
-            EditTeamTxtBox.Location = new Point(367, 119);
+            EditTeamTxtBox.Location = new Point(367, 93);
             EditTeamTxtBox.Margin = new Padding(5);
             EditTeamTxtBox.Name = "EditTeamTxtBox";
             EditTeamTxtBox.PlaceholderText = "Team Name";
@@ -81,7 +149,7 @@
             // 
             NewTeamTxt.AutoSize = true;
             NewTeamTxt.Font = new Font("Segoe UI", 12F);
-            NewTeamTxt.Location = new Point(112, 123);
+            NewTeamTxt.Location = new Point(112, 93);
             NewTeamTxt.Margin = new Padding(5, 0, 5, 0);
             NewTeamTxt.Name = "NewTeamTxt";
             NewTeamTxt.Size = new Size(142, 32);
@@ -93,36 +161,12 @@
             // 
             EditTeamHeadTxt.AutoSize = true;
             EditTeamHeadTxt.Font = new Font("Segoe UI", 16F, FontStyle.Bold);
-            EditTeamHeadTxt.Location = new Point(309, 9);
+            EditTeamHeadTxt.Location = new Point(444, 9);
             EditTeamHeadTxt.Margin = new Padding(5, 0, 5, 0);
             EditTeamHeadTxt.Name = "EditTeamHeadTxt";
             EditTeamHeadTxt.Size = new Size(166, 45);
             EditTeamHeadTxt.TabIndex = 0;
             EditTeamHeadTxt.Text = "Edit Team";
-            // 
-            // NewTeamDesTxt
-            // 
-            NewTeamDesTxt.AutoSize = true;
-            NewTeamDesTxt.Font = new Font("Segoe UI", 12F);
-            NewTeamDesTxt.Location = new Point(112, 258);
-            NewTeamDesTxt.Margin = new Padding(5, 0, 5, 0);
-            NewTeamDesTxt.Name = "NewTeamDesTxt";
-            NewTeamDesTxt.Size = new Size(135, 32);
-            NewTeamDesTxt.TabIndex = 3;
-            NewTeamDesTxt.Text = "Description";
-            NewTeamDesTxt.Click += NewTeamDesTxt_Click;
-            // 
-            // EditTeamDesTxtBox
-            // 
-            EditTeamDesTxtBox.Font = new Font("Segoe UI", 12F);
-            EditTeamDesTxtBox.Location = new Point(367, 217);
-            EditTeamDesTxtBox.Margin = new Padding(5);
-            EditTeamDesTxtBox.Multiline = true;
-            EditTeamDesTxtBox.Name = "EditTeamDesTxtBox";
-            EditTeamDesTxtBox.PlaceholderText = "Description";
-            EditTeamDesTxtBox.Size = new Size(393, 131);
-            EditTeamDesTxtBox.TabIndex = 4;
-            EditTeamDesTxtBox.TextChanged += EditTeamDesTxtBox_TextChanged;
             // 
             // EditTeam
             // 
@@ -158,6 +202,10 @@
         private void NewTeamTxt_Click(object sender, System.EventArgs e) { /* TODO: Implement logic */ }
         private TextBox EditTeamDesTxtBox;
         private Label NewTeamDesTxt;
+        private FlowLayoutPanel panelNonTeamMembers;
+        private FlowLayoutPanel panelTeamMembers;
+        private Label labelNonTeamMembers;
+        private Label labelTeamMembers;
         //  private void NewTeamHeadTxt_Click(object sender, System.EventArgs e) { /* TODO: Implement logic */ }
     }
 }

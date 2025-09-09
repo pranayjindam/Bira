@@ -17,7 +17,9 @@ namespace Bira
             //Application.Run(new Naveen.Signup());
             // Application.Run(new Naveen.ProjectForm());
             //Application.Run(new MemberDashboard());
-            Application.Run(new TeamleadDashboard());
+            // Application.Run(new TeamleadDashboard());
+            Application.Run(new EditTeam(1));
+
         }
     }
 }
