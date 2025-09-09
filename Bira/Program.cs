@@ -12,9 +12,10 @@ namespace Bira
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
             // Application.Run(new Form1());
-            Application.Run(new Naveen.Login());
+            // Application.Run(new Naveen.Login());
             // Application.Run(new Naveen.Signup());
             // Application.Run(new Naveen.ProjectForm());
+            Application.Run(new Naveen.TasksForm());
         }
     }
 }
