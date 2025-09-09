@@ -230,6 +230,7 @@
             buttonTeamsAdd.Text = "+";
             buttonTeamsAdd.TextAlign = ContentAlignment.TopCenter;
             buttonTeamsAdd.UseVisualStyleBackColor = false;
+            buttonTeamsAdd.Click += buttonTeamsAdd_Click;
             // 
             // buttonTeams
             // 

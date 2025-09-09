@@ -280,10 +280,10 @@ namespace Bira
 
             EditProject EditprojectForm = new EditProject(projectId);
 
-                EditprojectForm.TopLevel = false;     // Make the form a child control, not a top-level window
-                EditprojectForm.FormBorderStyle = FormBorderStyle.None;
-                EditprojectForm.Dock = DockStyle.Fill; // Fill the panel fully
-            
+            EditprojectForm.TopLevel = false;     // Make the form a child control, not a top-level window
+            EditprojectForm.FormBorderStyle = FormBorderStyle.None;
+            EditprojectForm.Dock = DockStyle.Fill; // Fill the panel fully
+
 
             panelMain.Controls.Add(EditprojectForm);  // Add to panel2 (or panelMain, depending on your design)
             EditprojectForm.Show();
@@ -1300,6 +1300,21 @@ namespace Bira
 
             panelMain.Controls.Add(oTasksForm);
             oTasksForm.Show();
+        }
+
+        private void buttonTeamsAdd_Click(object sender, EventArgs e)
+        {
+            panelMain.Controls.Clear();
+
+            NewTeam oTeamForm = new NewTeam
+            {
+                TopLevel = false,
+                FormBorderStyle = FormBorderStyle.None,
+                Dock = DockStyle.Fill
+            };
+
+            panelMain.Controls.Add(oTeamForm);
+            oTeamForm.Show();
         }
     }
     //public static class WinApi
