@@ -311,7 +311,20 @@ namespace Bira
             }
         }
 
-        private void EditTeam(int teamId) => MessageBox.Show($"Edit Team {teamId}");
+        private void EditTeam(int teamId)
+        {
+            panelMain.Controls.Clear();  // Clear any existing controls in panelMain (or use panel2)
+
+            EditTeam EditTeamForm = new EditTeam(teamId);
+
+            EditTeamForm.TopLevel = false;     // Make the form a child control, not a top-level window
+            EditTeamForm.FormBorderStyle = FormBorderStyle.None;
+            EditTeamForm.Dock = DockStyle.Fill; // Fill the panel fully
+
+
+            panelMain.Controls.Add(EditTeamForm);  // Add to panel2 (or panelMain, depending on your design)
+            EditTeamForm.Show();
+        }
         private void DeleteTeam(int teamId)
         {
             DialogResult result = MessageBox.Show(

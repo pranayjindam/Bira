@@ -72,12 +72,12 @@ namespace Bira.Naveen
 
 
 
-            if (validUser && validPassword )
+            if (validUser && validPassword)
             {
                 //MessageBox.Show("✅ Login successful!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 if (Role == "Teamlead")
                 {
-                    
+
                     TeamleadDashboard oTLform = new TeamleadDashboard();
                     this.Hide();
                     oTLform.Show();
@@ -114,6 +114,13 @@ namespace Bira.Naveen
         private void PasswordTxtBox_TextChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void linkLabelloginsignup_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            this.Hide();
+            Signup signup = new Signup();
+            signup.Show();
         }
     }
 }

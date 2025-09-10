@@ -389,6 +389,7 @@
             Controls.Add(panelSidebar);
             Name = "TeamleadDashboard";
             Text = "TeamLead Dashboard";
+            WindowState = FormWindowState.Maximized;
             panelSidebar.ResumeLayout(false);
             panelSidebar.PerformLayout();
             panelBacklogs.ResumeLayout(false);

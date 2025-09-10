@@ -262,6 +262,7 @@
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "MemberDashboard";
             Text = "Member Dashboard";
+            WindowState = FormWindowState.Maximized;
             panelSidebar.ResumeLayout(false);
             panelSidebar.PerformLayout();
             panelWrapTasks.ResumeLayout(false);

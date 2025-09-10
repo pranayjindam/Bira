@@ -128,5 +128,12 @@ namespace Bira.Naveen
         {
             SignupTransparentPanel.BackColor = Color.FromArgb(100, 0, 0, 0);
         }
+
+        private void linkLabelsignuplogin_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            this.Hide();
+            Login loginForm = new Login();
+            loginForm.Show();
+        }
     }
 }

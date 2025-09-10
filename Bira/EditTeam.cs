@@ -198,7 +198,7 @@ namespace Bira
             {
                 Text = $"{member.Name} ({member.Role})",
                 AutoSize = true,
-                Font = new Font(this.Font.FontFamily, 10, FontStyle.Italic),
+                Font = new Font(this.Font.FontFamily, 10, FontStyle.Regular),
                 ForeColor = Color.Black,
                 Cursor = Cursors.Hand
             };
