@@ -235,17 +235,17 @@ namespace Bira
                 {
                     foreach (var otherPn in panel.Controls.OfType<Panel>().Where(p => p.Tag?.ToString() == "DynamicItem"))
                     {
-                        //foreach (var otherBtn in otherPn.Controls.OfType<Button>().Where(b => b.Dock == DockStyle.Fill))
-                        //{
-                        //    otherBtn.Tag = "inactive";
-                        //    otherBtn.BackColor = defaultBack;
-                        //}
-
-                        foreach (var otherBtn in otherPn.Controls.OfType<Button>())
+                        foreach (var otherBtn in otherPn.Controls.OfType<Button>().Where(b => b.Dock == DockStyle.Fill))
                         {
                             otherBtn.Tag = "inactive";
                             otherBtn.BackColor = defaultBack;
                         }
+
+                        //foreach (var otherBtn in otherPn.Controls.OfType<Button>())
+                        //{
+                        //    otherBtn.Tag = "inactive";
+                        //    otherBtn.BackColor = defaultBack;
+                        //}
                     }
 
                     btn.Tag = "active";
