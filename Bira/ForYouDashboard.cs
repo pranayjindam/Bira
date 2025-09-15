@@ -184,6 +184,5 @@ namespace Bira
                 panelTaskProgress.Controls.Add(statusCard);
             }
         }
-
     }
 }

@@ -235,7 +235,13 @@ namespace Bira
                 {
                     foreach (var otherPn in panel.Controls.OfType<Panel>().Where(p => p.Tag?.ToString() == "DynamicItem"))
                     {
-                        foreach (var otherBtn in otherPn.Controls.OfType<Button>().Where(b => b.Dock == DockStyle.Fill))
+                        //foreach (var otherBtn in otherPn.Controls.OfType<Button>().Where(b => b.Dock == DockStyle.Fill))
+                        //{
+                        //    otherBtn.Tag = "inactive";
+                        //    otherBtn.BackColor = defaultBack;
+                        //}
+
+                        foreach (var otherBtn in otherPn.Controls.OfType<Button>())
                         {
                             otherBtn.Tag = "inactive";
                             otherBtn.BackColor = defaultBack;
@@ -1131,91 +1137,91 @@ namespace Bira
             int nWidthEllipse, int nHeightEllipse);
 
         private void DisplayTaskCard(int taskId, string taskName, string projectName,
-      string desc, DateTime startDate, DateTime endDate, string priority,
-      string status, Color color)
-        {
-            panelMain.Controls.Clear();
-
-            Panel card = new Panel
+            string desc, DateTime startDate, DateTime endDate, string priority,
+            string status, Color color)
             {
-                Width = panelMain.Width - 20,
-                Height = 220,
-                BackColor = color,
-                Padding = new Padding(15),
-                Margin = new Padding(10),
-                BorderStyle = BorderStyle.None
-            };
+                panelMain.Controls.Clear();
 
-            // Rounded corners
-            card.Region = Region.FromHrgn(
-                WinApi.CreateRoundRectRgn(0, 0, card.Width, card.Height, 20, 20)
-            );
+                Panel card = new Panel
+                {
+                    Width = panelMain.Width - 20,
+                    Height = 220,
+                    BackColor = color,
+                    Padding = new Padding(15),
+                    Margin = new Padding(10),
+                    BorderStyle = BorderStyle.None
+                };
 
-            FlowLayoutPanel contentPanel = new FlowLayoutPanel
-            {
-                Dock = DockStyle.Fill,
-                FlowDirection = FlowDirection.TopDown,
-                AutoScroll = true
-            };
+                // Rounded corners
+                card.Region = Region.FromHrgn(
+                    WinApi.CreateRoundRectRgn(0, 0, card.Width, card.Height, 20, 20)
+                );
 
-            Label lblTaskName = new Label
-            {
-                Text = $"📝 {taskName}",
-                Font = new Font("Segoe UI", 14, FontStyle.Bold),
-                ForeColor = Color.White,
-                AutoSize = true
-            };
+                FlowLayoutPanel contentPanel = new FlowLayoutPanel
+                {
+                    Dock = DockStyle.Fill,
+                    FlowDirection = FlowDirection.TopDown,
+                    AutoScroll = true
+                };
 
-            Label lblTaskProject = new Label
-            {
-                Text = $"📂 Project: {projectName}",
-                Font = new Font("Segoe UI", 12, FontStyle.Italic),
-                ForeColor = Color.White,
-                AutoSize = true
-            };
+                Label lblTaskName = new Label
+                {
+                    Text = $"📝 {taskName}",
+                    Font = new Font("Segoe UI", 14, FontStyle.Bold),
+                    ForeColor = Color.White,
+                    AutoSize = true
+                };
 
-            Label lblTaskDesc = new Label
-            {
-                Text = $"📖 {desc}",
-                Font = new Font("Segoe UI", 11, FontStyle.Regular),
-                ForeColor = Color.White,
-                AutoSize = true
-            };
+                Label lblTaskProject = new Label
+                {
+                    Text = $"📂 Project: {projectName}",
+                    Font = new Font("Segoe UI", 12, FontStyle.Italic),
+                    ForeColor = Color.White,
+                    AutoSize = true
+                };
 
-            Label lblTaskDates = new Label
-            {
-                Text = $"⏳ {startDate:dd MMM yyyy} ➝ {endDate:dd MMM yyyy}",
-                Font = new Font("Segoe UI", 11, FontStyle.Regular),
-                ForeColor = Color.White,
-                AutoSize = true
-            };
+                Label lblTaskDesc = new Label
+                {
+                    Text = $"📖 {desc}",
+                    Font = new Font("Segoe UI", 11, FontStyle.Regular),
+                    ForeColor = Color.White,
+                    AutoSize = true
+                };
 
-            Label lblTaskPriority = new Label
-            {
-                Text = $"⚡ Priority: {priority}",
-                Font = new Font("Segoe UI", 11, FontStyle.Bold),
-                ForeColor = Color.Gold,
-                AutoSize = true
-            };
+                Label lblTaskDates = new Label
+                {
+                    Text = $"⏳ {startDate:dd MMM yyyy} ➝ {endDate:dd MMM yyyy}",
+                    Font = new Font("Segoe UI", 11, FontStyle.Regular),
+                    ForeColor = Color.White,
+                    AutoSize = true
+                };
 
-            Label lblTaskStatus = new Label
-            {
-                Text = $"✅ Status: {status}",
-                Font = new Font("Segoe UI", 11, FontStyle.Bold),
-                ForeColor = Color.LightGreen,
-                AutoSize = true
-            };
+                Label lblTaskPriority = new Label
+                {
+                    Text = $"⚡ Priority: {priority}",
+                    Font = new Font("Segoe UI", 11, FontStyle.Bold),
+                    ForeColor = Color.Gold,
+                    AutoSize = true
+                };
 
-            contentPanel.Controls.Add(lblTaskName);
-            contentPanel.Controls.Add(lblTaskProject);
-            contentPanel.Controls.Add(lblTaskDesc);
-            contentPanel.Controls.Add(lblTaskDates);
-            contentPanel.Controls.Add(lblTaskPriority);
-            contentPanel.Controls.Add(lblTaskStatus);
+                Label lblTaskStatus = new Label
+                {
+                    Text = $"✅ Status: {status}",
+                    Font = new Font("Segoe UI", 11, FontStyle.Bold),
+                    ForeColor = Color.LightGreen,
+                    AutoSize = true
+                };
 
-            card.Controls.Add(contentPanel);
-            panelMain.Controls.Add(card);
-        }
+                contentPanel.Controls.Add(lblTaskName);
+                contentPanel.Controls.Add(lblTaskProject);
+                contentPanel.Controls.Add(lblTaskDesc);
+                contentPanel.Controls.Add(lblTaskDates);
+                contentPanel.Controls.Add(lblTaskPriority);
+                contentPanel.Controls.Add(lblTaskStatus);
+
+                card.Controls.Add(contentPanel);
+                panelMain.Controls.Add(card);
+            }
 
 
 

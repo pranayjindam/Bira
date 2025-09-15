@@ -45,103 +45,104 @@
             // 
             panelWelcome.BackColor = Color.LightSkyBlue;
             panelWelcome.Controls.Add(labelWelcome);
-            panelWelcome.Location = new Point(12, 21);
+            panelWelcome.Dock = DockStyle.Top;
+            panelWelcome.Location = new Point(0, 0);
             panelWelcome.Name = "panelWelcome";
-            panelWelcome.Size = new Size(1004, 108);
+            panelWelcome.Size = new Size(1674, 108);
             panelWelcome.TabIndex = 0;
             // 
             // labelWelcome
             // 
             labelWelcome.AutoSize = true;
-            labelWelcome.Font = new Font("Segoe UI", 20F);
+            labelWelcome.Font = new Font("Segoe UI", 24F);
             labelWelcome.Location = new Point(14, 28);
             labelWelcome.Name = "labelWelcome";
-            labelWelcome.Size = new Size(185, 54);
+            labelWelcome.Size = new Size(224, 65);
             labelWelcome.TabIndex = 0;
             labelWelcome.Text = "Welcome";
             // 
             // labelTaskProgress
             // 
             labelTaskProgress.AutoSize = true;
-            labelTaskProgress.Font = new Font("Segoe UI", 14F);
-            labelTaskProgress.Location = new Point(685, 361);
+            labelTaskProgress.Font = new Font("Segoe UI", 16F);
+            labelTaskProgress.Location = new Point(915, 417);
             labelTaskProgress.Name = "labelTaskProgress";
-            labelTaskProgress.Size = new Size(184, 38);
+            labelTaskProgress.Size = new Size(211, 45);
             labelTaskProgress.TabIndex = 0;
             labelTaskProgress.Text = "Task Progress";
             // 
             // panelAssignTasks
             // 
-            panelAssignTasks.BackColor = Color.Ivory;
-            panelAssignTasks.Location = new Point(125, 412);
+            panelAssignTasks.BackColor = Color.MintCream;
+            panelAssignTasks.Location = new Point(63, 513);
             panelAssignTasks.Name = "panelAssignTasks";
-            panelAssignTasks.Size = new Size(283, 269);
+            panelAssignTasks.Size = new Size(449, 459);
             panelAssignTasks.TabIndex = 2;
             // 
             // labelAssignTasks
             // 
             labelAssignTasks.AutoSize = true;
-            labelAssignTasks.Font = new Font("Segoe UI", 14F);
-            labelAssignTasks.Location = new Point(183, 361);
+            labelAssignTasks.Font = new Font("Segoe UI", 16F);
+            labelAssignTasks.Location = new Point(189, 417);
             labelAssignTasks.Name = "labelAssignTasks";
-            labelAssignTasks.Size = new Size(170, 38);
+            labelAssignTasks.Size = new Size(196, 45);
             labelAssignTasks.TabIndex = 1;
             labelAssignTasks.Text = "Assign Tasks";
             // 
             // panelTaskProgress
             // 
-            panelTaskProgress.BackColor = Color.Ivory;
-            panelTaskProgress.Location = new Point(629, 412);
+            panelTaskProgress.BackColor = Color.MintCream;
+            panelTaskProgress.Location = new Point(796, 513);
             panelTaskProgress.Name = "panelTaskProgress";
-            panelTaskProgress.Size = new Size(283, 269);
+            panelTaskProgress.Size = new Size(449, 459);
             panelTaskProgress.TabIndex = 5;
             // 
             // labelEmail
             // 
             labelEmail.AutoSize = true;
-            labelEmail.Font = new Font("Segoe UI", 12F);
-            labelEmail.Location = new Point(63, 149);
+            labelEmail.Font = new Font("Segoe UI", 14F);
+            labelEmail.Location = new Point(63, 148);
             labelEmail.Name = "labelEmail";
-            labelEmail.Size = new Size(90, 32);
+            labelEmail.Size = new Size(105, 38);
             labelEmail.TabIndex = 6;
             labelEmail.Text = "Email : ";
             // 
             // labelFirstname
             // 
             labelFirstname.AutoSize = true;
-            labelFirstname.Font = new Font("Segoe UI", 12F);
-            labelFirstname.Location = new Point(63, 209);
+            labelFirstname.Font = new Font("Segoe UI", 14F);
+            labelFirstname.Location = new Point(63, 228);
             labelFirstname.Name = "labelFirstname";
-            labelFirstname.Size = new Size(148, 32);
+            labelFirstname.Size = new Size(173, 38);
             labelFirstname.TabIndex = 7;
             labelFirstname.Text = "First Name : ";
             // 
             // labelLastname
             // 
             labelLastname.AutoSize = true;
-            labelLastname.Font = new Font("Segoe UI", 12F);
-            labelLastname.Location = new Point(63, 269);
+            labelLastname.Font = new Font("Segoe UI", 14F);
+            labelLastname.Location = new Point(63, 308);
             labelLastname.Name = "labelLastname";
-            labelLastname.Size = new Size(145, 32);
+            labelLastname.Size = new Size(169, 38);
             labelLastname.TabIndex = 8;
             labelLastname.Text = "Last Name : ";
             // 
             // labelRole
             // 
             labelRole.AutoSize = true;
-            labelRole.Font = new Font("Segoe UI", 12F);
-            labelRole.Location = new Point(768, 149);
+            labelRole.Font = new Font("Segoe UI", 14F);
+            labelRole.Location = new Point(980, 228);
             labelRole.Name = "labelRole";
-            labelRole.Size = new Size(60, 32);
+            labelRole.Size = new Size(85, 38);
             labelRole.TabIndex = 9;
-            labelRole.Text = "Role";
+            labelRole.Text = "Role :";
             // 
             // ForYouDashboard
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
-            ClientSize = new Size(1028, 693);
+            ClientSize = new Size(1674, 1050);
             Controls.Add(labelRole);
             Controls.Add(labelLastname);
             Controls.Add(labelFirstname);

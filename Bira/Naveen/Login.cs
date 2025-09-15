@@ -28,7 +28,7 @@ namespace Bira.Naveen
         {
             string username = UserNameTxtBox.Text.Trim();
 
-            if (string.IsNullOrEmpty(username) || username.Length < 4)
+            if (string.IsNullOrEmpty(username) || username.Length < 4 || username.Contains(' '))
             {
                 UserNameTxtBox.BackColor = Color.LightCoral;
                 toolTip1.SetToolTip(UserNameTxtBox, "Username must be at least 4 characters.");

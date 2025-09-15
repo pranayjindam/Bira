@@ -59,5 +59,14 @@ namespace Bira.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to https://jiramvpapi-hacya5b2bta0dvhq.centralindia-01.azurewebsites.net/api.
+        /// </summary>
+        internal static string api {
+            get {
+                return ResourceManager.GetString("api", resourceCulture);
+            }
+        }
     }
 }
