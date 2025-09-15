@@ -1,13 +1,10 @@
-# Visual Studio cache files
+# Visual Studio
 .vs/
 *.user
 *.suo
-*.cache
-*.pdb
-*.obj
-*.dll
-*.exe
 
-# Build folders
+# Build results
 bin/
 obj/
+Debug/
+Release/

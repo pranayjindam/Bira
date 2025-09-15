@@ -60,5 +60,10 @@ namespace Bira.Naveen
                 NewTeamTxtBox.Focus();
             }
         }
+
+        private void NewTeamAddBtn_Click_1(object sender, EventArgs e)
+        {
+            MessageBox.Show("New Team Added Successfully","Success",MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
     }
 }

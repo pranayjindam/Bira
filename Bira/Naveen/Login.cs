@@ -19,8 +19,7 @@ namespace Bira.Naveen
         {
             InitializeComponent();
             toolTip1 = new ToolTip();
-            LoginBtn.Click += LoginBtn_Click;
-            ForgettonPasswordTxt.Click += ForgettonPasswordTxt_Click;
+            //LoginBtn.Click += LoginBtn_Click;
             PasswordTxtBox.UseSystemPasswordChar = true; // hide password input
         }
 
@@ -29,7 +28,7 @@ namespace Bira.Naveen
         {
             string username = UserNameTxtBox.Text.Trim();
 
-            if (string.IsNullOrEmpty(username) || username.Length < 4)
+            if (string.IsNullOrEmpty(username) || username.Length < 4 || username.Contains(' '))
             {
                 UserNameTxtBox.BackColor = Color.LightCoral;
                 toolTip1.SetToolTip(UserNameTxtBox, "Username must be at least 4 characters.");
@@ -37,7 +36,7 @@ namespace Bira.Naveen
             else
             {
                 UserNameTxtBox.BackColor = Color.LightGreen;
-                toolTip1.SetToolTip(UserNameTxtBox, "Valid username.");
+                toolTip1.SetToolTip(UserNameTxtBox, "Valid  username.");
             }
         }
 
@@ -69,11 +68,30 @@ namespace Bira.Naveen
         {
             bool validUser = !string.IsNullOrEmpty(UserNameTxtBox.Text) && UserNameTxtBox.Text.Length >= 4;
             bool validPassword = ValidatePassword();
+            string Role = "Teamlead";
+
+
 
             if (validUser && validPassword)
             {
-                MessageBox.Show("✅ Login successful!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                //MessageBox.Show("✅ Login successful!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                if (Role == "Teamlead")
+                {
 
+                    TeamleadDashboard oTLform = new TeamleadDashboard();
+                    this.Hide();
+                    oTLform.Show();
+                }
+                else if (Role == "Member")
+                {
+                    this.Hide();
+                    MemberDashboard memberDashboard = new MemberDashboard();
+                    memberDashboard.Show();
+                }
+                else
+                {
+                    MessageBox.Show("❌ Unknown role.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
                 // TODO: Connect this with your DB (e.g., MySQL) for actual login verification
             }
             else
@@ -96,6 +114,13 @@ namespace Bira.Naveen
         private void PasswordTxtBox_TextChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void linkLabelloginsignup_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            this.Hide();
+            Signup signup = new Signup();
+            signup.Show();
         }
     }
 }

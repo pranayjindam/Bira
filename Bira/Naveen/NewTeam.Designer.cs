@@ -29,12 +29,12 @@
         private void InitializeComponent()
         {
             NewTeamPanel = new Panel();
-            NewTeamHeadTxt = new Label();
-            NewTeamTxt = new Label();
+            NewTeamAddBtn = new Button();
             NewTeamTxtBox = new TextBox();
+            NewTeamTxt = new Label();
+            NewTeamHeadTxt = new Label();
             NewTeamDesTxt = new Label();
             NewTeamDesTxtBox = new TextBox();
-            NewTeamAddBtn = new Button();
             NewTeamPanel.SuspendLayout();
             SuspendLayout();
             // 
@@ -46,76 +46,85 @@
             NewTeamPanel.Controls.Add(NewTeamTxtBox);
             NewTeamPanel.Controls.Add(NewTeamTxt);
             NewTeamPanel.Controls.Add(NewTeamHeadTxt);
-            NewTeamPanel.Location = new Point(172, 33);
+            NewTeamPanel.Location = new Point(215, 41);
+            NewTeamPanel.Margin = new Padding(4);
             NewTeamPanel.Name = "NewTeamPanel";
-            NewTeamPanel.Size = new Size(550, 480);
+            NewTeamPanel.Size = new Size(688, 600);
             NewTeamPanel.TabIndex = 0;
             // 
-            // NewTeamHeadTxt
+            // NewTeamAddBtn
             // 
-            NewTeamHeadTxt.AutoSize = true;
-            NewTeamHeadTxt.Font = new Font("Segoe UI", 16F, FontStyle.Bold);
-            NewTeamHeadTxt.Location = new Point(188, 28);
-            NewTeamHeadTxt.Name = "NewTeamHeadTxt";
-            NewTeamHeadTxt.Size = new Size(151, 37);
-            NewTeamHeadTxt.TabIndex = 0;
-            NewTeamHeadTxt.Text = "New Team";
+            NewTeamAddBtn.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
+            NewTeamAddBtn.Location = new Point(268, 479);
+            NewTeamAddBtn.Margin = new Padding(4);
+            NewTeamAddBtn.Name = "NewTeamAddBtn";
+            NewTeamAddBtn.Size = new Size(158, 59);
+            NewTeamAddBtn.TabIndex = 5;
+            NewTeamAddBtn.Text = "Add";
+            NewTeamAddBtn.UseVisualStyleBackColor = true;
+            NewTeamAddBtn.Click += NewTeamAddBtn_Click_1;
+            // 
+            // NewTeamTxtBox
+            // 
+            NewTeamTxtBox.Font = new Font("Segoe UI", 12F);
+            NewTeamTxtBox.Location = new Point(291, 158);
+            NewTeamTxtBox.Margin = new Padding(4);
+            NewTeamTxtBox.Name = "NewTeamTxtBox";
+            NewTeamTxtBox.PlaceholderText = "Team Name";
+            NewTeamTxtBox.Size = new Size(309, 39);
+            NewTeamTxtBox.TabIndex = 2;
             // 
             // NewTeamTxt
             // 
             NewTeamTxt.AutoSize = true;
             NewTeamTxt.Font = new Font("Segoe UI", 12F);
-            NewTeamTxt.Location = new Point(65, 129);
+            NewTeamTxt.Location = new Point(81, 161);
+            NewTeamTxt.Margin = new Padding(4, 0, 4, 0);
             NewTeamTxt.Name = "NewTeamTxt";
-            NewTeamTxt.Size = new Size(57, 28);
+            NewTeamTxt.Size = new Size(71, 32);
             NewTeamTxt.TabIndex = 1;
             NewTeamTxt.Text = "Team";
             // 
-            // NewTeamTxtBox
+            // NewTeamHeadTxt
             // 
-            NewTeamTxtBox.Font = new Font("Segoe UI", 12F);
-            NewTeamTxtBox.Location = new Point(233, 126);
-            NewTeamTxtBox.Name = "NewTeamTxtBox";
-            NewTeamTxtBox.PlaceholderText = "Team Name";
-            NewTeamTxtBox.Size = new Size(248, 34);
-            NewTeamTxtBox.TabIndex = 2;
+            NewTeamHeadTxt.AutoSize = true;
+            NewTeamHeadTxt.Font = new Font("Segoe UI", 16F, FontStyle.Bold);
+            NewTeamHeadTxt.Location = new Point(235, 35);
+            NewTeamHeadTxt.Margin = new Padding(4, 0, 4, 0);
+            NewTeamHeadTxt.Name = "NewTeamHeadTxt";
+            NewTeamHeadTxt.Size = new Size(176, 45);
+            NewTeamHeadTxt.TabIndex = 0;
+            NewTeamHeadTxt.Text = "New Team";
             // 
             // NewTeamDesTxt
             // 
             NewTeamDesTxt.AutoSize = true;
             NewTeamDesTxt.Font = new Font("Segoe UI", 12F);
-            NewTeamDesTxt.Location = new Point(65, 255);
+            NewTeamDesTxt.Location = new Point(81, 319);
+            NewTeamDesTxt.Margin = new Padding(4, 0, 4, 0);
             NewTeamDesTxt.Name = "NewTeamDesTxt";
-            NewTeamDesTxt.Size = new Size(112, 28);
+            NewTeamDesTxt.Size = new Size(135, 32);
             NewTeamDesTxt.TabIndex = 3;
             NewTeamDesTxt.Text = "Description";
             // 
             // NewTeamDesTxtBox
             // 
             NewTeamDesTxtBox.Font = new Font("Segoe UI", 12F);
-            NewTeamDesTxtBox.Location = new Point(233, 215);
+            NewTeamDesTxtBox.Location = new Point(291, 269);
+            NewTeamDesTxtBox.Margin = new Padding(4);
             NewTeamDesTxtBox.Multiline = true;
             NewTeamDesTxtBox.Name = "NewTeamDesTxtBox";
             NewTeamDesTxtBox.PlaceholderText = "Description";
-            NewTeamDesTxtBox.Size = new Size(248, 114);
+            NewTeamDesTxtBox.Size = new Size(309, 142);
             NewTeamDesTxtBox.TabIndex = 4;
-            // 
-            // NewTeamAddBtn
-            // 
-            NewTeamAddBtn.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
-            NewTeamAddBtn.Location = new Point(214, 383);
-            NewTeamAddBtn.Name = "NewTeamAddBtn";
-            NewTeamAddBtn.Size = new Size(126, 47);
-            NewTeamAddBtn.TabIndex = 5;
-            NewTeamAddBtn.Text = "Add";
-            NewTeamAddBtn.UseVisualStyleBackColor = true;
             // 
             // NewTeam
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(882, 553);
+            ClientSize = new Size(1102, 691);
             Controls.Add(NewTeamPanel);
+            Margin = new Padding(4);
             Name = "NewTeam";
             Text = "NewTeam";
             NewTeamPanel.ResumeLayout(false);

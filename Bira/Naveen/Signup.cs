@@ -70,7 +70,7 @@ namespace Bira.Naveen
             if (Regex.IsMatch(password, pattern))
             {
                 SignupPasswordTxtBox.BackColor = Color.LightGreen;
-                toolTip1.SetToolTip(SignupPasswordTxtBox, "Strong password.");
+                toolTip1.SetToolTip(SignupPasswordTxtBox, "Strong  password.");
             }
             else
             {
@@ -127,6 +127,13 @@ namespace Bira.Naveen
         private void SignupTransparentPanel_Paint(object sender, PaintEventArgs e)
         {
             SignupTransparentPanel.BackColor = Color.FromArgb(100, 0, 0, 0);
+        }
+
+        private void linkLabelsignuplogin_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            this.Hide();
+            Login loginForm = new Login();
+            loginForm.Show();
         }
     }
 }

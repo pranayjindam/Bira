@@ -73,7 +73,7 @@ namespace Bira.Naveen
             else
             {
                 ProjectDescriptionBox.BackColor = Color.LightGreen;
-                toolTip1.SetToolTip(ProjectDescriptionBox, "Valid description.");
+                toolTip1.SetToolTip(ProjectDescriptionBox, "Valid  description.");
             }
         }
 
@@ -117,6 +117,16 @@ namespace Bira.Naveen
             MessageBox.Show("✅ Project submitted successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             // TODO: Save project details to database here
+        }
+
+        private void EndDateTxt_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ProjectHeadTxt_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

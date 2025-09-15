@@ -1,6 +1,6 @@
-﻿namespace Bira.Naveen
+﻿namespace Bira
 {
-    partial class TasksForm
+    partial class EditTask
     {
         /// <summary>
         /// Required designer variable.
@@ -28,52 +28,41 @@
         /// </summary>
         private void InitializeComponent()
         {
-            TasksFormHeadTxt = new Label();
             TasksPanel = new Panel();
             TasksSubmitBtn = new Button();
-            TasksStatusComboBox = new ComboBox();
             TasksStatusTxt = new Label();
             TasksPriorityComboBox = new ComboBox();
             TasksPriorityTxt = new Label();
             TasksDesTxtBox = new TextBox();
             TasksDescriptionTxt = new Label();
-            TasksProjectNameComboBox = new ComboBox();
             TasksProNameTxt = new Label();
             TasksNameTxtBox = new TextBox();
             TasksNameTxt = new Label();
+            TasksFormHeadTxt = new Label();
+            TaskStatusComboBox = new ComboBox();
+            TasksProjectComboBox = new ComboBox();
             TasksPanel.SuspendLayout();
             SuspendLayout();
             // 
-            // TasksFormHeadTxt
-            // 
-            TasksFormHeadTxt.AutoSize = true;
-            TasksFormHeadTxt.Font = new Font("Segoe UI", 16F, FontStyle.Bold);
-            TasksFormHeadTxt.Location = new Point(375, 30);
-            TasksFormHeadTxt.Margin = new Padding(4, 0, 4, 0);
-            TasksFormHeadTxt.Name = "TasksFormHeadTxt";
-            TasksFormHeadTxt.Size = new Size(99, 45);
-            TasksFormHeadTxt.TabIndex = 0;
-            TasksFormHeadTxt.Text = "Tasks";
-            // 
             // TasksPanel
             // 
+            TasksPanel.Controls.Add(TasksProjectComboBox);
+            TasksPanel.Controls.Add(TaskStatusComboBox);
             TasksPanel.Controls.Add(TasksSubmitBtn);
-            TasksPanel.Controls.Add(TasksStatusComboBox);
             TasksPanel.Controls.Add(TasksStatusTxt);
             TasksPanel.Controls.Add(TasksPriorityComboBox);
             TasksPanel.Controls.Add(TasksPriorityTxt);
             TasksPanel.Controls.Add(TasksDesTxtBox);
             TasksPanel.Controls.Add(TasksDescriptionTxt);
-            TasksPanel.Controls.Add(TasksProjectNameComboBox);
             TasksPanel.Controls.Add(TasksProNameTxt);
             TasksPanel.Controls.Add(TasksNameTxtBox);
             TasksPanel.Controls.Add(TasksNameTxt);
             TasksPanel.Controls.Add(TasksFormHeadTxt);
-            TasksPanel.Location = new Point(176, 34);
+            TasksPanel.Location = new Point(166, 40);
             TasksPanel.Margin = new Padding(4);
             TasksPanel.Name = "TasksPanel";
             TasksPanel.Size = new Size(896, 799);
-            TasksPanel.TabIndex = 1;
+            TasksPanel.TabIndex = 2;
             // 
             // TasksSubmitBtn
             // 
@@ -85,19 +74,6 @@
             TasksSubmitBtn.TabIndex = 10;
             TasksSubmitBtn.Text = "Submit";
             TasksSubmitBtn.UseVisualStyleBackColor = true;
-            TasksSubmitBtn.Click += TasksSubmitBtn_Click;
-            // 
-            // TasksStatusComboBox
-            // 
-            TasksStatusComboBox.Cursor = Cursors.Hand;
-            TasksStatusComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
-            TasksStatusComboBox.FormattingEnabled = true;
-            TasksStatusComboBox.Items.AddRange(new object[] { "To do", "In Progress", "Done" });
-            TasksStatusComboBox.Location = new Point(412, 610);
-            TasksStatusComboBox.Margin = new Padding(4);
-            TasksStatusComboBox.Name = "TasksStatusComboBox";
-            TasksStatusComboBox.Size = new Size(374, 33);
-            TasksStatusComboBox.TabIndex = 9;
             // 
             // TasksStatusTxt
             // 
@@ -155,17 +131,6 @@
             TasksDescriptionTxt.TabIndex = 5;
             TasksDescriptionTxt.Text = "Description";
             // 
-            // TasksProjectNameComboBox
-            // 
-            TasksProjectNameComboBox.Cursor = Cursors.Hand;
-            TasksProjectNameComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
-            TasksProjectNameComboBox.FormattingEnabled = true;
-            TasksProjectNameComboBox.Location = new Point(412, 239);
-            TasksProjectNameComboBox.Margin = new Padding(4);
-            TasksProjectNameComboBox.Name = "TasksProjectNameComboBox";
-            TasksProjectNameComboBox.Size = new Size(374, 33);
-            TasksProjectNameComboBox.TabIndex = 4;
-            // 
             // TasksProNameTxt
             // 
             TasksProNameTxt.AutoSize = true;
@@ -198,40 +163,71 @@
             TasksNameTxt.TabIndex = 1;
             TasksNameTxt.Text = "Task Name";
             // 
-            // TasksForm
+            // TasksFormHeadTxt
+            // 
+            TasksFormHeadTxt.AutoSize = true;
+            TasksFormHeadTxt.Font = new Font("Segoe UI", 16F, FontStyle.Bold);
+            TasksFormHeadTxt.Location = new Point(375, 30);
+            TasksFormHeadTxt.Margin = new Padding(4, 0, 4, 0);
+            TasksFormHeadTxt.Name = "TasksFormHeadTxt";
+            TasksFormHeadTxt.Size = new Size(99, 45);
+            TasksFormHeadTxt.TabIndex = 0;
+            TasksFormHeadTxt.Text = "Tasks";
+            // 
+            // TaskStatusComboBox
+            // 
+            TaskStatusComboBox.Cursor = Cursors.Hand;
+            TaskStatusComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            TaskStatusComboBox.FormattingEnabled = true;
+            TaskStatusComboBox.Items.AddRange(new object[] { "Low", "Medium", "High" });
+            TaskStatusComboBox.Location = new Point(412, 608);
+            TaskStatusComboBox.Margin = new Padding(4);
+            TaskStatusComboBox.Name = "TaskStatusComboBox";
+            TaskStatusComboBox.Size = new Size(374, 33);
+            TaskStatusComboBox.TabIndex = 11;
+            // 
+            // TasksProjectComboBox
+            // 
+            TasksProjectComboBox.Cursor = Cursors.Hand;
+            TasksProjectComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            TasksProjectComboBox.FormattingEnabled = true;
+            TasksProjectComboBox.Items.AddRange(new object[] { "Low", "Medium", "High" });
+            TasksProjectComboBox.Location = new Point(412, 242);
+            TasksProjectComboBox.Margin = new Padding(4);
+            TasksProjectComboBox.Name = "TasksProjectComboBox";
+            TasksProjectComboBox.Size = new Size(374, 33);
+            TasksProjectComboBox.TabIndex = 12;
+            // 
+            // EditTask
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1228, 879);
             Controls.Add(TasksPanel);
-            Margin = new Padding(4);
-            Name = "TasksForm";
-            Text = "TasksForm";
+            Name = "EditTask";
+            Text = "EditTask";
+            Load += EditTask_Load;
             TasksPanel.ResumeLayout(false);
             TasksPanel.PerformLayout();
-            this.Load += TasksForm_Load;
             ResumeLayout(false);
         }
 
-        private void TasksForm_Load1(object sender, EventArgs e)
-        {
-            throw new NotImplementedException();
-        }
+
 
         #endregion
 
-        private Label TasksFormHeadTxt;
         private Panel TasksPanel;
+        private Button TasksSubmitBtn;
+        private Label TasksStatusTxt;
+        private ComboBox TasksPriorityComboBox;
+        private Label TasksPriorityTxt;
+        private TextBox TasksDesTxtBox;
+        private Label TasksDescriptionTxt;
         private Label TasksProNameTxt;
         private TextBox TasksNameTxtBox;
         private Label TasksNameTxt;
-        private ComboBox TasksProjectNameComboBox;
-        private TextBox TasksDesTxtBox;
-        private Label TasksDescriptionTxt;
-        private ComboBox TasksPriorityComboBox;
-        private Label TasksPriorityTxt;
-        private ComboBox TasksStatusComboBox;
-        private Label TasksStatusTxt;
-        private Button TasksSubmitBtn;
+        private Label TasksFormHeadTxt;
+        private ComboBox TasksProjectComboBox;
+        private ComboBox TaskStatusComboBox;
     }
 }
