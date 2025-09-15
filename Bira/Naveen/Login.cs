@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Media;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -30,6 +31,7 @@ namespace Bira.Naveen
 
             if (string.IsNullOrEmpty(username) || username.Length < 4 || username.Contains(' '))
             {
+                SystemSounds.Hand.Play();
                 UserNameTxtBox.BackColor = Color.LightCoral;
                 toolTip1.SetToolTip(UserNameTxtBox, "Username must be at least 4 characters.");
             }
@@ -56,6 +58,7 @@ namespace Bira.Naveen
             }
             else
             {
+                
                 PasswordTxtBox.BackColor = Color.LightCoral;
                 toolTip1.SetToolTip(PasswordTxtBox,
                     "Password must be at least 8 characters, with:\n- 1 uppercase\n- 1 lowercase\n- 1 number\n- 1 special character.");
@@ -77,6 +80,7 @@ namespace Bira.Naveen
                 //MessageBox.Show("✅ Login successful!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 if (Role == "Teamlead")
                 {
+                    SystemSounds.Asterisk.Play();
 
                     TeamleadDashboard oTLform = new TeamleadDashboard();
                     this.Hide();
@@ -84,18 +88,22 @@ namespace Bira.Naveen
                 }
                 else if (Role == "Member")
                 {
+                    SystemSounds.Asterisk.Play();
+
                     this.Hide();
                     MemberDashboard memberDashboard = new MemberDashboard();
                     memberDashboard.Show();
                 }
                 else
                 {
+                    SystemSounds.Hand.Play();
                     MessageBox.Show("❌ Unknown role.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 // TODO: Connect this with your DB (e.g., MySQL) for actual login verification
             }
             else
-            {
+            {                  
+                    SystemSounds.Hand.Play();
                 MessageBox.Show("❌ Please check your username and password.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
@@ -122,5 +130,9 @@ namespace Bira.Naveen
             Signup signup = new Signup();
             signup.Show();
         }
+
+
+
+
     }
 }

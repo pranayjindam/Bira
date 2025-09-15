@@ -187,6 +187,7 @@
             Controls.Add(LoginTransparentPanel);
             Icon = (Icon)resources.GetObject("$this.Icon");
             Margin = new Padding(4);
+            MaximizeBox = false;
             Name = "Login";
             Text = "Bira Login";
             Load += Login_Load;

@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Media;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -53,6 +54,8 @@ namespace Bira.Naveen
 
             if (!Regex.IsMatch(email, emailPattern))
             {
+
+                SystemSounds.Hand.Play();
                 SignupEmailTxtBox.BackColor = Color.LightCoral;
                 toolTip1.SetToolTip(SignupEmailTxtBox, "Enter a valid email address.");
                 return false;
@@ -74,6 +77,7 @@ namespace Bira.Naveen
             }
             else
             {
+                SystemSounds.Hand.Play();
                 SignupPasswordTxtBox.BackColor = Color.LightCoral;
                 toolTip1.SetToolTip(SignupPasswordTxtBox,
                     "Password must contain:\n- Min 8 characters\n- At least 1 uppercase\n- At least 1 lowercase\n- At least 1 number\n- At least 1 special character");
@@ -93,6 +97,7 @@ namespace Bira.Naveen
             }
             else
             {
+                SystemSounds.Hand.Play();
                 SignupConfirmPasswordTxtBox.BackColor = Color.LightCoral;
                 toolTip1.SetToolTip(SignupConfirmPasswordTxtBox, "Passwords do not match.");
             }
@@ -110,10 +115,12 @@ namespace Bira.Naveen
 
             if (validFirst && validLast && validEmail && validPassword && passwordsMatch)
             {
+                SystemSounds.Asterisk.Play();
                 MessageBox.Show("✅ Sign up successful!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             else
             {
+                SystemSounds.Hand.Play();
                 MessageBox.Show("❌ Please fix the highlighted fields.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }

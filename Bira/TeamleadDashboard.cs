@@ -1,15 +1,16 @@
-﻿using System;
+﻿using Bira.Models;
+using Bira.Naveen;
+using Bira.Services;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Bira.Services;
-using Bira.Models;
-using Bira.Naveen;
 
 namespace Bira
 {
+    using System.Media;
     using System.Runtime.InteropServices;
 
 
@@ -296,6 +297,7 @@ namespace Bira
         }
         private void DeleteProject(int projectId)
         {
+            SystemSounds.Hand.Play();
             DialogResult result = MessageBox.Show(
                "Are you sure you want to Delete This Project Permanently?",
                "Delete Project",
@@ -333,6 +335,7 @@ namespace Bira
         }
         private void DeleteTeam(int teamId)
         {
+            SystemSounds.Hand.Play();
             DialogResult result = MessageBox.Show(
                "Are you sure you want to Delete This Team Permanently?",
                "Delete Team",
@@ -370,6 +373,7 @@ namespace Bira
         }
         private void DeleteTask(int taskId)
         {
+            SystemSounds.Hand.Play();
             DialogResult result = MessageBox.Show(
                "Are you sure you want to Delete This Task Permanently?",
                "Delete Task",
@@ -1257,6 +1261,7 @@ namespace Bira
 
         private void buttonLogout_Click(object sender, EventArgs e)
         {
+            SystemSounds.Hand.Play();
             DialogResult result = MessageBox.Show(
                 "Are you sure you want to log out?",
                 "Confirm Logout",

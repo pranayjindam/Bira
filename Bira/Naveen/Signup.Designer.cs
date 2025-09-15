@@ -68,7 +68,7 @@
             // 
             SignupFirstNameTxtBox.Font = new Font("Segoe UI", 12F);
             SignupFirstNameTxtBox.Location = new Point(268, 115);
-            SignupFirstNameTxtBox.Margin = new Padding(4, 4, 4, 4);
+            SignupFirstNameTxtBox.Margin = new Padding(4);
             SignupFirstNameTxtBox.Name = "SignupFirstNameTxtBox";
             SignupFirstNameTxtBox.PlaceholderText = "Enter your first name";
             SignupFirstNameTxtBox.Size = new Size(488, 39);
@@ -90,7 +90,7 @@
             // 
             SignupLastNameTxtBox.Font = new Font("Segoe UI", 12F);
             SignupLastNameTxtBox.Location = new Point(268, 200);
-            SignupLastNameTxtBox.Margin = new Padding(4, 4, 4, 4);
+            SignupLastNameTxtBox.Margin = new Padding(4);
             SignupLastNameTxtBox.Name = "SignupLastNameTxtBox";
             SignupLastNameTxtBox.PlaceholderText = "Enter your last name";
             SignupLastNameTxtBox.Size = new Size(488, 39);
@@ -112,7 +112,7 @@
             // 
             SignupEmailTxtBox.Font = new Font("Segoe UI", 12F);
             SignupEmailTxtBox.Location = new Point(268, 286);
-            SignupEmailTxtBox.Margin = new Padding(4, 4, 4, 4);
+            SignupEmailTxtBox.Margin = new Padding(4);
             SignupEmailTxtBox.Name = "SignupEmailTxtBox";
             SignupEmailTxtBox.PlaceholderText = "Enter your email";
             SignupEmailTxtBox.Size = new Size(488, 39);
@@ -134,7 +134,7 @@
             // 
             SignupPasswordTxtBox.Font = new Font("Segoe UI", 12F);
             SignupPasswordTxtBox.Location = new Point(268, 380);
-            SignupPasswordTxtBox.Margin = new Padding(4, 4, 4, 4);
+            SignupPasswordTxtBox.Margin = new Padding(4);
             SignupPasswordTxtBox.Name = "SignupPasswordTxtBox";
             SignupPasswordTxtBox.PlaceholderText = "Enter your password";
             SignupPasswordTxtBox.Size = new Size(488, 39);
@@ -157,7 +157,7 @@
             // 
             SignupConfirmPasswordTxtBox.Font = new Font("Segoe UI", 12F);
             SignupConfirmPasswordTxtBox.Location = new Point(268, 474);
-            SignupConfirmPasswordTxtBox.Margin = new Padding(4, 4, 4, 4);
+            SignupConfirmPasswordTxtBox.Margin = new Padding(4);
             SignupConfirmPasswordTxtBox.Name = "SignupConfirmPasswordTxtBox";
             SignupConfirmPasswordTxtBox.PlaceholderText = "Confirm your password";
             SignupConfirmPasswordTxtBox.Size = new Size(488, 39);
@@ -170,7 +170,7 @@
             SignUpBtn.FlatAppearance.MouseOverBackColor = Color.OrangeRed;
             SignUpBtn.Font = new Font("Segoe UI", 16F);
             SignUpBtn.Location = new Point(305, 603);
-            SignUpBtn.Margin = new Padding(4, 4, 4, 4);
+            SignUpBtn.Margin = new Padding(4);
             SignUpBtn.Name = "SignUpBtn";
             SignUpBtn.Size = new Size(178, 58);
             SignUpBtn.TabIndex = 12;
@@ -208,7 +208,7 @@
             SignupTransparentPanel.Controls.Add(SignupEmailTxtBox);
             SignupTransparentPanel.Controls.Add(PasswordTxt);
             SignupTransparentPanel.Location = new Point(356, 8);
-            SignupTransparentPanel.Margin = new Padding(4, 4, 4, 4);
+            SignupTransparentPanel.Margin = new Padding(4);
             SignupTransparentPanel.Name = "SignupTransparentPanel";
             SignupTransparentPanel.Size = new Size(834, 868);
             SignupTransparentPanel.TabIndex = 15;
@@ -234,7 +234,7 @@
             pictureBox1.BackgroundImage = (Image)resources.GetObject("pictureBox1.BackgroundImage");
             pictureBox1.BackgroundImageLayout = ImageLayout.Center;
             pictureBox1.Location = new Point(2, 1);
-            pictureBox1.Margin = new Padding(4, 4, 4, 4);
+            pictureBox1.Margin = new Padding(4);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(350, 721);
             pictureBox1.TabIndex = 16;
@@ -248,7 +248,8 @@
             ClientSize = new Size(1188, 720);
             Controls.Add(pictureBox1);
             Controls.Add(SignupTransparentPanel);
-            Margin = new Padding(4, 4, 4, 4);
+            Margin = new Padding(4);
+            MaximizeBox = false;
             Name = "Signup";
             Text = "Sign Up";
             SignupTransparentPanel.ResumeLayout(false);
