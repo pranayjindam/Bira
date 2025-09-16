@@ -867,8 +867,9 @@ namespace Bira
 
             Panel card = new Panel
             {
-                Width = panelMain.Width - 20,
-                Height = 350, // Increased height for better backlog view
+                Dock = DockStyle.Fill,
+                Width = panelMain.Width - 25,
+                Height = 450, // Increased height to accommodate more content
                 BackColor = color,
                 Padding = new Padding(15),
                 Margin = new Padding(10),
@@ -890,12 +891,32 @@ namespace Bira
                 Height = 40
             };
 
+            // Handle case where there are no backlog items FIRST
+            if (backlogItems.Count == 0)
+            {
+                Label lblNoItems = new Label
+                {
+                    Text = "No backlog items found for this project.",
+                    Font = new Font("Segoe UI", 12, FontStyle.Italic),
+                    ForeColor = Color.LightGray,
+                    TextAlign = ContentAlignment.MiddleCenter,
+                    Dock = DockStyle.Fill,
+                    AutoSize = true
+                };
+
+                card.Controls.Add(lblNoItems);
+                card.Controls.Add(lblBacklogTitle);
+                panelMain.Controls.Add(card);
+                return; // Exit the method early since there's nothing else to do
+            }
+
+
             FlowLayoutPanel itemsPanel = new FlowLayoutPanel
             {
                 Dock = DockStyle.Fill,
                 AutoScroll = true,
-                WrapContents = false, // Set to false to prevent wrapping
-                FlowDirection = FlowDirection.TopDown, // Stack items vertically
+                WrapContents = true,
+                FlowDirection = FlowDirection.TopDown,
                 BackColor = Color.FromArgb(50, color)
             };
 
@@ -903,47 +924,66 @@ namespace Bira
             {
                 Panel itemCard = new Panel
                 {
-                    Width = itemsPanel.Width - 25, // Adjust width to fit FlowLayoutPanel
-                    Height = 90,
+                    Width = 800, // Slightly narrower for better padding
+                    Height = 140, // Increased height to fit description
                     BackColor = Color.FromArgb(80, color),
                     Margin = new Padding(5),
-                    Padding = new Padding(8)
+                    Padding = new Padding(10)
                 };
 
                 itemCard.Region = Region.FromHrgn(
                     WinApi.CreateRoundRectRgn(0, 0, itemCard.Width, itemCard.Height, 15, 15)
                 );
 
+                // Title Label
                 Label lblItemTitle = new Label
                 {
                     Text = $"📝 {item.Title}",
                     Font = new Font("Segoe UI", 11, FontStyle.Bold),
                     ForeColor = Color.White,
                     Dock = DockStyle.Top,
-                    Height = 30
+                    Height = 30,
+                    Width = itemCard.Width - 20,
                 };
+
+                // Description Label - THIS IS WHAT WAS MISSING
+                Label lblItemDescription = new Label
+                {
+                    Text = item.Description,
+                    Font = new Font("Segoe UI", 9, FontStyle.Italic),
+                    ForeColor = Color.LightGray,
+                    Dock = DockStyle.Top,
+                    Height = 45, // Fixed height for description
+                    AutoEllipsis = true, // Add "..." if text overflows
+                    Padding = new Padding(0, 5, 0, 5) // Add some vertical padding
+                };
+
 
                 Label lblItemStatus = new Label
                 {
+                    Dock = DockStyle.Bottom,
                     Text = $"📊 Status: {item.Status}",
-                    Font = new Font("Segoe UI", 10, FontStyle.Regular),
+                    Font = new Font("Segoe UI", 9, FontStyle.Regular),
                     ForeColor = Color.White,
-                    Dock = DockStyle.Top,
-                    Height = 25
+                    AutoSize = true,
+                    Margin = new Padding(0, 0, 15, 0) // Add right margin
                 };
 
                 Label lblItemPriority = new Label
                 {
+                    Dock = DockStyle.Bottom,
                     Text = $"🔺 Priority: {item.Priority}",
-                    Font = new Font("Segoe UI", 10, FontStyle.Regular),
-                    ForeColor = Color.White,
-                    Dock = DockStyle.Top,
-                    Height = 25
+                    Font = new Font("Segoe UI", 9, FontStyle.Bold),
+                    ForeColor = GetPriorityColor(item.Priority), // Use your existing priority color method
+                    AutoSize = true
                 };
 
-                itemCard.Controls.Add(lblItemPriority);
-                itemCard.Controls.Add(lblItemStatus);
+                // Add status and priority to footer panel
+                
+                itemCard.Controls.Add(lblItemDescription);
                 itemCard.Controls.Add(lblItemTitle);
+                itemCard.Controls.Add(lblItemStatus);
+                itemCard.Controls.Add(lblItemPriority);
 
                 itemsPanel.Controls.Add(itemCard);
             }
@@ -1031,6 +1071,7 @@ namespace Bira
 
                 membersPanel.Controls.Add(memberCard);
             }
+
 
             card.Controls.Add(membersPanel);
             card.Controls.Add(lblTeamTitle);
@@ -1125,8 +1166,35 @@ namespace Bira
                 Dock = DockStyle.Fill
             };
 
+            // 1. Create a "View Backlog" Button
+            Button btnViewBacklog = new Button
+            {
+                Text = "📋 View Project Backlog",
+                Font = new Font("Segoe UI", 10, FontStyle.Bold),
+                ForeColor = Color.White,
+                BackColor = Color.FromArgb(0, 98, 152), // A nice blue
+                FlatStyle = FlatStyle.Flat,
+                Height = 35,
+                Dock = DockStyle.Bottom,
+                Margin = new Padding(0, 10, 0, 0),
+                Cursor = Cursors.Hand
+            };
+            btnViewBacklog.FlatAppearance.BorderSize = 0;
+
+            // 2. Handle the button click
+            btnViewBacklog.Click += async (sender, e) =>
+            {
+                // Fetch the backlog items for THIS specific project
+                var allBacklogItems = await _backlogService.GetBacklogItemsAsync();
+                var projectBacklogItems = allBacklogItems.Where(b => b.ProjectId == projectId).ToList();
+
+                // Call the method to display them
+                DisplayProjectBacklogCard(projectId, projectName, projectBacklogItems, color);
+            };
+
             // Add in order
             card.Controls.Add(txtDesc);
+            card.Controls.Add(btnViewBacklog);
             card.Controls.Add(datesPanel);
             card.Controls.Add(lblProjectId);
             card.Controls.Add(lblProjectName);
@@ -1341,16 +1409,5 @@ namespace Bira
             oTeamForm.Show();
         }
     }
-    //public static class WinApi
-    //{
-    //    [DllImport("gdi32.dll", EntryPoint = "CreateRoundRectRgn")]
-    //    public static extern IntPtr CreateRoundRectRgn(
-    //        int nLeftRect,
-    //        int nTopRect,
-    //        int nRightRect,
-    //        int nBottomRect,
-    //        int nWidthEllipse,
-    //        int nHeightEllipse
-    //    );
-    //}
+  
 }

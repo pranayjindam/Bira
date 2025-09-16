@@ -28,15 +28,17 @@ namespace Bira.Services
                     Title = "Implement User Authentication",
                     Description = "Set up user login and registration pages.",
                     Status = "In Progress",
-                    Priority = "High"
+                    Priority = "High",
+                    ProjectId=1
                 },
                 new BacklogModel
                 {
                     ItemId = 202,
                     Title = "Design Database Schema",
                     Description = "Define tables for users, projects, and tasks.",
-                    Status = "Done",
-                    Priority = "High"
+                    Status = "To Do",
+                    Priority = "High",
+                    ProjectId=1
                 },
                 new BacklogModel
                 {
@@ -44,7 +46,8 @@ namespace Bira.Services
                     Title = "Develop Dashboard UI",
                     Description = "Create the main dashboard view with key metrics.",
                     Status = "To Do",
-                    Priority = "Medium"
+                    Priority = "Medium",
+                    ProjectId=3
                 },
                 new BacklogModel
                 {
@@ -52,7 +55,8 @@ namespace Bira.Services
                     Title = "Add 'Export to PDF' Feature",
                     Description = "Allow users to export their project reports.",
                     Status = "To Do",
-                    Priority = "Low"
+                    Priority = "Low",
+                    ProjectId=3
                 },
                  new BacklogModel
                 {
@@ -60,7 +64,8 @@ namespace Bira.Services
                     Title = "Refactor Payment Gateway",
                     Description = "Improve the integration with the payment provider.",
                     Status = "In Progress",
-                    Priority = "Medium"
+                    Priority = "Medium",
+                    ProjectId=3
                 }
             };
         }

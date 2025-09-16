@@ -9,6 +9,8 @@ namespace Bira.Models
     internal class BacklogModel
     {
         public int ItemId { get; set; }
+
+        public int ProjectId { get; set; }
         public string Title { get; set; } = "Untitled Task";
         public string Description { get; set; } = "";
         public string Status { get; set; } = "To Do"; // e.g., "To Do", "In Progress", "Done"
