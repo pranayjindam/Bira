@@ -1,14 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
+using Bira.UI;
 using System.Media;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+
 
 namespace Bira.Naveen
 {
@@ -58,7 +53,7 @@ namespace Bira.Naveen
             }
             else
             {
-                
+
                 PasswordTxtBox.BackColor = Color.LightCoral;
                 toolTip1.SetToolTip(PasswordTxtBox,
                     "Password must be at least 8 characters, with:\n- 1 uppercase\n- 1 lowercase\n- 1 number\n- 1 special character.");
@@ -102,8 +97,8 @@ namespace Bira.Naveen
                 // TODO: Connect this with your DB (e.g., MySQL) for actual login verification
             }
             else
-            {                  
-                    SystemSounds.Hand.Play();
+            {
+                SystemSounds.Hand.Play();
                 MessageBox.Show("❌ Please check your username and password.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
@@ -114,10 +109,7 @@ namespace Bira.Naveen
             MessageBox.Show("Redirect to Forgot Password page here.");
         }
 
-        private void Login_Load(object sender, EventArgs e)
-        {
-            LoginTransparentPanel.BackColor = Color.FromArgb(100, 0, 0, 0); // semi-transparent white
-        }
+
 
         private void PasswordTxtBox_TextChanged(object sender, EventArgs e)
         {
@@ -130,9 +122,5 @@ namespace Bira.Naveen
             Signup signup = new Signup();
             signup.Show();
         }
-
-
-
-
     }
 }
