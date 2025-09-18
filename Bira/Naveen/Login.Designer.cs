@@ -1,4 +1,6 @@
 ﻿using Bira.UI;
+using System.Drawing.Drawing2D;
+using System.Drawing;
 
 namespace Bira.Naveen
 {
@@ -32,99 +34,50 @@ namespace Bira.Naveen
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Login));
-            LoginTxt = new Label();
-            UserNameTxt = new Label();
-            UserNameTxtBox = new TextBox();
-            PasswordTxt = new Label();
-            PasswordTxtBox = new TextBox();
-            LoginBtn = new Button();
-            LoginTransparentPanel = new Panel();
-            linkLabelloginsignup = new LinkLabel();
-            labellogsignupdesc = new Label();
             panelPicture = new Panel();
             pictureBox1 = new PictureBox();
-            LoginTransparentPanel.SuspendLayout();
+            panelmain = new Panel();
+            panelSwitchbtn = new Panel();
+            panelbg = new Panel();
+           
             panelPicture.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
+            panelbg.SuspendLayout();
             SuspendLayout();
-            // 
-            // LoginTxt
-            // 
-            LoginTxt = UIControls.UIControlFactory.CreateLabelHeader("Login");
-            LoginTxt.Location = new Point(295, 91);
-            LoginTxt.TabIndex = 2;
-            // 
-            // UserNameTxt
-            // 
-            UserNameTxt = UIControls.UIControlFactory.CreateTextLabel("User Name");
-            UserNameTxt.Location = new Point(110, 218);
-            UserNameTxt.TabIndex = 4;
-            // 
-            // UserNameTxtBox
-            // 
-            UserNameTxtBox =InputControls.InputControlFactory.CreateTextInput(placeholder:"username");
-            UserNameTxtBox.Location = new Point(304, 210);
-            UserNameTxtBox.TabIndex = 7;
-            UserNameTxtBox.TextChanged += UserNameTxtBox_TextChanged_1;
-            // 
-            // PasswordTxt
-            // 
-            PasswordTxt = UIControls.UIControlFactory.CreateTextLabel("Password");
-            PasswordTxt.Location = new Point(110, 288);
-            PasswordTxt.TabIndex = 5;
-            // 
-            // PasswordTxtBox
-            // 
-            PasswordTxtBox = InputControls.InputControlFactory.CreateTextInput(placeholder:"password", isPassword:true);
-            PasswordTxtBox.Location = new Point(304, 288);
-            PasswordTxtBox.TabIndex = 6;
-            // 
-            // LoginBtn
-            // 
-            LoginBtn = UIControls.UIControlFactory.CreatePrimaryButton("Login");
-            LoginBtn.Location = new Point(347, 425);
-            LoginBtn.TabIndex = 3;
-            // 
 
-            // linkLabelloginsignup
-            // 
-            linkLabelloginsignup = UIControls.UIControlFactory.CreateLinkLabel("Sign Up");
-            linkLabelloginsignup.Location = new Point(585, 358);
-            linkLabelloginsignup.TabIndex = 0;
-            linkLabelloginsignup.LinkClicked += linkLabelloginsignup_LinkClicked;
-            // 
-            // labellogsignupdesc
-            // 
-            labellogsignupdesc = UIControls.UIControlFactory.CreateTextLabel("Don't have an account?");
-            labellogsignupdesc.Location = new Point(381, 358);
-            labellogsignupdesc.TabIndex = 1;
-            // 
-            // LoginTransparentPanel
-            // 
-            LoginTransparentPanel.BackColor = ColorHelper.FromHex("#b5c6e0");
-            LoginTransparentPanel.Controls.Add(linkLabelloginsignup);
-            LoginTransparentPanel.Controls.Add(labellogsignupdesc);
-            LoginTransparentPanel.Controls.Add(LoginTxt);
-            LoginTransparentPanel.Controls.Add(LoginBtn);
-            LoginTransparentPanel.Controls.Add(UserNameTxt);
-            LoginTransparentPanel.Controls.Add(PasswordTxt);
-            LoginTransparentPanel.Controls.Add(PasswordTxtBox);
-            LoginTransparentPanel.Controls.Add(UserNameTxtBox);
-            LoginTransparentPanel.Location = new Point(348, 0);
-            LoginTransparentPanel.Margin = new Padding(4);
-            LoginTransparentPanel.Name = "LoginTransparentPanel";
-            LoginTransparentPanel.Size = new Size(728, 611);
-            LoginTransparentPanel.TabIndex = 7;
-            // 
+
+            //
+            //Loginbtnswitch
+            //
+            //Loginbtnswitch = UIControls.UIControlFactory.CreateSecondaryButton("Login", backColor: ColorHelper.FromHex("#0077b6"));
+            //Loginbtnswitch.Location = new Point(100, 10);
+            //panelSwitchbtn.Controls.Add(Loginbtnswitch);
           
+            //
+            //
+
+
+
+            //
+            //Signupbtn
+            //
+            //Signupbtn = UIControls.UIControlFactory.CreateSecondaryButton("Sign Up", backColor: ColorHelper.FromHex("#00b4d8"));
+            //Signupbtn.Location = new Point(400, 10);
+            //panelSwitchbtn.Controls.Add(Signupbtn);
+            
+            //
+
+
+
+            // 
             // panelPicture
             // 
-            panelPicture.BackColor = ColorHelper.FromHex("#ebf4f5");
+            panelPicture.BackColor = Color.FromArgb(235, 244, 245);
             panelPicture.Controls.Add(pictureBox1);
             panelPicture.Dock = DockStyle.Left;
             panelPicture.Location = new Point(0, 0);
             panelPicture.Name = "panelPicture";
-            panelPicture.Size = new Size(350, 610);
+            panelPicture.Size = new Size(350, 721);
             panelPicture.TabIndex = 8;
             // 
             // pictureBox1
@@ -133,10 +86,90 @@ namespace Bira.Naveen
             pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
             pictureBox1.Location = new Point(0, 0);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(350, 610);
+            pictureBox1.Size = new Size(350, 721);
             pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox1.TabIndex = 0;
             pictureBox1.TabStop = false;
+            // 
+            // panelmain
+            // 
+            panelmain.Dock = DockStyle.Fill;
+            panelmain.Location = new Point(0, 65);
+            panelmain.Name = "panelmain";
+            panelmain.Size = new Size(819, 656);
+            panelmain.TabIndex = 9;
+            // 
+            // panelSwitchbtn
+            // 
+            // panelSwitchbtn
+            panelSwitchbtn = new Panel();
+            panelSwitchbtn.BackColor = ColorHelper.FromHex("#b5c6e0");
+            panelSwitchbtn.Dock = DockStyle.Top;
+            panelSwitchbtn.Height = 65;
+
+            // FlowLayoutPanel inside panelSwitchbtn
+            FlowLayoutPanel flowPanel = new FlowLayoutPanel();
+            flowPanel.Dock = DockStyle.None;                      // don't stretch
+            flowPanel.AutoSize = true;                            // size to content
+            flowPanel.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            flowPanel.FlowDirection = FlowDirection.LeftToRight;
+            flowPanel.WrapContents = false;
+            flowPanel.BackColor = Color.Transparent;
+
+            // Center flowPanel inside parent
+            flowPanel.Location = new Point(
+                (panelSwitchbtn.Width - (120 * 2 + 20)) / 2,      // center horizontally
+                (panelSwitchbtn.Height - 40) / 2                  // center vertically
+            );
+            flowPanel.Anchor = AnchorStyles.None;
+
+            // Add buttons
+            Size btnSize = new Size(120, 40);
+
+            Loginbtnswitch = UIControls.UIControlFactory.CreateSecondaryButton(
+                "Login",
+                size: btnSize,
+                backColor: ColorHelper.FromHex("#0077b6")
+            );
+
+            Signupbtn = UIControls.UIControlFactory.CreateSecondaryButton(
+                "Sign Up",
+                size: btnSize,
+                backColor: ColorHelper.FromHex("#00b4d8")
+            );
+
+            // Attach events
+            Loginbtnswitch.Click += Loginbtn_Click;
+            Signupbtn.Click += Signupbtn_Click;
+
+            // Margins for spacing between them
+            Loginbtnswitch.Margin = new Padding(5, 0, 10, 0);
+            Signupbtn.Margin = new Padding(10, 0, 5, 0);
+
+            // Add to flow panel
+            flowPanel.Controls.Add(Loginbtnswitch);
+            flowPanel.Controls.Add(Signupbtn);
+
+            panelSwitchbtn.Controls.Add(flowPanel);
+
+            // Handle resize to keep centered
+            panelSwitchbtn.Resize += (s, e) =>
+            {
+                flowPanel.Location = new Point(
+                    (panelSwitchbtn.Width - flowPanel.Width) / 2,
+                    (panelSwitchbtn.Height - flowPanel.Height) / 2
+                );
+            };
+
+            // panelbg
+            // 
+            panelbg.Controls.Add(panelmain);
+            panelbg.Controls.Add(panelSwitchbtn);
+            panelbg.Dock = DockStyle.Fill;
+            panelbg.Location = new Point(350, 0);
+            panelbg.Name = "panelbg";
+            panelbg.Size = new Size(819, 721);
+            panelbg.TabIndex = 9;
             // 
             // Login
             // 
@@ -144,33 +177,29 @@ namespace Bira.Naveen
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.ActiveCaptionText;
             BackgroundImageLayout = ImageLayout.Stretch;
-            ClientSize = new Size(1069, 610);
+            ClientSize = new Size(1169, 721);
+            Controls.Add(panelbg);
             Controls.Add(panelPicture);
-            Controls.Add(LoginTransparentPanel);
             Icon = (Icon)resources.GetObject("$this.Icon");
             Margin = new Padding(4);
             MaximizeBox = false;
             Name = "Login";
             Text = "Bira Login";
-            LoginTransparentPanel.ResumeLayout(false);
-            LoginTransparentPanel.PerformLayout();
+            Load += Login_Load;
             panelPicture.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
+            panelbg.ResumeLayout(false);
             ResumeLayout(false);
         }
 
         #endregion
-
-        private Label LoginTxt;
-        private Label UserNameTxt;
-        private TextBox UserNameTxtBox;
-        private Label PasswordTxt;
-        private TextBox PasswordTxtBox;
-        private Button LoginBtn;
-        private Panel LoginTransparentPanel;
-        private Label labellogsignupdesc;
-        private LinkLabel linkLabelloginsignup;
         private Panel panelPicture;
         private PictureBox pictureBox1;
+        private Panel panelmain;
+        private Button Loginbtn;
+        private Button Signupbtn;
+        private Panel panelSwitchbtn;
+        private Panel panelbg;
+        private Button Loginbtnswitch;
     }
 }

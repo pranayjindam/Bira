@@ -15,9 +15,11 @@ namespace Bira.Naveen
 {
     public partial class Signup : Form
     {
+      
         public Signup()
         {
             InitializeComponent();
+           
         }
 
         // ✅ First Name validation (only letters, not empty)
@@ -138,9 +140,9 @@ namespace Bira.Naveen
 
         private void linkLabelsignuplogin_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            this.Hide();
-            Login loginForm = new Login();
-            loginForm.Show();
+
+            //this.Close();          // Close signup
+            //_loginForm.Show();     // Show original login form again
         }
     }
 }

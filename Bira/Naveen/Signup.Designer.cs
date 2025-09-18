@@ -20,7 +20,6 @@ namespace Bira.Naveen
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Signup));
             SignUpTxt = new Label();
             FirstNameTxt = new Label();
             SignupFirstNameTxtBox = new TextBox();
@@ -37,92 +36,87 @@ namespace Bira.Naveen
             toolTip1 = new ToolTip(components);
             SignupTransparentPanel = new Panel();
             linkLabelsignuplogin = new LinkLabel();
-            pictureBox1 = new PictureBox();
             SignupTransparentPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
             // SignUpTxt
             // 
-            SignUpTxt.AutoSize = true;
-            SignUpTxt.Font = new Font("Segoe UI", 16F, FontStyle.Bold);
-            SignUpTxt.ForeColor = Color.White;
-            SignUpTxt.Location = new Point(305, 18);
-            SignUpTxt.Margin = new Padding(4, 0, 4, 0);
-            SignUpTxt.Name = "SignUpTxt";
-            SignUpTxt.Size = new Size(129, 45);
-            SignUpTxt.TabIndex = 0;
-            SignUpTxt.Text = "SignUp";
+            SignUpTxt = UIControls.UIControlFactory.CreateLabelHeader("Sign Up");
+            SignUpTxt.Location = new Point(305, 20); // centered
             // 
             // FirstNameTxt
-            // 
+            //
             FirstNameTxt = UIControls.UIControlFactory.CreateTextLabel("First Name");
-            FirstNameTxt.Location = new Point(22, 126);
-            
+            FirstNameTxt.Location = new Point(200, 100); 
             // 
             // SignupFirstNameTxtBox
             // 
-            SignupFirstNameTxtBox = InputControls.InputControlFactory.CreateTextInput(placeholder: "Enter your first name");
-            SignupFirstNameTxtBox.Location = new Point(268, 115);
+            SignupFirstNameTxtBox = InputControls.InputControlFactory.CreateTextInput(size:new Size(220,31),placeholder:"Enter Your First Name");
+            SignupFirstNameTxtBox.Location = new Point(400, 100);
+            SignupFirstNameTxtBox.Name = "SignupFirstNameTxtBox";
             // 
             // LastNameTxt
             // 
             LastNameTxt = UIControls.UIControlFactory.CreateTextLabel("Last Name");
-            LastNameTxt.Location = new Point(22, 211);
+            LastNameTxt.Location = new Point(200, 160);
             // 
             // SignupLastNameTxtBox
             // 
-            SignupLastNameTxtBox = InputControls.InputControlFactory.CreateTextInput(placeholder: "Enter your last name");
-            SignupLastNameTxtBox.Location = new Point(268, 200);
+            SignupLastNameTxtBox = InputControls.InputControlFactory.CreateTextInput(size: new Size(220, 31), placeholder: "Enter Your Last Name");
+            SignupLastNameTxtBox.Location = new Point(400, 160);
+            SignupLastNameTxtBox.Name = "SignupLastNameTxtBox";
             // 
             // EmailTxt
             // 
-            EmailTxt = UIControls.UIControlFactory.CreateTextLabel("Email");
-            EmailTxt.Location = new Point(22, 298);
+            EmailTxt = UIControls.UIControlFactory.CreateTextLabel("EMail");
+            EmailTxt.Location = new Point(200, 220);
             // 
             // SignupEmailTxtBox
             // 
-            SignupEmailTxtBox = InputControls.InputControlFactory.CreateTextInput(placeholder: "Enter your email");
-            SignupEmailTxtBox.Location = new Point(268, 286);
+            SignupEmailTxtBox = InputControls.InputControlFactory.CreateTextInput(size: new Size(220, 31), placeholder: "Enter Your Email");
+            SignupEmailTxtBox.Location = new Point(400, 220);
+            SignupEmailTxtBox.Name = "SignupEmailTxtBox";
             // 
             // PasswordTxt
             // 
             PasswordTxt = UIControls.UIControlFactory.CreateTextLabel("Password");
-            PasswordTxt.Location = new Point(22, 391);
+            PasswordTxt.Location = new Point(200, 280);
+           
             // 
             // SignupPasswordTxtBox
             // 
-            SignupPasswordTxtBox = InputControls.InputControlFactory.CreateTextInput(placeholder: "Enter your password");
-            SignupPasswordTxtBox.Location = new Point(268, 380);
+            SignupPasswordTxtBox = InputControls.InputControlFactory.CreateTextInput(size: new Size(220, 31), placeholder: "Enter Your Password", isPassword: true);
+            SignupPasswordTxtBox.Location = new Point(400, 280);
+            SignupPasswordTxtBox.Name = "SignupPasswordTxtBox";
             SignupPasswordTxtBox.TextChanged += SignupPasswordTxt_TextChanged;
             // 
             // ConfirmPasswordTxt
             // 
             ConfirmPasswordTxt = UIControls.UIControlFactory.CreateTextLabel("Confirm Password");
-            ConfirmPasswordTxt.Location = new Point(11, 485);
+            ConfirmPasswordTxt.Location = new Point(200, 340);
             // 
             // SignupConfirmPasswordTxtBox
             // 
-            SignupConfirmPasswordTxtBox = InputControls.InputControlFactory.CreateTextInput(placeholder: "Confirm your password");
-            SignupConfirmPasswordTxtBox.Location = new Point(268, 474);
-            SignupConfirmPasswordTxtBox.TabIndex = 11;
+            SignupConfirmPasswordTxtBox = InputControls.InputControlFactory.CreateTextInput(size: new Size(220, 31), placeholder: "Re-enter Your Password", isPassword: true);
+            SignupConfirmPasswordTxtBox.Location = new Point(400, 340);
+            SignupConfirmPasswordTxtBox.Name = "SignupConfirmPasswordTxtBox";
             SignupConfirmPasswordTxtBox.TextChanged += SignupConfirmPasswordTxt_TextChanged;
             // 
             // SignUpBtn
             // 
-            SignUpBtn = UIControls.UIControlFactory.CreatePrimaryButton("Sign Up"); 
-            SignUpBtn.Location = new Point(305, 603);
-            SignUpBtn.UseVisualStyleBackColor = false;
+            SignUpBtn = UIControls.UIControlFactory.CreatePrimaryButton("Sign Up", backColor: ColorHelper.FromHex("#00b4d8"));
+            SignUpBtn.Location = new Point(320, 420);
+            SignUpBtn.Name = "SignUpBtn";
             SignUpBtn.Click += SignUpBtn_Click;
             // 
             // HaveAccTxt
             // 
-            HaveAccTxt = UIControls.UIControlFactory.CreateTextLabel("Already have an account?");
-            HaveAccTxt.Location = new Point(449, 549);
-            HaveAccTxt.TabIndex = 13;
+            HaveAccTxt = UIControls.UIControlFactory.CreateTextLabel("have an account?");
+            HaveAccTxt.Location = new Point(260, 480);
+            // 
             // SignupTransparentPanel
             // 
-            SignupTransparentPanel.BackColor = Color.DarkTurquoise;
+            SignupTransparentPanel.BackColor = ColorHelper.FromHex("#edede9");
             SignupTransparentPanel.Controls.Add(linkLabelsignuplogin);
             SignupTransparentPanel.Controls.Add(SignUpTxt);
             SignupTransparentPanel.Controls.Add(SignUpBtn);
@@ -137,12 +131,13 @@ namespace Bira.Naveen
             SignupTransparentPanel.Controls.Add(SignupPasswordTxtBox);
             SignupTransparentPanel.Controls.Add(SignupEmailTxtBox);
             SignupTransparentPanel.Controls.Add(PasswordTxt);
-            SignupTransparentPanel.Location = new Point(356, 8);
+            SignupTransparentPanel.Dock = DockStyle.Fill;
+            SignupTransparentPanel.Location = new Point(0, 0);
             SignupTransparentPanel.Margin = new Padding(4);
             SignupTransparentPanel.Name = "SignupTransparentPanel";
-            SignupTransparentPanel.Size = new Size(834, 868);
+            SignupTransparentPanel.Size = new Size(706, 555);
             SignupTransparentPanel.TabIndex = 15;
-            SignupTransparentPanel.Paint += SignupTransparentPanel_Paint;
+           // SignupTransparentPanel.Paint += SignupTransparentPanel_Paint;
             // 
             // linkLabelsignuplogin
             // 
@@ -158,25 +153,12 @@ namespace Bira.Naveen
             linkLabelsignuplogin.Text = "login";
             linkLabelsignuplogin.LinkClicked += linkLabelsignuplogin_LinkClicked;
             // 
-            // pictureBox1
-            // 
-            pictureBox1.BackColor = SystemColors.ControlLightLight;
-            pictureBox1.BackgroundImage = (Image)resources.GetObject("pictureBox1.BackgroundImage");
-            pictureBox1.BackgroundImageLayout = ImageLayout.Center;
-            pictureBox1.Location = new Point(2, 1);
-            pictureBox1.Margin = new Padding(4);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(350, 721);
-            pictureBox1.TabIndex = 16;
-            pictureBox1.TabStop = false;
-            // 
             // Signup
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             BackgroundImageLayout = ImageLayout.Stretch;
-            ClientSize = new Size(1188, 720);
-            Controls.Add(pictureBox1);
+            ClientSize = new Size(819, 596);
             Controls.Add(SignupTransparentPanel);
             Margin = new Padding(4);
             MaximizeBox = false;
@@ -184,7 +166,6 @@ namespace Bira.Naveen
             Text = "Sign Up";
             SignupTransparentPanel.ResumeLayout(false);
             SignupTransparentPanel.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
         }
 
@@ -205,7 +186,6 @@ namespace Bira.Naveen
         private Label HaveAccTxt;
         private ToolTip toolTip1;
         private Panel SignupTransparentPanel;
-        private PictureBox pictureBox1;
         private LinkLabel linkLabelsignuplogin;
     }
 }

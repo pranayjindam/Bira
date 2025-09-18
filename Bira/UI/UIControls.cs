@@ -68,10 +68,10 @@ namespace Bira.UI
             /// <param name="size">Button size (optional)</param>
             /// <param name="clickHandler">Click event handler (optional)</param>
             /// <returns>Configured primary Button control</returns>
-            public static Button CreatePrimaryButton(string text, Size? size = null, EventHandler clickHandler = null)
+            public static Button CreatePrimaryButton(string text,  Size? size = null, Color? backColor = null, EventHandler clickHandler = null)
             {
                 var button = CreateInputButton(text, size, clickHandler);
-                button.BackColor = Color.FromArgb(40, 167, 69);
+                button.BackColor = backColor ?? Color.FromArgb(40, 167, 69);
                 button.FlatAppearance.MouseOverBackColor = Color.FromArgb(34, 142, 58);
 
                 button.MouseEnter += (s, e) => button.BackColor = Color.FromArgb(34, 142, 58);
@@ -88,14 +88,16 @@ namespace Bira.UI
             /// <param name="size">Button size (optional)</param>
             /// <param name="clickHandler">Click event handler (optional)</param>
             /// <returns>Configured secondary Button control</returns>
-            public static Button CreateSecondaryButton(string text, Size? size = null, EventHandler clickHandler = null)
+            public static Button CreateSecondaryButton( string text,Size? size = null,Color? backColor = null,EventHandler clickHandler = null)
             {
-                var button = CreateInputButton(text,  size, clickHandler);
-                button.BackColor = Color.FromArgb(108, 117, 125);
+                var button = CreateInputButton(text, size, clickHandler);
+
+                // Use provided color or default to Bootstrap-like secondary
+                button.BackColor = backColor ?? Color.FromArgb(108, 117, 125);
                 button.FlatAppearance.MouseOverBackColor = Color.FromArgb(90, 98, 104);
 
                 button.MouseEnter += (s, e) => button.BackColor = Color.FromArgb(90, 98, 104);
-                button.MouseLeave += (s, e) => button.BackColor = Color.FromArgb(108, 117, 125);
+                button.MouseLeave += (s, e) => button.BackColor = backColor ?? Color.FromArgb(108, 117, 125);
 
                 return button;
             }

@@ -3,6 +3,7 @@ using Bira.UI;
 using System.Media;
 using System.Text;
 using System.Text.RegularExpressions;
+using Bira.Naveen;
 
 
 namespace Bira.Naveen
@@ -15,112 +16,55 @@ namespace Bira.Naveen
         {
             InitializeComponent();
             toolTip1 = new ToolTip();
-            //LoginBtn.Click += LoginBtn_Click;
-            PasswordTxtBox.UseSystemPasswordChar = true; // hide password input
+
         }
 
         // ✅ Username validation
-        private void UserNameTxtBox_TextChanged_1(object sender, EventArgs e)
-        {
-            string username = UserNameTxtBox.Text.Trim();
 
-            if (string.IsNullOrEmpty(username) || username.Length < 4 || username.Contains(' '))
+        private void Loginbtn_Click(object sender, EventArgs e)
+        {
+            panelmain.Controls.Clear();
+
+            LoginIndex loginform = new LoginIndex
             {
-                SystemSounds.Hand.Play();
-                UserNameTxtBox.BackColor = Color.LightCoral;
-                toolTip1.SetToolTip(UserNameTxtBox, "Username must be at least 4 characters.");
-            }
-            else
-            {
-                UserNameTxtBox.BackColor = Color.LightGreen;
-                toolTip1.SetToolTip(UserNameTxtBox, "Valid  username.");
-            }
+                TopLevel = false,
+                FormBorderStyle = FormBorderStyle.None,
+                Dock = DockStyle.Fill   // ✅ makes it fill the panel
+            };
+
+            panelmain.Controls.Add(loginform);
+            loginform.Show();
         }
 
-        // ✅ Password validation
-        private bool ValidatePassword()
+        private void Signupbtn_Click(object sender, EventArgs e)
         {
-            string password = PasswordTxtBox.Text;
-
-            // Same regex as Signup (uppercase, lowercase, number, special char, min 8)
-            string pattern = @"^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$";
-
-            if (Regex.IsMatch(password, pattern))
+            panelmain.Controls.Clear();
+            Signup signupform = new Signup
             {
-                PasswordTxtBox.BackColor = Color.LightGreen;
-                toolTip1.SetToolTip(PasswordTxtBox, "Strong password.");
-                return true;
-            }
-            else
-            {
-
-                PasswordTxtBox.BackColor = Color.LightCoral;
-                toolTip1.SetToolTip(PasswordTxtBox,
-                    "Password must be at least 8 characters, with:\n- 1 uppercase\n- 1 lowercase\n- 1 number\n- 1 special character.");
-                return false;
-            }
-        }
-
-        // ✅ Login button click
-        private void LoginBtn_Click(object sender, EventArgs e)
-        {
-            bool validUser = !string.IsNullOrEmpty(UserNameTxtBox.Text) && UserNameTxtBox.Text.Length >= 4;
-            bool validPassword = ValidatePassword();
-            string Role = "Teamlead";
-
-
-
-            if (validUser && validPassword)
-            {
-                //MessageBox.Show("✅ Login successful!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                if (Role == "Teamlead")
-                {
-                    SystemSounds.Asterisk.Play();
-
-                    TeamleadDashboard oTLform = new TeamleadDashboard();
-                    this.Hide();
-                    oTLform.Show();
-                }
-                else if (Role == "Member")
-                {
-                    SystemSounds.Asterisk.Play();
-
-                    this.Hide();
-                    MemberDashboard memberDashboard = new MemberDashboard();
-                    memberDashboard.Show();
-                }
-                else
-                {
-                    SystemSounds.Hand.Play();
-                    MessageBox.Show("❌ Unknown role.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-                // TODO: Connect this with your DB (e.g., MySQL) for actual login verification
-            }
-            else
-            {
-                SystemSounds.Hand.Play();
-                MessageBox.Show("❌ Please check your username and password.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
-        }
-
-        // ✅ Forgot password
-        private void ForgettonPasswordTxt_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show("Redirect to Forgot Password page here.");
+                TopLevel = false,
+                FormBorderStyle = FormBorderStyle.None,
+                Dock = DockStyle.Fill   // ✅ makes it fill the panel
+            };
+            panelmain.Controls.Add(signupform);
+            signupform.Show();
         }
 
 
+        
 
-        private void PasswordTxtBox_TextChanged(object sender, EventArgs e)
+        private void Login_Load(object sender, EventArgs e)
         {
+            panelmain.Controls.Clear();
 
-        }
+            LoginIndex loginform = new LoginIndex
+            {
+                TopLevel = false,
+                FormBorderStyle = FormBorderStyle.None,
+                Dock = DockStyle.Fill   // ✅ makes it fill the panel
+            };
 
-        private void linkLabelloginsignup_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            this.Hide();
-            Signup signup = new Signup();
-            signup.Show();
+            panelmain.Controls.Add(loginform);
+            loginform.Show();
         }
     }
 }

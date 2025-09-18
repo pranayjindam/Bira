@@ -91,11 +91,11 @@ namespace Bira.UI
                     {
                         case ButtonType.Primary:
                             button = UIControlFactory.CreatePrimaryButton(config.Text,
-                                 config.Size, config.ClickHandler);
+                                 config.Size,clickHandler: config.ClickHandler);
                             break;
                         case ButtonType.Secondary:
                             button = UIControlFactory.CreateSecondaryButton(config.Text,
-                                config.Size, config.ClickHandler);
+                                config.Size, clickHandler: config.ClickHandler);
                             break;
                         default:
                             button = UIControlFactory.CreateInputButton(config.Text,
