@@ -245,7 +245,7 @@ namespace Bira
                 {
                     using (Pen borderPen = new Pen(Color.FromArgb(226, 232, 240), 2))
                     {
-                        e.Graphics.DrawRoundedRectangle(borderPen, new Rectangle(1, 1, card.Width - 3, card.Height - 3), 18);
+                        e.Graphics.DrawCustomRoundedRectangle(borderPen, new Rectangle(1, 1, card.Width - 3, card.Height - 3), 18);
                     }
                 };
 
@@ -360,7 +360,7 @@ namespace Bira
                 {
                     using (Pen borderPen = new Pen(Color.FromArgb(226, 232, 240), 2))
                     {
-                        e.Graphics.DrawRoundedRectangle(borderPen, new Rectangle(1, 1, card.Width - 3, card.Height - 3), 18);
+                        e.Graphics.DrawCustomRoundedRectangle(borderPen, new Rectangle(1, 1, card.Width - 3, card.Height - 3), 18);
                     }
                 };
 
@@ -455,7 +455,7 @@ namespace Bira
                 {
                     using (Pen borderPen = new Pen(Color.FromArgb(226, 232, 240), 2))
                     {
-                        e.Graphics.DrawRoundedRectangle(borderPen, new Rectangle(1, 1, card.Width - 3, card.Height - 3), 18);
+                        e.Graphics.DrawCustomRoundedRectangle(borderPen, new Rectangle(1, 1, card.Width - 3, card.Height - 3), 18);
                     }
                 };
 
@@ -702,7 +702,7 @@ namespace Bira
                 {
                     using (Pen borderPen = new Pen(Color.FromArgb(226, 232, 240), 2))
                     {
-                        e.Graphics.DrawRoundedRectangle(borderPen, new Rectangle(1, 1, memberCard.Width - 3, memberCard.Height - 3), 13);
+                        e.Graphics.DrawCustomRoundedRectangle(borderPen, new Rectangle(1, 1, memberCard.Width - 3, memberCard.Height - 3), 13);
                     }
                 };
 

@@ -1036,7 +1036,7 @@ namespace Bira
                 {
                     using (Pen borderPen = new Pen(Color.FromArgb(226, 232, 240), 1))
                     {
-                        e.Graphics.DrawRoundedRectangle(borderPen, new Rectangle(0, 0, itemCard.Width - 1, itemCard.Height - 1), 15);
+                        e.Graphics.DrawCustomRoundedRectangle(borderPen, new Rectangle(0, 0, itemCard.Width - 1, itemCard.Height - 1), 15);
                     }
                 };
 

@@ -43,7 +43,7 @@ namespace Bira
             using (Pen borderPen = new Pen(Color.FromArgb(226, 232, 240), 2))
             {
                 // Use the extension from Bira.UiHelper.GraphicsExtensions
-                e.Graphics.DrawRoundedRectangle(borderPen, new Rectangle(1, 1, panel.Width - 3, panel.Height - 3), 18);
+                e.Graphics.DrawCustomRoundedRectangle(borderPen, new Rectangle(1, 1, panel.Width - 3, panel.Height - 3), 18);
             }
         }
 
@@ -127,7 +127,7 @@ namespace Bira
                 {
                     using (Pen borderPen = new Pen(Color.FromArgb(226, 232, 240), 1))
                     {
-                        e.Graphics.DrawRoundedRectangle(borderPen, new Rectangle(0, 0, statusCard.Width - 1, statusCard.Height - 1), 15);
+                        e.Graphics.DrawCustomRoundedRectangle(borderPen, new Rectangle(0, 0, statusCard.Width - 1, statusCard.Height - 1), 15);
                     }
                 };
 

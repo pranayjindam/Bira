@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Reflection.Metadata.Ecma335;
 using System.Threading.Tasks;
 using Bira.Models;
 
@@ -6,6 +7,7 @@ namespace Bira.Services
 {
     public class TaskService
     {
+        private static List<TaskModel> _tasks = new List<TaskModel>();
         public async Task<List<TaskModel>> GetTasksAsync()
         {
             await Task.Delay(200); // Simulate async call
@@ -43,5 +45,10 @@ namespace Bira.Services
                 }
             };
         }
+
+
+
+
+
     }
 }
