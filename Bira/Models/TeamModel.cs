@@ -7,6 +7,8 @@
         public List<string> TeamMembers { get; set; } = new();
         public string TeamRole { get; set; } = string.Empty;
 
+        public string TeamLead { get; set; } = string.Empty;
+
         public List<MemberModel> Members { get; set; } = new();
         public Dictionary<string, string> MemberRoles { get; set; } = new();
     }

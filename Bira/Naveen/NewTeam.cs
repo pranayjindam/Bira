@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
 namespace Bira.Naveen
@@ -15,7 +10,8 @@ namespace Bira.Naveen
         public NewTeam()
         {
             InitializeComponent();
-            NewTeamAddBtn.Click += NewTeamAddBtn_Click; // attach event
+            // Apply rounded corners to the main panel after it's initialized
+            ApplyRoundedCorners();
         }
 
         private void NewTeamAddBtn_Click(object sender, EventArgs e)
@@ -61,9 +57,21 @@ namespace Bira.Naveen
             }
         }
 
-        private void NewTeamAddBtn_Click_1(object sender, EventArgs e)
+        // Helper for rounded corners
+        [DllImport("Gdi32.dll", EntryPoint = "CreateRoundRectRgn")]
+        private static extern IntPtr CreateRoundRectRgn(
+            int nLeftRect, int nTopRect, int nRightRect, int nBottomRect,
+            int nWidthEllipse, int nHeightEllipse);
+
+        private void ApplyRoundedCorners()
         {
-            MessageBox.Show("New Team Added Successfully","Success",MessageBoxButtons.OK, MessageBoxIcon.Information);
+            // Apply rounded corners to the main panel
+            NewTeamPanel.Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, NewTeamPanel.Width, NewTeamPanel.Height, 20, 20));
+
+            // Re-apply if the panel is resized
+            NewTeamPanel.Resize += (s, e) => {
+                NewTeamPanel.Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, NewTeamPanel.Width, NewTeamPanel.Height, 20, 20));
+            };
         }
     }
 }

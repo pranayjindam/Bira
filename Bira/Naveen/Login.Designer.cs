@@ -1,21 +1,9 @@
-﻿using Bira.UI;
-using System.Drawing.Drawing2D;
-using System.Drawing;
-
-namespace Bira.Naveen
+﻿namespace Bira.Naveen
 {
     partial class Login
     {
-        /// <summary>
-        /// Required designer variable.
-        /// </summary>
         private System.ComponentModel.IContainer components = null;
-       
 
-        /// <summary>
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -27,179 +15,230 @@ namespace Bira.Naveen
 
         #region Windows Form Designer generated code
 
-        /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
-        /// </summary>
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Login));
-            panelPicture = new Panel();
+            LoginTxt = new Label();
+            UserNameTxt = new Label();
+            UserNameTxtBox = new TextBox();
+            PasswordTxt = new Label();
+            PasswordTxtBox = new TextBox();
+            LoginBtn = new Button();
+            LoginPanel = new Panel();
+            labelLoginsub = new Label();
+            ShowHidePassword = new PictureBox();
+            labellogsignupdesc = new Label();
+            linkLabelloginsignup = new LinkLabel();
+            panelPasswordUnderline = new Panel();
+            panelUserUnderline = new Panel();
             pictureBox1 = new PictureBox();
-            panelmain = new Panel();
-            panelSwitchbtn = new Panel();
-            panelbg = new Panel();
-           
-            panelPicture.SuspendLayout();
+            LoginPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)ShowHidePassword).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
-            panelbg.SuspendLayout();
             SuspendLayout();
-
-
-            //
-            //Loginbtnswitch
-            //
-            //Loginbtnswitch = UIControls.UIControlFactory.CreateSecondaryButton("Login", backColor: ColorHelper.FromHex("#0077b6"));
-            //Loginbtnswitch.Location = new Point(100, 10);
-            //panelSwitchbtn.Controls.Add(Loginbtnswitch);
-          
-            //
-            //
-
-
-
-            //
-            //Signupbtn
-            //
-            //Signupbtn = UIControls.UIControlFactory.CreateSecondaryButton("Sign Up", backColor: ColorHelper.FromHex("#00b4d8"));
-            //Signupbtn.Location = new Point(400, 10);
-            //panelSwitchbtn.Controls.Add(Signupbtn);
-            
-            //
-
-
-
             // 
-            // panelPicture
+            // LoginTxt
             // 
-            panelPicture.BackColor = Color.FromArgb(235, 244, 245);
-            panelPicture.Controls.Add(pictureBox1);
-            panelPicture.Dock = DockStyle.Left;
-            panelPicture.Location = new Point(0, 0);
-            panelPicture.Name = "panelPicture";
-            panelPicture.Size = new Size(350, 721);
-            panelPicture.TabIndex = 8;
+            LoginTxt.Font = new Font("Segoe UI", 22F, FontStyle.Bold);
+            LoginTxt.ForeColor = Color.DeepSkyBlue;
+            LoginTxt.Location = new Point(0, 50);
+            LoginTxt.Name = "LoginTxt";
+            LoginTxt.Size = new Size(728, 68);
+            LoginTxt.TabIndex = 0;
+            LoginTxt.Text = "Sign In";
+            LoginTxt.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // UserNameTxt
+            // 
+            UserNameTxt.AutoSize = true;
+            UserNameTxt.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            UserNameTxt.ForeColor = Color.LightGray;
+            UserNameTxt.Location = new Point(120, 200);
+            UserNameTxt.Name = "UserNameTxt";
+            UserNameTxt.Size = new Size(128, 32);
+            UserNameTxt.TabIndex = 1;
+            UserNameTxt.Text = "Username";
+            // 
+            // UserNameTxtBox
+            // 
+            UserNameTxtBox.BackColor = Color.FromArgb(4, 40, 55);
+            UserNameTxtBox.BorderStyle = BorderStyle.None;
+            UserNameTxtBox.Font = new Font("Segoe UI", 12F);
+            UserNameTxtBox.ForeColor = Color.White;
+            UserNameTxtBox.Location = new Point(125, 235);
+            UserNameTxtBox.Name = "UserNameTxtBox";
+            UserNameTxtBox.Size = new Size(480, 32);
+            UserNameTxtBox.TabIndex = 2;
+            UserNameTxtBox.TextChanged += UserNameTxtBox_TextChanged;
+            // 
+            // PasswordTxt
+            // 
+            PasswordTxt.AutoSize = true;
+            PasswordTxt.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            PasswordTxt.ForeColor = Color.LightGray;
+            PasswordTxt.Location = new Point(120, 300);
+            PasswordTxt.Name = "PasswordTxt";
+            PasswordTxt.Size = new Size(122, 32);
+            PasswordTxt.TabIndex = 3;
+            PasswordTxt.Text = "Password";
+            // 
+            // PasswordTxtBox
+            // 
+            PasswordTxtBox.BackColor = Color.FromArgb(4, 40, 55);
+            PasswordTxtBox.BorderStyle = BorderStyle.None;
+            PasswordTxtBox.Font = new Font("Segoe UI", 12F);
+            PasswordTxtBox.ForeColor = Color.White;
+            PasswordTxtBox.Location = new Point(125, 335);
+            PasswordTxtBox.Name = "PasswordTxtBox";
+            PasswordTxtBox.Size = new Size(480, 32);
+            PasswordTxtBox.TabIndex = 4;
+            PasswordTxtBox.TextChanged += PasswordTxtBox_TextChanged;
+            // 
+            // LoginBtn
+            // 
+            LoginBtn.BackColor = Color.FromArgb(0, 98, 152);
+            LoginBtn.Cursor = Cursors.Hand;
+            LoginBtn.FlatAppearance.BorderSize = 0;
+            LoginBtn.FlatStyle = FlatStyle.Flat;
+            LoginBtn.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
+            LoginBtn.ForeColor = Color.White;
+            LoginBtn.Location = new Point(285, 420);
+            LoginBtn.Name = "LoginBtn";
+            LoginBtn.Size = new Size(158, 59);
+            LoginBtn.TabIndex = 5;
+            LoginBtn.Text = "Login";
+            LoginBtn.UseVisualStyleBackColor = false;
+            LoginBtn.Click += LoginBtn_Click;
+            // 
+            // LoginPanel
+            // 
+            LoginPanel.Controls.Add(labelLoginsub);
+            LoginPanel.Controls.Add(ShowHidePassword);
+            LoginPanel.Controls.Add(labellogsignupdesc);
+            LoginPanel.Controls.Add(linkLabelloginsignup);
+            LoginPanel.Controls.Add(panelPasswordUnderline);
+            LoginPanel.Controls.Add(panelUserUnderline);
+            LoginPanel.Controls.Add(LoginTxt);
+            LoginPanel.Controls.Add(LoginBtn);
+            LoginPanel.Controls.Add(UserNameTxt);
+            LoginPanel.Controls.Add(PasswordTxt);
+            LoginPanel.Controls.Add(PasswordTxtBox);
+            LoginPanel.Controls.Add(UserNameTxtBox);
+            LoginPanel.Dock = DockStyle.Right;
+            LoginPanel.Location = new Point(341, 0);
+            LoginPanel.Name = "LoginPanel";
+            LoginPanel.Size = new Size(728, 610);
+            LoginPanel.TabIndex = 7;
+            // 
+            // labelLoginsub
+            // 
+            labelLoginsub.Font = new Font("Segoe UI", 10F);
+            labelLoginsub.ForeColor = Color.FromArgb(224, 224, 224);
+            labelLoginsub.Location = new Point(120, 143);
+            labelLoginsub.Name = "labelLoginsub";
+            labelLoginsub.Size = new Size(480, 39);
+            labelLoginsub.TabIndex = 11;
+            labelLoginsub.Text = "Welcome back! please enter your details";
+            // 
+            // ShowHidePassword
+            // 
+            ShowHidePassword.BackColor = Color.Transparent;
+            ShowHidePassword.Location = new Point(564, 333);
+            ShowHidePassword.Name = "ShowHidePassword";
+            ShowHidePassword.Size = new Size(41, 36);
+            ShowHidePassword.SizeMode = PictureBoxSizeMode.Zoom;
+            ShowHidePassword.TabIndex = 10;
+            ShowHidePassword.TabStop = false;
+            ShowHidePassword.Click += ShowHidePassword_Click;
+            // 
+            // labellogsignupdesc
+            // 
+            labellogsignupdesc.AutoSize = true;
+            labellogsignupdesc.Font = new Font("Segoe UI", 10F);
+            labellogsignupdesc.ForeColor = Color.LightGray;
+            labellogsignupdesc.Location = new Point(216, 510);
+            labellogsignupdesc.Name = "labellogsignupdesc";
+            labellogsignupdesc.Size = new Size(216, 28);
+            labellogsignupdesc.TabIndex = 6;
+            labellogsignupdesc.Text = "Don't have an account?";
+            // 
+            // linkLabelloginsignup
+            // 
+            linkLabelloginsignup.AutoSize = true;
+            linkLabelloginsignup.Font = new Font("Segoe UI", 10F);
+            linkLabelloginsignup.LinkColor = Color.DeepSkyBlue;
+            linkLabelloginsignup.Location = new Point(430, 510);
+            linkLabelloginsignup.Name = "linkLabelloginsignup";
+            linkLabelloginsignup.Size = new Size(82, 28);
+            linkLabelloginsignup.TabIndex = 7;
+            linkLabelloginsignup.TabStop = true;
+            linkLabelloginsignup.Text = "Sign Up";
+            linkLabelloginsignup.LinkClicked += linkLabelloginsignup_LinkClicked;
+            // 
+            // panelPasswordUnderline
+            // 
+            panelPasswordUnderline.BackColor = Color.Gray;
+            panelPasswordUnderline.Location = new Point(125, 370);
+            panelPasswordUnderline.Name = "panelPasswordUnderline";
+            panelPasswordUnderline.Size = new Size(480, 2);
+            panelPasswordUnderline.TabIndex = 9;
+            // 
+            // panelUserUnderline
+            // 
+            panelUserUnderline.BackColor = Color.Gray;
+            panelUserUnderline.Location = new Point(125, 270);
+            panelUserUnderline.Name = "panelUserUnderline";
+            panelUserUnderline.Size = new Size(480, 2);
+            panelUserUnderline.TabIndex = 8;
             // 
             // pictureBox1
             // 
-            pictureBox1.Dock = DockStyle.Fill;
+            pictureBox1.BackColor = Color.White;
+            pictureBox1.Dock = DockStyle.Left;
             pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
             pictureBox1.Location = new Point(0, 0);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(350, 721);
+            pictureBox1.Size = new Size(350, 610);
             pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
-            pictureBox1.TabIndex = 0;
+            pictureBox1.TabIndex = 8;
             pictureBox1.TabStop = false;
-            // 
-            // panelmain
-            // 
-            panelmain.Dock = DockStyle.Fill;
-            panelmain.Location = new Point(0, 65);
-            panelmain.Name = "panelmain";
-            panelmain.Size = new Size(819, 656);
-            panelmain.TabIndex = 9;
-            // 
-            // panelSwitchbtn
-            // 
-            // panelSwitchbtn
-            panelSwitchbtn = new Panel();
-            panelSwitchbtn.BackColor = ColorHelper.FromHex("#b5c6e0");
-            panelSwitchbtn.Dock = DockStyle.Top;
-            panelSwitchbtn.Height = 65;
-
-            // FlowLayoutPanel inside panelSwitchbtn
-            FlowLayoutPanel flowPanel = new FlowLayoutPanel();
-            flowPanel.Dock = DockStyle.None;                      // don't stretch
-            flowPanel.AutoSize = true;                            // size to content
-            flowPanel.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            flowPanel.FlowDirection = FlowDirection.LeftToRight;
-            flowPanel.WrapContents = false;
-            flowPanel.BackColor = Color.Transparent;
-
-            // Center flowPanel inside parent
-            flowPanel.Location = new Point(
-                (panelSwitchbtn.Width - (120 * 2 + 20)) / 2,      // center horizontally
-                (panelSwitchbtn.Height - 40) / 2                  // center vertically
-            );
-            flowPanel.Anchor = AnchorStyles.None;
-
-            // Add buttons
-            Size btnSize = new Size(120, 40);
-
-            Loginbtnswitch = UIControls.UIControlFactory.CreateSecondaryButton(
-                "Login",
-                size: btnSize,
-                backColor: ColorHelper.FromHex("#0077b6")
-            );
-
-            Signupbtn = UIControls.UIControlFactory.CreateSecondaryButton(
-                "Sign Up",
-                size: btnSize,
-                backColor: ColorHelper.FromHex("#00b4d8")
-            );
-
-            // Attach events
-            Loginbtnswitch.Click += Loginbtn_Click;
-            Signupbtn.Click += Signupbtn_Click;
-
-            // Margins for spacing between them
-            Loginbtnswitch.Margin = new Padding(5, 0, 10, 0);
-            Signupbtn.Margin = new Padding(10, 0, 5, 0);
-
-            // Add to flow panel
-            flowPanel.Controls.Add(Loginbtnswitch);
-            flowPanel.Controls.Add(Signupbtn);
-
-            panelSwitchbtn.Controls.Add(flowPanel);
-
-            // Handle resize to keep centered
-            panelSwitchbtn.Resize += (s, e) =>
-            {
-                flowPanel.Location = new Point(
-                    (panelSwitchbtn.Width - flowPanel.Width) / 2,
-                    (panelSwitchbtn.Height - flowPanel.Height) / 2
-                );
-            };
-
-            // panelbg
-            // 
-            panelbg.Controls.Add(panelmain);
-            panelbg.Controls.Add(panelSwitchbtn);
-            panelbg.Dock = DockStyle.Fill;
-            panelbg.Location = new Point(350, 0);
-            panelbg.Name = "panelbg";
-            panelbg.Size = new Size(819, 721);
-            panelbg.TabIndex = 9;
             // 
             // Login
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackColor = SystemColors.ActiveCaptionText;
-            BackgroundImageLayout = ImageLayout.Stretch;
-            ClientSize = new Size(1169, 721);
-            Controls.Add(panelbg);
-            Controls.Add(panelPicture);
+            BackColor = Color.FromArgb(4, 40, 55);
+            ClientSize = new Size(1069, 610);
+            Controls.Add(pictureBox1);
+            Controls.Add(LoginPanel);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
             Icon = (Icon)resources.GetObject("$this.Icon");
-            Margin = new Padding(4);
             MaximizeBox = false;
             Name = "Login";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "Bira Login";
-            Load += Login_Load;
-            panelPicture.ResumeLayout(false);
+            LoginPanel.ResumeLayout(false);
+            LoginPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)ShowHidePassword).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
-            panelbg.ResumeLayout(false);
             ResumeLayout(false);
         }
 
         #endregion
-        private Panel panelPicture;
+
+        private Label LoginTxt;
+        private Label UserNameTxt;
+        private TextBox UserNameTxtBox;
+        private Label PasswordTxt;
+        private TextBox PasswordTxtBox;
+        private Button LoginBtn;
+        private Panel LoginPanel;
         private PictureBox pictureBox1;
-        private Panel panelmain;
-        private Button Loginbtn;
-        private Button Signupbtn;
-        private Panel panelSwitchbtn;
-        private Panel panelbg;
-        private Button Loginbtnswitch;
+        private Label labellogsignupdesc;
+        private LinkLabel linkLabelloginsignup;
+        private Panel panelUserUnderline;
+        private Panel panelPasswordUnderline;
+        private PictureBox ShowHidePassword;
+        private Label labelLoginsub;
     }
 }

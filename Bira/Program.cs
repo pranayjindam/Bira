@@ -19,6 +19,11 @@ namespace Bira
             //Application.Run(new MemberDashboard());
             //Application.Run(new TeamleadDashboard());
             //Application.Run(new EditTeam(1));
+           // Application.Run(new NewTeam());
+            //Application.Run(new TasksForm());
+            //Application.Run(new ProjectForm());
+            //Application.Run(new ForYouDashboard());
+
 
         }
     }

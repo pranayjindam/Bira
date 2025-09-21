@@ -1,6 +1,4 @@
-﻿using Bira.UI;
-
-namespace Bira.Naveen
+﻿namespace Bira.Naveen
 {
     partial class Signup
     {
@@ -20,6 +18,7 @@ namespace Bira.Naveen
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Signup));
             SignUpTxt = new Label();
             FirstNameTxt = new Label();
             SignupFirstNameTxtBox = new TextBox();
@@ -34,138 +33,280 @@ namespace Bira.Naveen
             SignUpBtn = new Button();
             HaveAccTxt = new Label();
             toolTip1 = new ToolTip(components);
-            SignupTransparentPanel = new Panel();
+            SignupPanel = new Panel();
             linkLabelsignuplogin = new LinkLabel();
-            SignupTransparentPanel.SuspendLayout();
+            panelConfirmPasswordUnderline = new Panel();
+            panelPasswordUnderline = new Panel();
+            panelEmailUnderline = new Panel();
+            panelLastNameUnderline = new Panel();
+            panelFirstNameUnderline = new Panel();
+            pictureBox1 = new PictureBox();
+            SignupPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
             // SignUpTxt
             // 
-            SignUpTxt = UIControls.UIControlFactory.CreateLabelHeader("Sign Up");
-            SignUpTxt.Location = new Point(305, 20); // centered
+            SignUpTxt.Font = new Font("Segoe UI", 22F, FontStyle.Bold);
+            SignUpTxt.ForeColor = System.Drawing.Color.DeepSkyBlue;
+            SignUpTxt.Location = new System.Drawing.Point(0, 50);
+            SignUpTxt.Name = "SignUpTxt";
+            SignUpTxt.Size = new System.Drawing.Size(728, 54);
+            SignUpTxt.TabIndex = 0;
+            SignUpTxt.Text = "Create Account";
+            SignUpTxt.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // FirstNameTxt
-            //
-            FirstNameTxt = UIControls.UIControlFactory.CreateTextLabel("First Name");
-            FirstNameTxt.Location = new Point(200, 100); 
+            // 
+            FirstNameTxt.AutoSize = true;
+            FirstNameTxt.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            FirstNameTxt.ForeColor = System.Drawing.Color.LightGray;
+            FirstNameTxt.Location = new System.Drawing.Point(120, 130);
+            FirstNameTxt.Name = "FirstNameTxt";
+            FirstNameTxt.Size = new System.Drawing.Size(138, 32);
+            FirstNameTxt.TabIndex = 1;
+            FirstNameTxt.Text = "First Name";
             // 
             // SignupFirstNameTxtBox
             // 
-            SignupFirstNameTxtBox = InputControls.InputControlFactory.CreateTextInput(size:new Size(220,31),placeholder:"Enter Your First Name");
-            SignupFirstNameTxtBox.Location = new Point(400, 100);
+            SignupFirstNameTxtBox.BackColor = System.Drawing.Color.FromArgb(4, 40, 55);
+            SignupFirstNameTxtBox.BorderStyle = BorderStyle.None;
+            SignupFirstNameTxtBox.Font = new Font("Segoe UI", 12F);
+            SignupFirstNameTxtBox.ForeColor = System.Drawing.Color.White;
+            SignupFirstNameTxtBox.Location = new System.Drawing.Point(125, 165);
             SignupFirstNameTxtBox.Name = "SignupFirstNameTxtBox";
+            SignupFirstNameTxtBox.Size = new System.Drawing.Size(220, 32);
+            SignupFirstNameTxtBox.TabIndex = 1;
+            SignupFirstNameTxtBox.TextChanged += SignupFirstNameTxtBox_TextChanged;
             // 
             // LastNameTxt
             // 
-            LastNameTxt = UIControls.UIControlFactory.CreateTextLabel("Last Name");
-            LastNameTxt.Location = new Point(200, 160);
+            LastNameTxt.AutoSize = true;
+            LastNameTxt.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            LastNameTxt.ForeColor = System.Drawing.Color.LightGray;
+            LastNameTxt.Location = new System.Drawing.Point(380, 130);
+            LastNameTxt.Name = "LastNameTxt";
+            LastNameTxt.Size = new System.Drawing.Size(134, 32);
+            LastNameTxt.TabIndex = 3;
+            LastNameTxt.Text = "Last Name";
             // 
             // SignupLastNameTxtBox
             // 
-            SignupLastNameTxtBox = InputControls.InputControlFactory.CreateTextInput(size: new Size(220, 31), placeholder: "Enter Your Last Name");
-            SignupLastNameTxtBox.Location = new Point(400, 160);
+            SignupLastNameTxtBox.BackColor = System.Drawing.Color.FromArgb(4, 40, 55);
+            SignupLastNameTxtBox.BorderStyle = BorderStyle.None;
+            SignupLastNameTxtBox.Font = new Font("Segoe UI", 12F);
+            SignupLastNameTxtBox.ForeColor = System.Drawing.Color.White;
+            SignupLastNameTxtBox.Location = new System.Drawing.Point(385, 165);
             SignupLastNameTxtBox.Name = "SignupLastNameTxtBox";
+            SignupLastNameTxtBox.Size = new System.Drawing.Size(220, 32);
+            SignupLastNameTxtBox.TabIndex = 2;
+            SignupLastNameTxtBox.TextChanged += SignupLastNameTxtBox_TextChanged;
             // 
             // EmailTxt
             // 
-            EmailTxt = UIControls.UIControlFactory.CreateTextLabel("EMail");
-            EmailTxt.Location = new Point(200, 220);
+            EmailTxt.AutoSize = true;
+            EmailTxt.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            EmailTxt.ForeColor = System.Drawing.Color.LightGray;
+            EmailTxt.Location = new System.Drawing.Point(120, 230);
+            EmailTxt.Name = "EmailTxt";
+            EmailTxt.Size = new System.Drawing.Size(75, 32);
+            EmailTxt.TabIndex = 5;
+            EmailTxt.Text = "Email";
             // 
             // SignupEmailTxtBox
             // 
-            SignupEmailTxtBox = InputControls.InputControlFactory.CreateTextInput(size: new Size(220, 31), placeholder: "Enter Your Email");
-            SignupEmailTxtBox.Location = new Point(400, 220);
+            SignupEmailTxtBox.BackColor = System.Drawing.Color.FromArgb(4, 40, 55);
+            SignupEmailTxtBox.BorderStyle = BorderStyle.None;
+            SignupEmailTxtBox.Font = new Font("Segoe UI", 12F);
+            SignupEmailTxtBox.ForeColor = System.Drawing.Color.White;
+            SignupEmailTxtBox.Location = new System.Drawing.Point(125, 265);
             SignupEmailTxtBox.Name = "SignupEmailTxtBox";
+            SignupEmailTxtBox.Size = new System.Drawing.Size(480, 32);
+            SignupEmailTxtBox.TabIndex = 3;
+            SignupEmailTxtBox.TextChanged += SignupEmailTxtBox_TextChanged;
             // 
             // PasswordTxt
             // 
-            PasswordTxt = UIControls.UIControlFactory.CreateTextLabel("Password");
-            PasswordTxt.Location = new Point(200, 280);
-           
+            PasswordTxt.AutoSize = true;
+            PasswordTxt.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            PasswordTxt.ForeColor = System.Drawing.Color.LightGray;
+            PasswordTxt.Location = new System.Drawing.Point(120, 330);
+            PasswordTxt.Name = "PasswordTxt";
+            PasswordTxt.Size = new System.Drawing.Size(122, 32);
+            PasswordTxt.TabIndex = 7;
+            PasswordTxt.Text = "Password";
             // 
             // SignupPasswordTxtBox
             // 
-            SignupPasswordTxtBox = InputControls.InputControlFactory.CreateTextInput(size: new Size(220, 31), placeholder: "Enter Your Password", isPassword: true);
-            SignupPasswordTxtBox.Location = new Point(400, 280);
+            SignupPasswordTxtBox.BackColor = System.Drawing.Color.FromArgb(4, 40, 55);
+            SignupPasswordTxtBox.BorderStyle = BorderStyle.None;
+            SignupPasswordTxtBox.Font = new Font("Segoe UI", 12F);
+            SignupPasswordTxtBox.ForeColor = System.Drawing.Color.White;
+            SignupPasswordTxtBox.Location = new System.Drawing.Point(125, 365);
             SignupPasswordTxtBox.Name = "SignupPasswordTxtBox";
-            SignupPasswordTxtBox.TextChanged += SignupPasswordTxt_TextChanged;
+            SignupPasswordTxtBox.Size = new System.Drawing.Size(480, 32);
+            SignupPasswordTxtBox.TabIndex = 4;
+            SignupPasswordTxtBox.TextChanged += SignupPasswordTxtBox_TextChanged;
             // 
             // ConfirmPasswordTxt
             // 
-            ConfirmPasswordTxt = UIControls.UIControlFactory.CreateTextLabel("Confirm Password");
-            ConfirmPasswordTxt.Location = new Point(200, 340);
+            ConfirmPasswordTxt.AutoSize = true;
+            ConfirmPasswordTxt.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            ConfirmPasswordTxt.ForeColor = System.Drawing.Color.LightGray;
+            ConfirmPasswordTxt.Location = new System.Drawing.Point(120, 430);
+            ConfirmPasswordTxt.Name = "ConfirmPasswordTxt";
+            ConfirmPasswordTxt.Size = new System.Drawing.Size(225, 32);
+            ConfirmPasswordTxt.TabIndex = 10;
+            ConfirmPasswordTxt.Text = "Confirm Password";
             // 
             // SignupConfirmPasswordTxtBox
             // 
-            SignupConfirmPasswordTxtBox = InputControls.InputControlFactory.CreateTextInput(size: new Size(220, 31), placeholder: "Re-enter Your Password", isPassword: true);
-            SignupConfirmPasswordTxtBox.Location = new Point(400, 340);
+            SignupConfirmPasswordTxtBox.BackColor = System.Drawing.Color.FromArgb(4, 40, 55);
+            SignupConfirmPasswordTxtBox.BorderStyle = BorderStyle.None;
+            SignupConfirmPasswordTxtBox.Font = new Font("Segoe UI", 12F);
+            SignupConfirmPasswordTxtBox.ForeColor = System.Drawing.Color.White;
+            SignupConfirmPasswordTxtBox.Location = new System.Drawing.Point(125, 465);
             SignupConfirmPasswordTxtBox.Name = "SignupConfirmPasswordTxtBox";
-            SignupConfirmPasswordTxtBox.TextChanged += SignupConfirmPasswordTxt_TextChanged;
+            SignupConfirmPasswordTxtBox.Size = new System.Drawing.Size(480, 32);
+            SignupConfirmPasswordTxtBox.TabIndex = 5;
+            SignupConfirmPasswordTxtBox.TextChanged += SignupConfirmPasswordTxtBox_TextChanged;
             // 
             // SignUpBtn
             // 
-            SignUpBtn = UIControls.UIControlFactory.CreatePrimaryButton("Sign Up", backColor: ColorHelper.FromHex("#00b4d8"));
-            SignUpBtn.Location = new Point(320, 420);
+            SignUpBtn.BackColor = System.Drawing.Color.FromArgb(0, 98, 152);
+            SignUpBtn.Cursor = Cursors.Hand;
+            SignUpBtn.FlatAppearance.BorderSize = 0;
+            SignUpBtn.FlatStyle = FlatStyle.Flat;
+            SignUpBtn.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
+            SignUpBtn.ForeColor = System.Drawing.Color.White;
+            SignUpBtn.Location = new System.Drawing.Point(285, 540);
             SignUpBtn.Name = "SignUpBtn";
+            SignUpBtn.Size = new System.Drawing.Size(158, 59);
+            SignUpBtn.TabIndex = 6;
+            SignUpBtn.Text = "Sign Up";
+            SignUpBtn.UseVisualStyleBackColor = false;
             SignUpBtn.Click += SignUpBtn_Click;
             // 
             // HaveAccTxt
             // 
-            HaveAccTxt = UIControls.UIControlFactory.CreateTextLabel("have an account?");
-            HaveAccTxt.Location = new Point(260, 480);
+            HaveAccTxt.AutoSize = true;
+            HaveAccTxt.Font = new Font("Segoe UI", 10F);
+            HaveAccTxt.ForeColor = System.Drawing.Color.LightGray;
+            HaveAccTxt.Location = new System.Drawing.Point(216, 620);
+            HaveAccTxt.Name = "HaveAccTxt";
+            HaveAccTxt.Size = new System.Drawing.Size(234, 28);
+            HaveAccTxt.TabIndex = 13;
+            HaveAccTxt.Text = "Already have an account?";
             // 
-            // SignupTransparentPanel
+            // SignupPanel
             // 
-            SignupTransparentPanel.BackColor = ColorHelper.FromHex("#edede9");
-            SignupTransparentPanel.Controls.Add(linkLabelsignuplogin);
-            SignupTransparentPanel.Controls.Add(SignUpTxt);
-            SignupTransparentPanel.Controls.Add(SignUpBtn);
-            SignupTransparentPanel.Controls.Add(FirstNameTxt);
-            SignupTransparentPanel.Controls.Add(HaveAccTxt);
-            SignupTransparentPanel.Controls.Add(SignupFirstNameTxtBox);
-            SignupTransparentPanel.Controls.Add(LastNameTxt);
-            SignupTransparentPanel.Controls.Add(SignupConfirmPasswordTxtBox);
-            SignupTransparentPanel.Controls.Add(SignupLastNameTxtBox);
-            SignupTransparentPanel.Controls.Add(ConfirmPasswordTxt);
-            SignupTransparentPanel.Controls.Add(EmailTxt);
-            SignupTransparentPanel.Controls.Add(SignupPasswordTxtBox);
-            SignupTransparentPanel.Controls.Add(SignupEmailTxtBox);
-            SignupTransparentPanel.Controls.Add(PasswordTxt);
-            SignupTransparentPanel.Dock = DockStyle.Fill;
-            SignupTransparentPanel.Location = new Point(0, 0);
-            SignupTransparentPanel.Margin = new Padding(4);
-            SignupTransparentPanel.Name = "SignupTransparentPanel";
-            SignupTransparentPanel.Size = new Size(706, 555);
-            SignupTransparentPanel.TabIndex = 15;
-           // SignupTransparentPanel.Paint += SignupTransparentPanel_Paint;
+            SignupPanel.Controls.Add(linkLabelsignuplogin);
+            SignupPanel.Controls.Add(panelConfirmPasswordUnderline);
+            SignupPanel.Controls.Add(panelPasswordUnderline);
+            SignupPanel.Controls.Add(panelEmailUnderline);
+            SignupPanel.Controls.Add(panelLastNameUnderline);
+            SignupPanel.Controls.Add(panelFirstNameUnderline);
+            SignupPanel.Controls.Add(SignUpTxt);
+            SignupPanel.Controls.Add(SignUpBtn);
+            SignupPanel.Controls.Add(FirstNameTxt);
+            SignupPanel.Controls.Add(HaveAccTxt);
+            SignupPanel.Controls.Add(SignupFirstNameTxtBox);
+            SignupPanel.Controls.Add(LastNameTxt);
+            SignupPanel.Controls.Add(SignupConfirmPasswordTxtBox);
+            SignupPanel.Controls.Add(SignupLastNameTxtBox);
+            SignupPanel.Controls.Add(ConfirmPasswordTxt);
+            SignupPanel.Controls.Add(EmailTxt);
+            SignupPanel.Controls.Add(SignupPasswordTxtBox);
+            SignupPanel.Controls.Add(SignupEmailTxtBox);
+            SignupPanel.Controls.Add(PasswordTxt);
+            SignupPanel.Dock = DockStyle.Right;
+            SignupPanel.Location = new System.Drawing.Point(341, 0);
+            SignupPanel.Name = "SignupPanel";
+            SignupPanel.Size = new System.Drawing.Size(728, 720);
+            SignupPanel.TabIndex = 15;
             // 
             // linkLabelsignuplogin
             // 
             linkLabelsignuplogin.AutoSize = true;
             linkLabelsignuplogin.Font = new Font("Segoe UI", 10F);
-            linkLabelsignuplogin.LinkColor = Color.Blue;
-            linkLabelsignuplogin.Location = new Point(699, 549);
-            linkLabelsignuplogin.Margin = new Padding(4, 0, 4, 0);
+            linkLabelsignuplogin.LinkColor = System.Drawing.Color.DeepSkyBlue;
+            linkLabelsignuplogin.Location = new System.Drawing.Point(445, 620);
             linkLabelsignuplogin.Name = "linkLabelsignuplogin";
-            linkLabelsignuplogin.Size = new Size(57, 28);
-            linkLabelsignuplogin.TabIndex = 14;
+            linkLabelsignuplogin.Size = new System.Drawing.Size(60, 28);
+            linkLabelsignuplogin.TabIndex = 7;
             linkLabelsignuplogin.TabStop = true;
-            linkLabelsignuplogin.Text = "login";
+            linkLabelsignuplogin.Text = "Login";
             linkLabelsignuplogin.LinkClicked += linkLabelsignuplogin_LinkClicked;
+            // 
+            // panelConfirmPasswordUnderline
+            // 
+            panelConfirmPasswordUnderline.BackColor = System.Drawing.Color.Gray;
+            panelConfirmPasswordUnderline.Location = new System.Drawing.Point(125, 500);
+            panelConfirmPasswordUnderline.Name = "panelConfirmPasswordUnderline";
+            panelConfirmPasswordUnderline.Size = new System.Drawing.Size(480, 2);
+            panelConfirmPasswordUnderline.TabIndex = 18;
+            // 
+            // panelPasswordUnderline
+            // 
+            panelPasswordUnderline.BackColor = System.Drawing.Color.Gray;
+            panelPasswordUnderline.Location = new System.Drawing.Point(125, 400);
+            panelPasswordUnderline.Name = "panelPasswordUnderline";
+            panelPasswordUnderline.Size = new System.Drawing.Size(480, 2);
+            panelPasswordUnderline.TabIndex = 17;
+            // 
+            // panelEmailUnderline
+            // 
+            panelEmailUnderline.BackColor = System.Drawing.Color.Gray;
+            panelEmailUnderline.Location = new System.Drawing.Point(125, 300);
+            panelEmailUnderline.Name = "panelEmailUnderline";
+            panelEmailUnderline.Size = new System.Drawing.Size(480, 2);
+            panelEmailUnderline.TabIndex = 16;
+            // 
+            // panelLastNameUnderline
+            // 
+            panelLastNameUnderline.BackColor = System.Drawing.Color.Gray;
+            panelLastNameUnderline.Location = new System.Drawing.Point(385, 200);
+            panelLastNameUnderline.Name = "panelLastNameUnderline";
+            panelLastNameUnderline.Size = new System.Drawing.Size(220, 2);
+            panelLastNameUnderline.TabIndex = 15;
+            // 
+            // panelFirstNameUnderline
+            // 
+            panelFirstNameUnderline.BackColor = System.Drawing.Color.Gray;
+            panelFirstNameUnderline.Location = new System.Drawing.Point(125, 200);
+            panelFirstNameUnderline.Name = "panelFirstNameUnderline";
+            panelFirstNameUnderline.Size = new System.Drawing.Size(220, 2);
+            panelFirstNameUnderline.TabIndex = 14;
+            // 
+            // pictureBox1
+            // 
+            pictureBox1.BackColor = System.Drawing.Color.White;
+            pictureBox1.Dock = DockStyle.Left;
+            pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
+            pictureBox1.Location = new System.Drawing.Point(0, 0);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new System.Drawing.Size(350, 720);
+            pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBox1.TabIndex = 16;
+            pictureBox1.TabStop = false;
             // 
             // Signup
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackgroundImageLayout = ImageLayout.Stretch;
-            ClientSize = new Size(819, 596);
-            Controls.Add(SignupTransparentPanel);
-            Margin = new Padding(4);
+            BackColor = System.Drawing.Color.FromArgb(4, 40, 55);
+            ClientSize = new System.Drawing.Size(1069, 720);
+            Controls.Add(pictureBox1);
+            Controls.Add(SignupPanel);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
+            Icon = (Icon)resources.GetObject("$this.Icon");
             MaximizeBox = false;
             Name = "Signup";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "Sign Up";
-            SignupTransparentPanel.ResumeLayout(false);
-            SignupTransparentPanel.PerformLayout();
+            SignupPanel.ResumeLayout(false);
+            SignupPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
         }
 
@@ -185,7 +326,13 @@ namespace Bira.Naveen
         private Button SignUpBtn;
         private Label HaveAccTxt;
         private ToolTip toolTip1;
-        private Panel SignupTransparentPanel;
+        private Panel SignupPanel;
+        private PictureBox pictureBox1;
         private LinkLabel linkLabelsignuplogin;
+        private Panel panelFirstNameUnderline;
+        private Panel panelLastNameUnderline;
+        private Panel panelEmailUnderline;
+        private Panel panelPasswordUnderline;
+        private Panel panelConfirmPasswordUnderline;
     }
 }
