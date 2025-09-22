@@ -271,7 +271,7 @@ namespace Bira
                     FlatAppearance = { BorderSize = 0 },
                     Font = new Font("Segoe UI", 9F, FontStyle.Bold),
                     ForeColor = Color.FromArgb(107, 114, 128),
-                    Text = "⋮", // vertical ellipsis
+                    Text = "⋮", // :
                     Width = 40,
                     Dock = DockStyle.Right,
                     Tag = new Tuple<int, string>(itemId, itemType)
@@ -407,13 +407,13 @@ namespace Bira
             switch (priority?.ToLower())
             {
                 case "high":
-                    return Color.FromArgb(239, 68, 68); // Red-500
+                    return Color.FromArgb(239, 68, 68); // Red
                 case "medium":
-                    return Color.FromArgb(251, 146, 60); // Orange-400
+                    return Color.FromArgb(251, 146, 60); // Orange
                 case "low":
-                    return Color.FromArgb(34, 197, 94); // Green-500
+                    return Color.FromArgb(34, 197, 94); // Green
                 default:
-                    return Color.FromArgb(107, 114, 128); // Gray-500
+                    return Color.FromArgb(107, 114, 128); // Gray
             }
         }
 
@@ -505,7 +505,6 @@ namespace Bira
                 card.Controls.Add(footerPanel);
                 card.Controls.Add(lblName);
 
-                // Make the entire card clickable
                 card.Click += (s, ev) => Card_ClickHandler(card);
                 foreach (Control ctrl in card.Controls)
                 {
@@ -636,7 +635,7 @@ namespace Bira
                 card.Controls.Add(lblDates);
                 card.Controls.Add(lblName);
 
-                // Make the entire card clickable
+                
                 card.Click += (s, ev) =>
                 {
                     var p = (ProjectModel)card.Tag;
@@ -1087,15 +1086,15 @@ namespace Bira
                 footerPanel.Controls.Add(lblItemStatus);
                 footerPanel.Controls.Add(lblItemPriority);
 
-                // Add controls to item card in correct order (bottom to top for docking)
-                itemCard.Controls.Add(lblItemDescription);  // Fill - added first
-                itemCard.Controls.Add(footerPanel);         // Bottom
-                itemCard.Controls.Add(lblItemTitle);        // Top
+                // Add controls to item card 
+                itemCard.Controls.Add(lblItemDescription); 
+                itemCard.Controls.Add(footerPanel);         
+                itemCard.Controls.Add(lblItemTitle);       
 
                 itemsPanel.Controls.Add(itemCard);
             }
 
-            // Handle layout updates to ensure proper sizing
+            
             itemsPanel.Layout += (s, e) =>
             {
                 var panel = s as FlowLayoutPanel;
@@ -1109,9 +1108,9 @@ namespace Bira
                 }
             };
 
-            // Add controls to main card in correct order (bottom to top for docking)
-            card.Controls.Add(itemsPanel);      // Fill - added first
-            card.Controls.Add(lblBacklogTitle); // Top - added last
+            // Add controls to main card 
+            card.Controls.Add(itemsPanel);      
+            card.Controls.Add(lblBacklogTitle); 
 
             panelMain.Controls.Add(card);
         }
