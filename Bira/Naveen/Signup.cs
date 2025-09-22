@@ -122,7 +122,9 @@ namespace Bira.Naveen
             if (ValidateFirstName() && ValidateLastName() && ValidateEmail() && ValidatePassword() && ValidateConfirmPassword())
             {
                 MessageBox.Show("✅ Sign up successful!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                // TODO: Add logic to save user to the database
+                Login loginForm = new Login();
+                this.Hide();
+                loginForm.Show();
             }
             else
             {

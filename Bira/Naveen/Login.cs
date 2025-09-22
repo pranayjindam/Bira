@@ -113,19 +113,14 @@ namespace Bira.Naveen
 
         private void ShowHidepasswordLoad()
         {
-            // Check the current state and toggle it
             if (PasswordTxtBox.UseSystemPasswordChar)
             {
-                // If password is HIDDEN, show it
                 PasswordTxtBox.UseSystemPasswordChar = false;
-                // Change the icon to the 'open eye'
                 ShowHidePassword.Image = Properties.Resources.show_password_icon;
             }
             else
             {
-                // If password is VISIBLE, hide it
                 PasswordTxtBox.UseSystemPasswordChar = true;
-                // Change the icon back to the 'slashed eye'
                 ShowHidePassword.Image = Properties.Resources.hide_password_icon;
             }
         }

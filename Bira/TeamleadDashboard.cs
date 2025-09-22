@@ -106,10 +106,10 @@ namespace Bira
             panelTasksMenu.Visible = false;
         }
 
-        private void btn2_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show("Button 2 clicked!");
-        }
+        //private void btn2_Click(object sender, EventArgs e)
+        //{
+        //    MessageBox.Show("Button 2 clicked!");
+        //}
         private void ShowSubMenu(Panel subMenu)
         {
             if (!subMenu.Visible)
@@ -143,7 +143,7 @@ namespace Bira
                 OpenProject(project.ProjectId, project.Name, project.Description, project.StartDate, project.EndDate);
             });
             names.Clear();
-            //Load Teams(if needed)
+            //Load Teams
             var teams = await _teamService.GetTeamsAsync();
             foreach (var team in teams)
             {
@@ -154,7 +154,7 @@ namespace Bira
                 OpenTeam(team.TeamId, team.Name, team.Members);
             });
             names.Clear();
-            //Load Tasks(if needed)
+            //Load Tasks
             var tasks = await _taskService.GetTasksAsync();
             foreach (var task in tasks)
             {
@@ -181,9 +181,9 @@ namespace Bira
                 ctrl.Dispose();
             }
 
-            // Define cool colors
+          
             Color defaultBack = Color.Transparent;
-            Color hoverBack = Color.FromArgb(59, 130, 246);   // Cool blue hover
+            Color hoverBack = Color.FromArgb(59, 130, 246);   //  blue hover
             Color activeBack = Color.FromArgb(37, 99, 235);   // Deeper blue accent
 
             int i = 0;
@@ -192,7 +192,7 @@ namespace Bira
                 int itemId = 0;
                 string itemType = "";
 
-                // Safe type checks
+                
                 if (item is ProjectModel project)
                 {
                     itemId = project.ProjectId;
@@ -1169,11 +1169,11 @@ namespace Bira
             {
                 Panel memberCard = new Panel
                 {
-                    Width = 250,
-                    Height = 100,
+                    Width = 350, 
+                    Height = 300, 
                     BackColor = Color.White,
                     Margin = new Padding(10),
-                    Padding = new Padding(10),
+                    Padding = new Padding(12), 
                     Cursor = Cursors.Hand
                 };
 
@@ -1191,17 +1191,17 @@ namespace Bira
                 Label lblMemberName = new Label
                 {
                     Text = $"👤 {member.Name}",
-                    Font = new Font("Segoe UI", 12, FontStyle.Bold),
+                    Font = new Font("Segoe UI", 14, FontStyle.Bold), // Increased from 12 to 13
                     ForeColor = Color.FromArgb(37, 99, 235),
                     Dock = DockStyle.Top,
-                    Height = 30,
+                    Height = 35, // Increased from 30 to 35
                     AutoEllipsis = true
                 };
 
                 Label lblMemberRole = new Label
                 {
                     Text = $"🔧 {member.Role}",
-                    Font = new Font("Segoe UI", 11, FontStyle.Regular),
+                    Font = new Font("Segoe UI", 12, FontStyle.Regular), // Increased from 11 to 12
                     ForeColor = Color.FromArgb(71, 85, 105),
                     Dock = DockStyle.Fill,
                     AutoEllipsis = true
@@ -1231,7 +1231,6 @@ namespace Bira
 
             panelMain.Controls.Add(card);
         }
-
         private void DisplayProjectCard(int projectId, string projectName, DateTime startDate, DateTime endDate, string desc, Color baseColor)
         {
             panelMain.Controls.Clear();
