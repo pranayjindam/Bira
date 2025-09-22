@@ -25,9 +25,6 @@
             panelDone = new Panel();
             flowLayoutPanelDone = new FlowLayoutPanel();
             labelDone = new Label();
-            panelReview = new Panel();
-            flowLayoutPanelReview = new FlowLayoutPanel();
-            labelReview = new Label();
             panelInProgress = new Panel();
             flowLayoutPanelInProgress = new FlowLayoutPanel();
             labelInProgress = new Label();
@@ -37,7 +34,6 @@
             panelHeader.SuspendLayout();
             panelBoard.SuspendLayout();
             panelDone.SuspendLayout();
-            panelReview.SuspendLayout();
             panelInProgress.SuspendLayout();
             panelToDo.SuspendLayout();
             SuspendLayout();
@@ -52,7 +48,7 @@
             panelHeader.Location = new Point(0, 0);
             panelHeader.Name = "panelHeader";
             panelHeader.Padding = new Padding(20);
-            panelHeader.Size = new Size(1200, 80);
+            panelHeader.Size = new Size(975, 80);
             panelHeader.TabIndex = 0;
             // 
             // buttonRefresh
@@ -77,7 +73,7 @@
             comboBoxProjectFilter.FormattingEnabled = true;
             comboBoxProjectFilter.Location = new Point(250, 30);
             comboBoxProjectFilter.Name = "comboBoxProjectFilter";
-            comboBoxProjectFilter.Size = new Size(180, 25);
+            comboBoxProjectFilter.Size = new Size(180, 36);
             comboBoxProjectFilter.TabIndex = 1;
             comboBoxProjectFilter.SelectedIndexChanged += comboBoxProjectFilter_SelectedIndexChanged;
             // 
@@ -96,14 +92,13 @@
             // 
             panelBoard.BackColor = Color.FromArgb(248, 250, 252);
             panelBoard.Controls.Add(panelDone);
-            panelBoard.Controls.Add(panelReview);
             panelBoard.Controls.Add(panelInProgress);
             panelBoard.Controls.Add(panelToDo);
             panelBoard.Dock = DockStyle.Fill;
             panelBoard.Location = new Point(0, 80);
             panelBoard.Name = "panelBoard";
             panelBoard.Padding = new Padding(20);
-            panelBoard.Size = new Size(1200, 520);
+            panelBoard.Size = new Size(975, 520);
             panelBoard.TabIndex = 1;
             // 
             // panelDone
@@ -111,23 +106,23 @@
             panelDone.BackColor = Color.White;
             panelDone.Controls.Add(flowLayoutPanelDone);
             panelDone.Controls.Add(labelDone);
-            panelDone.Dock = DockStyle.Fill;
-            panelDone.Location = new Point(890, 20);
+            panelDone.Dock = DockStyle.Left;
+            panelDone.Location = new Point(600, 20);
             panelDone.Margin = new Padding(10);
             panelDone.Name = "panelDone";
-            panelDone.Size = new Size(290, 480);
+            panelDone.Size = new Size(350, 480);
             panelDone.TabIndex = 3;
             // 
             // flowLayoutPanelDone
             // 
             flowLayoutPanelDone.AutoScroll = true;
             flowLayoutPanelDone.BackColor = Color.Transparent;
-            flowLayoutPanelDone.Dock = DockStyle.Fill;
+            flowLayoutPanelDone.Dock = DockStyle.Left;
             flowLayoutPanelDone.FlowDirection = FlowDirection.TopDown;
             flowLayoutPanelDone.Location = new Point(0, 40);
             flowLayoutPanelDone.Name = "flowLayoutPanelDone";
             flowLayoutPanelDone.Padding = new Padding(5);
-            flowLayoutPanelDone.Size = new Size(290, 440);
+            flowLayoutPanelDone.Size = new Size(350, 440);
             flowLayoutPanelDone.TabIndex = 1;
             flowLayoutPanelDone.WrapContents = false;
             // 
@@ -139,48 +134,10 @@
             labelDone.ForeColor = Color.White;
             labelDone.Location = new Point(0, 0);
             labelDone.Name = "labelDone";
-            labelDone.Size = new Size(290, 40);
+            labelDone.Size = new Size(350, 40);
             labelDone.TabIndex = 0;
             labelDone.Text = "Done (0)";
             labelDone.TextAlign = ContentAlignment.MiddleCenter;
-            // 
-            // panelReview
-            // 
-            panelReview.BackColor = Color.White;
-            panelReview.Controls.Add(flowLayoutPanelReview);
-            panelReview.Controls.Add(labelReview);
-            panelReview.Dock = DockStyle.Left;
-            panelReview.Location = new Point(600, 20);
-            panelReview.Margin = new Padding(10);
-            panelReview.Name = "panelReview";
-            panelReview.Size = new Size(290, 480);
-            panelReview.TabIndex = 2;
-            // 
-            // flowLayoutPanelReview
-            // 
-            flowLayoutPanelReview.AutoScroll = true;
-            flowLayoutPanelReview.BackColor = Color.Transparent;
-            flowLayoutPanelReview.Dock = DockStyle.Fill;
-            flowLayoutPanelReview.FlowDirection = FlowDirection.TopDown;
-            flowLayoutPanelReview.Location = new Point(0, 40);
-            flowLayoutPanelReview.Name = "flowLayoutPanelReview";
-            flowLayoutPanelReview.Padding = new Padding(5);
-            flowLayoutPanelReview.Size = new Size(290, 440);
-            flowLayoutPanelReview.TabIndex = 1;
-            flowLayoutPanelReview.WrapContents = false;
-            // 
-            // labelReview
-            // 
-            labelReview.BackColor = Color.FromArgb(59, 130, 246);
-            labelReview.Dock = DockStyle.Top;
-            labelReview.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
-            labelReview.ForeColor = Color.White;
-            labelReview.Location = new Point(0, 0);
-            labelReview.Name = "labelReview";
-            labelReview.Size = new Size(290, 40);
-            labelReview.TabIndex = 0;
-            labelReview.Text = "Review (0)";
-            labelReview.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // panelInProgress
             // 
@@ -198,12 +155,12 @@
             // 
             flowLayoutPanelInProgress.AutoScroll = true;
             flowLayoutPanelInProgress.BackColor = Color.Transparent;
-            flowLayoutPanelInProgress.Dock = DockStyle.Fill;
+            flowLayoutPanelInProgress.Dock = DockStyle.Left;
             flowLayoutPanelInProgress.FlowDirection = FlowDirection.TopDown;
             flowLayoutPanelInProgress.Location = new Point(0, 40);
             flowLayoutPanelInProgress.Name = "flowLayoutPanelInProgress";
             flowLayoutPanelInProgress.Padding = new Padding(5);
-            flowLayoutPanelInProgress.Size = new Size(290, 440);
+            flowLayoutPanelInProgress.Size = new Size(350, 440);
             flowLayoutPanelInProgress.TabIndex = 1;
             flowLayoutPanelInProgress.WrapContents = false;
             // 
@@ -236,12 +193,12 @@
             // 
             flowLayoutPanelToDo.AutoScroll = true;
             flowLayoutPanelToDo.BackColor = Color.Transparent;
-            flowLayoutPanelToDo.Dock = DockStyle.Fill;
+            flowLayoutPanelToDo.Dock = DockStyle.Left;
             flowLayoutPanelToDo.FlowDirection = FlowDirection.TopDown;
             flowLayoutPanelToDo.Location = new Point(0, 40);
             flowLayoutPanelToDo.Name = "flowLayoutPanelToDo";
             flowLayoutPanelToDo.Padding = new Padding(5);
-            flowLayoutPanelToDo.Size = new Size(290, 440);
+            flowLayoutPanelToDo.Size = new Size(350, 440);
             flowLayoutPanelToDo.TabIndex = 1;
             flowLayoutPanelToDo.WrapContents = false;
             // 
@@ -260,7 +217,7 @@
             // 
             // KanbanBoard
             // 
-            ClientSize = new Size(1200, 600);
+            ClientSize = new Size(975, 600);
             Controls.Add(panelBoard);
             Controls.Add(panelHeader);
             Name = "KanbanBoard";
@@ -269,7 +226,6 @@
             panelHeader.ResumeLayout(false);
             panelBoard.ResumeLayout(false);
             panelDone.ResumeLayout(false);
-            panelReview.ResumeLayout(false);
             panelInProgress.ResumeLayout(false);
             panelToDo.ResumeLayout(false);
             ResumeLayout(false);
@@ -288,9 +244,6 @@
         private Panel panelInProgress;
         private Label labelInProgress;
         private FlowLayoutPanel flowLayoutPanelInProgress;
-        private Panel panelReview;
-        private Label labelReview;
-        private FlowLayoutPanel flowLayoutPanelReview;
         private Panel panelDone;
         private Label labelDone;
         private FlowLayoutPanel flowLayoutPanelDone;

@@ -18,7 +18,7 @@ namespace Bira.Naveen
             ShowHidePassword.Image = Properties.Resources.hide_password_icon;
         }
 
-        // ✅ Username validation with updated UI feedback
+        //  Username validation with updated UI feedback
         private void UserNameTxtBox_TextChanged(object sender, EventArgs e)
         {
             string username = UserNameTxtBox.Text.Trim();
@@ -65,7 +65,7 @@ namespace Bira.Naveen
             return Regex.IsMatch(PasswordTxtBox.Text, pattern);
         }
 
-        // ✅ Login button click
+        // Login button click
         private void LoginBtn_Click(object sender, EventArgs e)
         {
             bool validUser = !string.IsNullOrEmpty(UserNameTxtBox.Text) && UserNameTxtBox.Text.Length >= 4;
