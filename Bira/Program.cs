@@ -13,19 +13,8 @@ namespace Bira
             // To customize application configuration such as set high DPI settings or default font,
             //see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
-            //Application.Run(new Naveen.Login());
-            //Application.Run(new Naveen.Signup());
-            //Application.Run(new Naveen.ProjectForm());
-            //Application.Run(new MemberDashboard());
-            //Application.Run(new TeamleadDashboard());
-            //Application.Run(new EditTeam(1));
-           // Application.Run(new NewTeam());
-            //Application.Run(new TasksForm());
-            //Application.Run(new ProjectForm());
-            //Application.Run(new ForYouDashboard());
-            Application.Run(new KanbanBoard());
-
-
+            Application.Run(new Naveen.Login());
+           
         }
     }
 }

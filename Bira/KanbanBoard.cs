@@ -71,7 +71,7 @@ namespace Bira
 
         private void StyleColumns()
         {
-            var columns = new[] { panelToDo, panelInProgress, panelReview, panelDone };
+            var columns = new[] { panelToDo, panelInProgress, panelDone };
             var colors = new[]
             {
                 Color.FromArgb(239, 68, 68),   // Red for To Do
@@ -197,7 +197,6 @@ LoadData()
             {
                 case "To Do": return panelToDo;
                 case "In Progress": return panelInProgress;
-                case "Review": return panelReview;
                 case "Done": return panelDone;
                 default: return panelToDo;
             }
@@ -302,7 +301,7 @@ LoadData()
 
         private void ClearTaskCards()
         {
-            var columns = new[] { panelToDo, panelInProgress, panelReview, panelDone };
+            var columns = new[] { panelToDo, panelInProgress,panelDone };
             foreach (var column in columns)
             {
                 var flowPanel = column.Controls.OfType<FlowLayoutPanel>().FirstOrDefault();
@@ -319,7 +318,7 @@ LoadData()
             {
                 (panelToDo, "To Do"),
                 (panelInProgress, "In Progress"),
-                (panelReview, "Review"),
+
                 (panelDone, "Done")
             };
 
