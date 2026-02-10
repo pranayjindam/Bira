@@ -1,11 +1,10 @@
 ﻿using Bira.Services;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
+using System.Runtime.InteropServices;
+using Bira.UiHelper;   // <-- this already has GraphicsExtensions
+using Bira.UI;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -17,173 +16,147 @@ namespace Bira
         {
             InitializeComponent();
             this.Load += new System.EventHandler(this.ForYouDashboard_Load);
-
         }
+
+        // Helper for rounded corners
+        [DllImport("Gdi32.dll", EntryPoint = "CreateRoundRectRgn")]
+        private static extern IntPtr CreateRoundRectRgn(
+            int nLeftRect, int nTopRect, int nRightRect, int nBottomRect,
+            int nWidthEllipse, int nHeightEllipse);
 
         private async void ForYouDashboard_Load(object sender, EventArgs e)
         {
-            //await LoadRecentTasks();
+            // Apply rounded corners to the main panels
+            panelUserInfo.Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, panelUserInfo.Width, panelUserInfo.Height, 20, 20));
+            panelTaskProgressContainer.Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, panelTaskProgressContainer.Width, panelTaskProgressContainer.Height, 20, 20));
+
+            // Add paint events for borders
+            panelUserInfo.Paint += (s, e) => DrawPanelBorder(e, panelUserInfo);
+            panelTaskProgressContainer.Paint += (s, e) => DrawPanelBorder(e, panelTaskProgressContainer);
+
             await LoadTaskProgressOverview();
             await LoadUserInfo();
         }
 
+        private void DrawPanelBorder(PaintEventArgs e, Panel panel)
+        {
+            using (Pen borderPen = new Pen(Color.FromArgb(226, 232, 240), 2))
+            {
+                // Use the extension from Bira.UiHelper.GraphicsExtensions
+                e.Graphics.DrawCustomRoundedRectangle(borderPen, new Rectangle(1, 1, panel.Width - 3, panel.Height - 3), 18);
+            }
+        }
 
         private async Task LoadUserInfo()
         {
             var _userService = new UserService();
             var users = await _userService.GetUsersAsync();
-            if (users == null || users.Count == 0)
+            if (users == null || !users.Any())
             {
-                MessageBox.Show("No users found.");
+                labelWelcome.Text = "Welcome, User!";
+                labelFullName.Text = "User Name";
+                labelEmail.Text = "user@email.com";
+                labelRole.Text = "Team Lead";
                 return;
             }
-            var user = users.First(); // Just get the first user for demo purposes
-            labelWelcome.Text = $"Welcome, {user.FirstName}!";
-            labelFirstname.Text = $"First Name : {user.FirstName}";
-            labelLastname.Text = $"Last Name : {user.LastName}";
-            labelEmail.Text = $"Email : {user.Email}";
-            labelRole.Text = $"Role : {user.Role}";
+
+            var user = users.First(); // Using the first user for this demo
+            labelWelcome.Text = $"Hello, {user.FirstName}!";
+            labelFullName.Text = $"{user.FirstName} {user.LastName}";
+            labelEmail.Text = user.Email;
+            labelRole.Text = user.Role;
         }
-
-        //private async Task LoadRecentTasks()
-        //{
-        //    var _taskService = new TaskService();
-        //    var tasks = await _taskService.GetTasksAsync();
-
-        //    if (tasks == null || tasks.Count == 0)
-        //    {
-        //        MessageBox.Show("No tasks found.");
-        //        return;
-        //    }
-
-        //    panelRecentTasks.Controls.Clear();
-        //    panelRecentTasks.FlowDirection = FlowDirection.TopDown;
-        //    panelRecentTasks.WrapContents = false;
-        //    panelRecentTasks.AutoScroll = true;
-
-        //    foreach (var task in tasks.Take(5))
-        //    {
-        //        // CHANGE 1: Use FlowLayoutPanel instead of Panel
-        //        FlowLayoutPanel taskCard = new FlowLayoutPanel
-        //        {
-        //            Width = 300,
-        //            AutoSize = true,
-        //            AutoSizeMode = AutoSizeMode.GrowAndShrink,
-        //            BackColor = Color.Chocolate,
-        //            Margin = new Padding(5),
-        //            Padding = new Padding(10),
-        //            // CHANGE 2: Set its FlowDirection to stack controls vertically
-        //            FlowDirection = FlowDirection.TopDown
-        //        };
-
-        //        Label lblTaskName = new Label
-        //        {
-        //            Text = $" {task.Name}",
-        //            Font = new Font("Segoe UI", 12, FontStyle.Bold),
-        //            ForeColor = Color.White,
-        //            AutoSize = true,
-        //            // Add a little margin to separate the labels
-        //            Margin = new Padding(0, 0, 0, 5)
-        //        };
-
-        //        Label lblTaskStatus = new Label
-        //        {
-        //            // Using Task Name for more context
-        //            Text = $"Status: {task.Status}",
-        //            Font = new Font("Segoe UI", 10, FontStyle.Regular),
-        //            ForeColor = Color.LightGray,
-        //            AutoSize = true
-        //        };
-
-        //        taskCard.Controls.Add(lblTaskName);
-        //        taskCard.Controls.Add(lblTaskStatus); // Now this will appear below the first label
-
-        //        panelRecentTasks.Controls.Add(taskCard);
-        //    }
-        //}
-
-
 
         private async Task LoadTaskProgressOverview()
         {
             var _taskService = new TaskService();
             var tasks = await _taskService.GetTasksAsync();
 
-            if (tasks == null || tasks.Count == 0)
+            if (tasks == null || !tasks.Any())
             {
-                MessageBox.Show("No tasks found.");
+                Label noTasksLabel = new Label
+                {
+                    Text = "No tasks found.",
+                    Font = new Font("Segoe UI", 12F, FontStyle.Regular),
+                    ForeColor = Color.FromArgb(107, 114, 128),
+                    Dock = DockStyle.Fill,
+                    TextAlign = ContentAlignment.MiddleCenter
+                };
+                panelTaskProgress.Controls.Add(noTasksLabel);
                 return;
             }
 
             panelTaskProgress.Controls.Clear();
-            panelTaskProgress.FlowDirection = FlowDirection.TopDown;
-            panelTaskProgress.WrapContents = false;
-            panelTaskProgress.AutoScroll = true;
 
-            // Based on your TaskService, "InProgress" should be "In Progress" with a space
-            var grouped = tasks.GroupBy(t => t.Status == "InProgress" ? "In Progress" : t.Status);
+            var grouped = tasks.GroupBy(t => t.Status);
 
             foreach (var group in grouped)
             {
                 string status = group.Key;
                 int count = group.Count();
 
-                Color bgColor = status switch
+                Color statusColor = status switch
                 {
-                    "Pending" => Color.FromArgb(220, 68, 68),        // Red
-                    "In Progress" => Color.FromArgb(108, 117, 125),  // Gray
-                    "Completed" => Color.FromArgb(40, 167, 69),      // Green
-                    _ => Color.FromArgb(100, 100, 100),              // Default gray
+                    "Pending" => Color.FromArgb(239, 68, 68),      // Red-500
+                    "In Progress" => Color.FromArgb(59, 130, 246), // Blue-500  
+                    "Completed" => Color.FromArgb(16, 185, 129),   // Emerald-500
+                    _ => Color.FromArgb(107, 114, 128),            // Gray-500
                 };
 
-                // CHANGE 1: Use FlowLayoutPanel instead of Panel
-                FlowLayoutPanel statusCard = new FlowLayoutPanel
-                {
-                    Width = 300,
-                    AutoSize = true,
-                    AutoSizeMode = AutoSizeMode.GrowAndShrink,
-                    BackColor = bgColor,
-                    Margin = new Padding(5),
-                    Padding = new Padding(10),
-                    // CHANGE 2: Set its FlowDirection to stack controls vertically
-                    FlowDirection = FlowDirection.TopDown
-                };
-
-                // I've used an icon from the Segoe MDL2 Assets font, common in Windows
-                // Feel free to change the icon
                 string icon = status switch
                 {
-                    "Pending" => "⏳",     // Hourglass icon
-                    "Completed" => "✅",   // Checkmark icon
-                    "In Progress" => "🔄", // Circular arrows icon
-                    _ => "❔"              // Question mark for unknown status
+                    "Pending" => "⏳",
+                    "Completed" => "✅",
+                    "In Progress" => "🔄",
+                    _ => "❔"
                 };
 
+                // Main card container
+                Panel statusCard = new Panel
+                {
+                    Width = panelTaskProgress.Width - 25,
+                    Height = 95,
+                    BackColor = Color.FromArgb(248, 250, 252),
+                    Margin = new Padding(10),
+                    Padding = new Padding(15)
+                };
+                statusCard.Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, statusCard.Width, statusCard.Height, 15, 15));
+
+                // Add paint event for card border
+                statusCard.Paint += (s, e) =>
+                {
+                    using (Pen borderPen = new Pen(Color.FromArgb(226, 232, 240), 1))
+                    {
+                        e.Graphics.DrawCustomRoundedRectangle(borderPen, new Rectangle(0, 0, statusCard.Width - 1, statusCard.Height - 1), 15);
+                    }
+                };
+
+                // Status title label
                 Label lblStatusTitle = new Label
                 {
                     Text = $"{icon} {status}",
-                    Font = new Font("Segoe MDL2 Assets", 12, FontStyle.Regular), // Use icon font
-                    ForeColor = Color.White,
-                    AutoSize = false,
-                    Width = 280, // Slightly less than card width for padding
-                    TextAlign = ContentAlignment.MiddleLeft,
-                    Margin = new Padding(0, 0, 0, 5)
+                    Font = new Font("Segoe UI", 14F, FontStyle.Bold),
+                    ForeColor = Color.FromArgb(30, 41, 59),
+                    Dock = DockStyle.Top,
+                    Height = 35,
+                    TextAlign = ContentAlignment.MiddleLeft
                 };
 
+                // Status count label
                 Label lblStatusCount = new Label
                 {
                     Text = $"{count} Tasks",
-                    Font = new Font("Segoe UI", 10, FontStyle.Regular),
-                    ForeColor = Color.White,
-                    AutoSize = true
+                    Font = new Font("Segoe UI", 11F, FontStyle.Regular),
+                    ForeColor = statusColor,
+                    Dock = DockStyle.Fill,
+                    TextAlign = ContentAlignment.MiddleLeft
                 };
 
+                statusCard.Controls.Add(lblStatusCount);
                 statusCard.Controls.Add(lblStatusTitle);
-                statusCard.Controls.Add(lblStatusCount); // This will now appear below the title
 
                 panelTaskProgress.Controls.Add(statusCard);
             }
         }
-
     }
 }

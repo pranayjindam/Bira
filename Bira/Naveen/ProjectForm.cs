@@ -1,12 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
 namespace Bira.Naveen
@@ -19,63 +14,44 @@ namespace Bira.Naveen
         {
             InitializeComponent();
             toolTip1 = new ToolTip();
+            ApplyRoundedCorners(); // Apply rounded corners on load
         }
+
+        // --- VALIDATION FEEDBACK METHODS ---
 
         private void ProjectNameBox_TextChanged(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(ProjectNameBox.Text) || ProjectNameBox.Text.Length < 3)
             {
-                ProjectNameBox.BackColor = Color.LightCoral;
+                ProjectNameBox.ForeColor = Color.IndianRed;
+                panelNameUnderline.BackColor = Color.IndianRed;
                 toolTip1.SetToolTip(ProjectNameBox, "Project name must be at least 3 characters.");
             }
             else
             {
-                ProjectNameBox.BackColor = Color.LightGreen;
+                ProjectNameBox.ForeColor = Color.White;
+                panelNameUnderline.BackColor = Color.LightGreen;
                 toolTip1.SetToolTip(ProjectNameBox, "Valid project name.");
             }
         }
 
-        private void StarttextBox_TextChanged(object sender, EventArgs e)
-        {
-            if (!DateTime.TryParseExact(StarttextBox.Text, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out _))
-            {
-                StarttextBox.BackColor = Color.LightCoral;
-                toolTip1.SetToolTip(StarttextBox, "Enter a valid Start Date (Format: yyyy-MM-dd).");
-            }
-            else
-            {
-                StarttextBox.BackColor = Color.LightGreen;
-                toolTip1.SetToolTip(StarttextBox, "Valid Start Date.");
-            }
-        }
-
-        private void EndDateTxtBox_TextChanged(object sender, EventArgs e)
-        {
-            if (!DateTime.TryParseExact(EndDateTxtBox.Text, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out _))
-            {
-                EndDateTxtBox.BackColor = Color.LightCoral;
-                toolTip1.SetToolTip(EndDateTxtBox, "Enter a valid End Date (Format: yyyy-MM-dd).");
-            }
-            else
-            {
-                EndDateTxtBox.BackColor = Color.LightGreen;
-                toolTip1.SetToolTip(EndDateTxtBox, "Valid End Date.");
-            }
-        }
+        // REMOVED: StarttextBox_TextChanged and EndDateTxtBox_TextChanged are no longer needed.
 
         private void ProjectDescriptionBox_TextChanged(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(ProjectDescriptionBox.Text) || ProjectDescriptionBox.Text.Length < 10)
             {
-                ProjectDescriptionBox.BackColor = Color.LightCoral;
+                ProjectDescriptionBox.ForeColor = Color.IndianRed;
                 toolTip1.SetToolTip(ProjectDescriptionBox, "Description must be at least 10 characters.");
             }
             else
             {
-                ProjectDescriptionBox.BackColor = Color.LightGreen;
-                toolTip1.SetToolTip(ProjectDescriptionBox, "Valid  description.");
+                ProjectDescriptionBox.ForeColor = Color.White;
+                toolTip1.SetToolTip(ProjectDescriptionBox, "Valid description.");
             }
         }
+
+        // --- SUBMIT BUTTON CLICK ---
 
         private void ProjectSubmitBtn_Click(object sender, EventArgs e)
         {
@@ -86,21 +62,11 @@ namespace Bira.Naveen
                 return;
             }
 
-            // Validate start date
-            if (!DateTime.TryParseExact(StarttextBox.Text, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime startDate))
-            {
-                MessageBox.Show("❌ Enter a valid Start Date (Format: yyyy-MM-dd).", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
+            // MODIFIED: Get dates directly from the DateTimePicker controls. No parsing needed!
+            DateTime startDate = startDatePicker.Value;
+            DateTime endDate = endDatePicker.Value;
 
-            // Validate end date
-            if (!DateTime.TryParseExact(EndDateTxtBox.Text, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime endDate))
-            {
-                MessageBox.Show("❌ Enter a valid End Date (Format: yyyy-MM-dd).", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            if (endDate < startDate)
+            if (endDate.Date < startDate.Date) // Use .Date to compare only the date part
             {
                 MessageBox.Show("❌ End Date cannot be earlier than Start Date.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
@@ -115,18 +81,21 @@ namespace Bira.Naveen
 
             // ✅ All validations passed
             MessageBox.Show("✅ Project submitted successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-            // TODO: Save project details to database here
         }
 
-        private void EndDateTxt_Click(object sender, EventArgs e)
+        // --- UI HELPER METHODS ---
+
+        [DllImport("Gdi32.dll", EntryPoint = "CreateRoundRectRgn")]
+        private static extern IntPtr CreateRoundRectRgn(
+            int nLeftRect, int nTopRect, int nRightRect, int nBottomRect,
+            int nWidthEllipse, int nHeightEllipse);
+
+        private void ApplyRoundedCorners()
         {
-
-        }
-
-        private void ProjectHeadTxt_Click(object sender, EventArgs e)
-        {
-
+            ProjectPanel.Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, ProjectPanel.Width, ProjectPanel.Height, 20, 20));
+            ProjectPanel.Resize += (s, e) => {
+                ProjectPanel.Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, ProjectPanel.Width, ProjectPanel.Height, 20, 20));
+            };
         }
     }
 }

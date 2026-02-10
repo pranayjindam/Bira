@@ -1,14 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace Bira.Naveen
 {
@@ -17,116 +10,126 @@ namespace Bira.Naveen
         public Signup()
         {
             InitializeComponent();
+            // Hide password input characters
+            SignupPasswordTxtBox.UseSystemPasswordChar = true;
+            SignupConfirmPasswordTxtBox.UseSystemPasswordChar = true;
         }
 
-        // ✅ First Name validation (only letters, not empty)
+        // --- REAL-TIME VALIDATION EVENT HANDLERS ---
+
+        private void SignupFirstNameTxtBox_TextChanged(object sender, EventArgs e)
+        {
+            ValidateFirstName();
+        }
+
+        private void SignupLastNameTxtBox_TextChanged(object sender, EventArgs e)
+        {
+            ValidateLastName();
+        }
+
+        private void SignupEmailTxtBox_TextChanged(object sender, EventArgs e)
+        {
+            ValidateEmail();
+        }
+
+        private void SignupPasswordTxtBox_TextChanged(object sender, EventArgs e)
+        {
+            ValidatePassword();
+            // Re-check the confirmation field whenever the main password changes
+            ValidateConfirmPassword();
+        }
+
+        private void SignupConfirmPasswordTxtBox_TextChanged(object sender, EventArgs e)
+        {
+            ValidateConfirmPassword();
+        }
+
+        // --- VALIDATION LOGIC METHODS ---
+
         private bool ValidateFirstName()
         {
             if (string.IsNullOrWhiteSpace(SignupFirstNameTxtBox.Text) || !Regex.IsMatch(SignupFirstNameTxtBox.Text, @"^[A-Za-z]+$"))
             {
-                SignupFirstNameTxtBox.BackColor = Color.LightCoral;
-                toolTip1.SetToolTip(SignupFirstNameTxtBox, "Enter a valid first name (letters only).");
+                panelFirstNameUnderline.BackColor = Color.IndianRed;
+                toolTip1.SetToolTip(SignupFirstNameTxtBox, "First name must contain letters only.");
                 return false;
             }
-            SignupFirstNameTxtBox.BackColor = Color.LightGreen;
+            panelFirstNameUnderline.BackColor = Color.LightGreen;
+            toolTip1.SetToolTip(SignupFirstNameTxtBox, "Valid first name.");
             return true;
         }
 
-        // ✅ Last Name validation
         private bool ValidateLastName()
         {
             if (string.IsNullOrWhiteSpace(SignupLastNameTxtBox.Text) || !Regex.IsMatch(SignupLastNameTxtBox.Text, @"^[A-Za-z]+$"))
             {
-                SignupLastNameTxtBox.BackColor = Color.LightCoral;
-                toolTip1.SetToolTip(SignupLastNameTxtBox, "Enter a valid last name (letters only).");
+                panelLastNameUnderline.BackColor = Color.IndianRed;
+                toolTip1.SetToolTip(SignupLastNameTxtBox, "Last name must contain letters only.");
                 return false;
             }
-            SignupLastNameTxtBox.BackColor = Color.LightGreen;
+            panelLastNameUnderline.BackColor = Color.LightGreen;
+            toolTip1.SetToolTip(SignupLastNameTxtBox, "Valid last name.");
             return true;
         }
 
-        // ✅ Email validation
         private bool ValidateEmail()
         {
-            string email = SignupEmailTxtBox.Text;
             string emailPattern = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";
-
-            if (!Regex.IsMatch(email, emailPattern))
+            if (!Regex.IsMatch(SignupEmailTxtBox.Text, emailPattern))
             {
-                SignupEmailTxtBox.BackColor = Color.LightCoral;
+                panelEmailUnderline.BackColor = Color.IndianRed;
                 toolTip1.SetToolTip(SignupEmailTxtBox, "Enter a valid email address.");
                 return false;
             }
-            SignupEmailTxtBox.BackColor = Color.LightGreen;
+            panelEmailUnderline.BackColor = Color.LightGreen;
+            toolTip1.SetToolTip(SignupEmailTxtBox, "Valid email address.");
             return true;
         }
 
-        // ✅ Password validation
-        private void SignupPasswordTxt_TextChanged(object sender, EventArgs e)
+        private bool ValidatePassword()
         {
-            string password = SignupPasswordTxtBox.Text;
-            string pattern = @"^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$";
-
-            if (Regex.IsMatch(password, pattern))
+            string pattern = @"^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$";
+            if (Regex.IsMatch(SignupPasswordTxtBox.Text, pattern))
             {
-                SignupPasswordTxtBox.BackColor = Color.LightGreen;
-                toolTip1.SetToolTip(SignupPasswordTxtBox, "Strong  password.");
+                panelPasswordUnderline.BackColor = Color.LightGreen;
+                toolTip1.SetToolTip(SignupPasswordTxtBox, "Strong password.");
+                return true;
             }
-            else
-            {
-                SignupPasswordTxtBox.BackColor = Color.LightCoral;
-                toolTip1.SetToolTip(SignupPasswordTxtBox,
-                    "Password must contain:\n- Min 8 characters\n- At least 1 uppercase\n- At least 1 lowercase\n- At least 1 number\n- At least 1 special character");
-            }
-
-            // Recheck confirm password also
-            SignupConfirmPasswordTxt_TextChanged(sender, e);
+            panelPasswordUnderline.BackColor = Color.IndianRed;
+            toolTip1.SetToolTip(SignupPasswordTxtBox,
+                "Password must contain:\n- Min 8 characters\n- 1 uppercase\n- 1 lowercase\n- 1 number\n- 1 special character");
+            return false;
         }
 
-        // ✅ Confirm password validation
-        private void SignupConfirmPasswordTxt_TextChanged(object sender, EventArgs e)
+        private bool ValidateConfirmPassword()
         {
             if (SignupConfirmPasswordTxtBox.Text == SignupPasswordTxtBox.Text && !string.IsNullOrEmpty(SignupConfirmPasswordTxtBox.Text))
             {
-                SignupConfirmPasswordTxtBox.BackColor = Color.LightGreen;
+                panelConfirmPasswordUnderline.BackColor = Color.LightGreen;
                 toolTip1.SetToolTip(SignupConfirmPasswordTxtBox, "Passwords match.");
+                return true;
             }
-            else
-            {
-                SignupConfirmPasswordTxtBox.BackColor = Color.LightCoral;
-                toolTip1.SetToolTip(SignupConfirmPasswordTxtBox, "Passwords do not match.");
-            }
+            panelConfirmPasswordUnderline.BackColor = Color.IndianRed;
+            toolTip1.SetToolTip(SignupConfirmPasswordTxtBox, "Passwords do not match.");
+            return false;
         }
 
-        // ✅ Final validation on Sign Up button click
+        // --- BUTTON AND LINK CLICK EVENTS ---
+
         private void SignUpBtn_Click(object sender, EventArgs e)
         {
-            bool validFirst = ValidateFirstName();
-            bool validLast = ValidateLastName();
-            bool validEmail = ValidateEmail();
-
-            bool validPassword = Regex.IsMatch(SignupPasswordTxtBox.Text, @"^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$");
-            bool passwordsMatch = SignupConfirmPasswordTxtBox.Text == SignupPasswordTxtBox.Text;
-
-            if (validFirst && validLast && validEmail && validPassword && passwordsMatch)
+            // Run all validations on click to be sure
+            if (ValidateFirstName() && ValidateLastName() && ValidateEmail() && ValidatePassword() && ValidateConfirmPassword())
             {
                 MessageBox.Show("✅ Sign up successful!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                Login loginForm = new Login();
+                this.Hide();
+                loginForm.Show();
             }
             else
             {
-                MessageBox.Show("❌ Please fix the highlighted fields.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("❌ Please fix the fields highlighted in red.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
-        }
-
-        // Placeholder for SignIn click
-        private void SignInAccTxt_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show("Redirect to Sign In form here.");
-        }
-
-        private void SignupTransparentPanel_Paint(object sender, PaintEventArgs e)
-        {
-            SignupTransparentPanel.BackColor = Color.FromArgb(100, 0, 0, 0);
         }
 
         private void linkLabelsignuplogin_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)

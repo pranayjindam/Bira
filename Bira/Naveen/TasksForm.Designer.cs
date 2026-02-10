@@ -2,15 +2,8 @@
 {
     partial class TasksForm
     {
-        /// <summary>
-        /// Required designer variable.
-        /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-        /// <summary>
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -22,14 +15,11 @@
 
         #region Windows Form Designer generated code
 
-        /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
-        /// </summary>
         private void InitializeComponent()
         {
             TasksFormHeadTxt = new Label();
             TasksPanel = new Panel();
+            panelTaskNameUnderline = new Panel();
             TasksSubmitBtn = new Button();
             TasksStatusComboBox = new ComboBox();
             TasksStatusTxt = new Label();
@@ -41,22 +31,27 @@
             TasksProNameTxt = new Label();
             TasksNameTxtBox = new TextBox();
             TasksNameTxt = new Label();
+            tableLayoutPanel1 = new TableLayoutPanel();
             TasksPanel.SuspendLayout();
+            tableLayoutPanel1.SuspendLayout();
             SuspendLayout();
             // 
             // TasksFormHeadTxt
             // 
-            TasksFormHeadTxt.AutoSize = true;
-            TasksFormHeadTxt.Font = new Font("Segoe UI", 16F, FontStyle.Bold);
-            TasksFormHeadTxt.Location = new Point(375, 30);
-            TasksFormHeadTxt.Margin = new Padding(4, 0, 4, 0);
+            TasksFormHeadTxt.Font = new Font("Segoe UI", 18F, FontStyle.Bold);
+            TasksFormHeadTxt.ForeColor = Color.DeepSkyBlue;
+            TasksFormHeadTxt.Location = new Point(0, 30);
             TasksFormHeadTxt.Name = "TasksFormHeadTxt";
-            TasksFormHeadTxt.Size = new Size(99, 45);
+            TasksFormHeadTxt.Size = new Size(700, 45);
             TasksFormHeadTxt.TabIndex = 0;
-            TasksFormHeadTxt.Text = "Tasks";
+            TasksFormHeadTxt.Text = "Create a New Task";
+            TasksFormHeadTxt.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // TasksPanel
             // 
+            TasksPanel.Anchor = AnchorStyles.None;
+            TasksPanel.BackColor = Color.FromArgb(45, 65, 90);
+            TasksPanel.Controls.Add(panelTaskNameUnderline);
             TasksPanel.Controls.Add(TasksSubmitBtn);
             TasksPanel.Controls.Add(TasksStatusComboBox);
             TasksPanel.Controls.Add(TasksStatusTxt);
@@ -69,153 +64,185 @@
             TasksPanel.Controls.Add(TasksNameTxtBox);
             TasksPanel.Controls.Add(TasksNameTxt);
             TasksPanel.Controls.Add(TasksFormHeadTxt);
-            TasksPanel.Location = new Point(176, 34);
-            TasksPanel.Margin = new Padding(4);
+            TasksPanel.Location = new Point(264, 50);
             TasksPanel.Name = "TasksPanel";
-            TasksPanel.Size = new Size(896, 799);
+            TasksPanel.Size = new Size(700, 700);
             TasksPanel.TabIndex = 1;
+            // 
+            // panelTaskNameUnderline
+            // 
+            panelTaskNameUnderline.BackColor = Color.Gray;
+            panelTaskNameUnderline.Location = new Point(80, 180);
+            panelTaskNameUnderline.Name = "panelTaskNameUnderline";
+            panelTaskNameUnderline.Size = new Size(540, 2);
+            panelTaskNameUnderline.TabIndex = 11;
             // 
             // TasksSubmitBtn
             // 
-            TasksSubmitBtn.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
-            TasksSubmitBtn.Location = new Point(341, 711);
-            TasksSubmitBtn.Margin = new Padding(4);
+            TasksSubmitBtn.BackColor = Color.FromArgb(0, 98, 152);
+            TasksSubmitBtn.Cursor = Cursors.Hand;
+            TasksSubmitBtn.FlatAppearance.BorderSize = 0;
+            TasksSubmitBtn.FlatStyle = FlatStyle.Flat;
+            TasksSubmitBtn.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
+            TasksSubmitBtn.ForeColor = Color.White;
+            TasksSubmitBtn.Location = new Point(271, 600);
             TasksSubmitBtn.Name = "TasksSubmitBtn";
-            TasksSubmitBtn.Size = new Size(156, 71);
-            TasksSubmitBtn.TabIndex = 10;
-            TasksSubmitBtn.Text = "Submit";
-            TasksSubmitBtn.UseVisualStyleBackColor = true;
+            TasksSubmitBtn.Size = new Size(158, 59);
+            TasksSubmitBtn.TabIndex = 6;
+            TasksSubmitBtn.Text = "Create Task";
+            TasksSubmitBtn.UseVisualStyleBackColor = false;
             TasksSubmitBtn.Click += TasksSubmitBtn_Click;
             // 
             // TasksStatusComboBox
             // 
+            TasksStatusComboBox.BackColor = Color.FromArgb(50, 50, 65);
             TasksStatusComboBox.Cursor = Cursors.Hand;
             TasksStatusComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            TasksStatusComboBox.FlatStyle = FlatStyle.Flat;
+            TasksStatusComboBox.Font = new Font("Segoe UI", 12F);
+            TasksStatusComboBox.ForeColor = Color.White;
             TasksStatusComboBox.FormattingEnabled = true;
-            TasksStatusComboBox.Items.AddRange(new object[] { "To do", "In Progress", "Done" });
-            TasksStatusComboBox.Location = new Point(412, 610);
-            TasksStatusComboBox.Margin = new Padding(4);
+            TasksStatusComboBox.Location = new Point(80, 525);
             TasksStatusComboBox.Name = "TasksStatusComboBox";
-            TasksStatusComboBox.Size = new Size(374, 33);
-            TasksStatusComboBox.TabIndex = 9;
+            TasksStatusComboBox.Size = new Size(540, 40);
+            TasksStatusComboBox.TabIndex = 5;
             // 
             // TasksStatusTxt
             // 
             TasksStatusTxt.AutoSize = true;
-            TasksStatusTxt.Font = new Font("Segoe UI", 12F);
-            TasksStatusTxt.Location = new Point(138, 605);
-            TasksStatusTxt.Margin = new Padding(4, 0, 4, 0);
+            TasksStatusTxt.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            TasksStatusTxt.ForeColor = Color.LightGray;
+            TasksStatusTxt.Location = new Point(75, 490);
             TasksStatusTxt.Name = "TasksStatusTxt";
-            TasksStatusTxt.Size = new Size(78, 32);
+            TasksStatusTxt.Size = new Size(83, 32);
             TasksStatusTxt.TabIndex = 8;
             TasksStatusTxt.Text = "Status";
             // 
             // TasksPriorityComboBox
             // 
+            TasksPriorityComboBox.BackColor = Color.FromArgb(50, 50, 65);
             TasksPriorityComboBox.Cursor = Cursors.Hand;
             TasksPriorityComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            TasksPriorityComboBox.FlatStyle = FlatStyle.Flat;
+            TasksPriorityComboBox.Font = new Font("Segoe UI", 12F);
+            TasksPriorityComboBox.ForeColor = Color.White;
             TasksPriorityComboBox.FormattingEnabled = true;
-            TasksPriorityComboBox.Items.AddRange(new object[] { "Low", "Medium", "High" });
-            TasksPriorityComboBox.Location = new Point(412, 506);
-            TasksPriorityComboBox.Margin = new Padding(4);
+            TasksPriorityComboBox.Location = new Point(80, 435);
             TasksPriorityComboBox.Name = "TasksPriorityComboBox";
-            TasksPriorityComboBox.Size = new Size(374, 33);
-            TasksPriorityComboBox.TabIndex = 7;
+            TasksPriorityComboBox.Size = new Size(540, 40);
+            TasksPriorityComboBox.TabIndex = 4;
             // 
             // TasksPriorityTxt
             // 
             TasksPriorityTxt.AutoSize = true;
-            TasksPriorityTxt.Font = new Font("Segoe UI", 12F);
-            TasksPriorityTxt.Location = new Point(138, 501);
-            TasksPriorityTxt.Margin = new Padding(4, 0, 4, 0);
+            TasksPriorityTxt.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            TasksPriorityTxt.ForeColor = Color.LightGray;
+            TasksPriorityTxt.Location = new Point(75, 400);
             TasksPriorityTxt.Name = "TasksPriorityTxt";
-            TasksPriorityTxt.Size = new Size(89, 32);
+            TasksPriorityTxt.Size = new Size(100, 32);
             TasksPriorityTxt.TabIndex = 2;
             TasksPriorityTxt.Text = "Priority";
             // 
             // TasksDesTxtBox
             // 
+            TasksDesTxtBox.BackColor = Color.FromArgb(50, 50, 65);
+            TasksDesTxtBox.BorderStyle = BorderStyle.FixedSingle;
             TasksDesTxtBox.Font = new Font("Segoe UI", 12F);
-            TasksDesTxtBox.Location = new Point(412, 340);
-            TasksDesTxtBox.Margin = new Padding(4);
+            TasksDesTxtBox.ForeColor = Color.White;
+            TasksDesTxtBox.Location = new Point(80, 305);
             TasksDesTxtBox.Multiline = true;
             TasksDesTxtBox.Name = "TasksDesTxtBox";
-            TasksDesTxtBox.PlaceholderText = "Enter Your Description";
-            TasksDesTxtBox.Size = new Size(374, 103);
-            TasksDesTxtBox.TabIndex = 6;
+            TasksDesTxtBox.Size = new Size(540, 80);
+            TasksDesTxtBox.TabIndex = 3;
             // 
             // TasksDescriptionTxt
             // 
             TasksDescriptionTxt.AutoSize = true;
-            TasksDescriptionTxt.Font = new Font("Segoe UI", 12F);
-            TasksDescriptionTxt.Location = new Point(138, 368);
-            TasksDescriptionTxt.Margin = new Padding(4, 0, 4, 0);
+            TasksDescriptionTxt.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            TasksDescriptionTxt.ForeColor = Color.LightGray;
+            TasksDescriptionTxt.Location = new Point(75, 270);
             TasksDescriptionTxt.Name = "TasksDescriptionTxt";
-            TasksDescriptionTxt.Size = new Size(135, 32);
+            TasksDescriptionTxt.Size = new Size(146, 32);
             TasksDescriptionTxt.TabIndex = 5;
             TasksDescriptionTxt.Text = "Description";
             // 
             // TasksProjectNameComboBox
             // 
+            TasksProjectNameComboBox.BackColor = Color.FromArgb(50, 50, 65);
             TasksProjectNameComboBox.Cursor = Cursors.Hand;
             TasksProjectNameComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            TasksProjectNameComboBox.FlatStyle = FlatStyle.Flat;
+            TasksProjectNameComboBox.Font = new Font("Segoe UI", 12F);
+            TasksProjectNameComboBox.ForeColor = Color.White;
             TasksProjectNameComboBox.FormattingEnabled = true;
-            TasksProjectNameComboBox.Location = new Point(412, 239);
-            TasksProjectNameComboBox.Margin = new Padding(4);
+            TasksProjectNameComboBox.Location = new Point(80, 215);
             TasksProjectNameComboBox.Name = "TasksProjectNameComboBox";
-            TasksProjectNameComboBox.Size = new Size(374, 33);
-            TasksProjectNameComboBox.TabIndex = 4;
+            TasksProjectNameComboBox.Size = new Size(540, 40);
+            TasksProjectNameComboBox.TabIndex = 2;
             // 
             // TasksProNameTxt
             // 
             TasksProNameTxt.AutoSize = true;
-            TasksProNameTxt.Font = new Font("Segoe UI", 12F);
-            TasksProNameTxt.Location = new Point(138, 239);
-            TasksProNameTxt.Margin = new Padding(4, 0, 4, 0);
+            TasksProNameTxt.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            TasksProNameTxt.ForeColor = Color.LightGray;
+            TasksProNameTxt.Location = new Point(75, 185);
             TasksProNameTxt.Name = "TasksProNameTxt";
-            TasksProNameTxt.Size = new Size(158, 32);
+            TasksProNameTxt.Size = new Size(169, 32);
             TasksProNameTxt.TabIndex = 3;
             TasksProNameTxt.Text = "Project Name";
             // 
             // TasksNameTxtBox
             // 
+            TasksNameTxtBox.BackColor = Color.FromArgb(45, 65, 90);
+            TasksNameTxtBox.BorderStyle = BorderStyle.None;
             TasksNameTxtBox.Font = new Font("Segoe UI", 12F);
-            TasksNameTxtBox.Location = new Point(412, 142);
-            TasksNameTxtBox.Margin = new Padding(4);
+            TasksNameTxtBox.ForeColor = Color.White;
+            TasksNameTxtBox.Location = new Point(80, 145);
             TasksNameTxtBox.Name = "TasksNameTxtBox";
-            TasksNameTxtBox.PlaceholderText = "Enter Task Name";
-            TasksNameTxtBox.Size = new Size(374, 39);
-            TasksNameTxtBox.TabIndex = 2;
+            TasksNameTxtBox.Size = new Size(540, 32);
+            TasksNameTxtBox.TabIndex = 1;
+            TasksNameTxtBox.TextChanged += TasksNameTxtBox_TextChanged;
             // 
             // TasksNameTxt
             // 
             TasksNameTxt.AutoSize = true;
-            TasksNameTxt.Font = new Font("Segoe UI", 12F);
-            TasksNameTxt.Location = new Point(138, 150);
-            TasksNameTxt.Margin = new Padding(4, 0, 4, 0);
+            TasksNameTxt.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            TasksNameTxt.ForeColor = Color.LightGray;
+            TasksNameTxt.Location = new Point(75, 110);
             TasksNameTxt.Name = "TasksNameTxt";
-            TasksNameTxt.Size = new Size(129, 32);
+            TasksNameTxt.Size = new Size(137, 32);
             TasksNameTxt.TabIndex = 1;
             TasksNameTxt.Text = "Task Name";
+            // 
+            // tableLayoutPanel1
+            // 
+            tableLayoutPanel1.BackColor = Color.White;
+            tableLayoutPanel1.ColumnCount = 1;
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            tableLayoutPanel1.Controls.Add(TasksPanel, 0, 0);
+            tableLayoutPanel1.Dock = DockStyle.Fill;
+            tableLayoutPanel1.Location = new Point(0, 0);
+            tableLayoutPanel1.Name = "tableLayoutPanel1";
+            tableLayoutPanel1.RowCount = 1;
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            tableLayoutPanel1.Size = new Size(1228, 800);
+            tableLayoutPanel1.TabIndex = 2;
             // 
             // TasksForm
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1228, 879);
-            Controls.Add(TasksPanel);
-            Margin = new Padding(4);
+            BackColor = Color.FromArgb(4, 40, 55);
+            ClientSize = new Size(1228, 800);
+            Controls.Add(tableLayoutPanel1);
+            FormBorderStyle = FormBorderStyle.None;
             Name = "TasksForm";
             Text = "TasksForm";
+            Load += TasksForm_Load;
             TasksPanel.ResumeLayout(false);
             TasksPanel.PerformLayout();
-            this.Load += TasksForm_Load;
+            tableLayoutPanel1.ResumeLayout(false);
             ResumeLayout(false);
-        }
-
-        private void TasksForm_Load1(object sender, EventArgs e)
-        {
-            throw new NotImplementedException();
         }
 
         #endregion
@@ -233,5 +260,7 @@
         private ComboBox TasksStatusComboBox;
         private Label TasksStatusTxt;
         private Button TasksSubmitBtn;
+        private TableLayoutPanel tableLayoutPanel1;
+        private Panel panelTaskNameUnderline;
     }
 }

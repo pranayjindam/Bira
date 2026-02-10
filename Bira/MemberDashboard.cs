@@ -1,41 +1,35 @@
 ﻿using Bira.Models;
 using Bira.Services;
-using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+using System.Runtime.InteropServices;
+using Bira.Naveen;
+using System.Drawing.Drawing2D;
+using System.Media;
+using Bira.UI;
+using Bira.UiHelper;
 
 namespace Bira
 {
-    using Bira.Naveen;
-    using System.Runtime.InteropServices;
-
-
-
     public partial class MemberDashboard : Form
     {
         private readonly ProjectService _projectService = new ProjectService();
         private readonly TeamService _teamService = new TeamService();
         private readonly TaskService _taskService = new TaskService();
-        private static readonly Random _rnd = new Random();
+
         public MemberDashboard()
         {
             InitializeComponent();
             CustomizeSidebar();
             LoadAllData();
+            LoadMemberOverview();
         }
+
+        [DllImport("Gdi32.dll", EntryPoint = "CreateRoundRectRgn")]
+        private static extern IntPtr CreateRoundRectRgn(
+            int nLeftRect, int nTopRect, int nRightRect, int nBottomRect,
+            int nWidthEllipse, int nHeightEllipse);
 
         #region Sidebar Logic
         private void CustomizeSidebar()
-        {
-            panelProjectsMenu.Visible = false;
-            panelTeamsMenu.Visible = false;
-            panelTasksMenu.Visible = false;
-        }
-
-        private void HideSubMenus()
         {
             panelProjectsMenu.Visible = false;
             panelTeamsMenu.Visible = false;
@@ -46,7 +40,6 @@ namespace Bira
         {
             if (!subMenu.Visible)
             {
-                HideSubMenus(); // optional if you want only one submenu open
                 subMenu.Visible = true;
             }
             else
@@ -75,7 +68,8 @@ namespace Bira
                 OpenProject(project.ProjectId, project.Name, project.Description, project.StartDate, project.EndDate);
             });
             names.Clear();
-            //Load Teams(if needed)
+
+            // Load Teams
             var teams = await _teamService.GetTeamsAsync();
             foreach (var team in teams)
             {
@@ -86,7 +80,8 @@ namespace Bira
                 OpenTeam(team.TeamId, team.Name, team.Members);
             });
             names.Clear();
-            //Load Tasks(if needed)
+
+            // Load Tasks
             var tasks = await _taskService.GetTasksAsync();
             foreach (var task in tasks)
             {
@@ -99,39 +94,48 @@ namespace Bira
             names.Clear();
         }
 
-        // Generic submenu population for any type (Project, Team, Task)
+        // Enhanced submenu population matching TeamLead style
         private async Task PopulateSubMenu<T>(Panel panel, Button showMoreBtn, List<T> items, List<string> names, Action<T> onClick)
         {
-            // Remove existing buttons except "Show More"
-            var existing = panel.Controls.OfType<Button>().Where(b => b != showMoreBtn).ToList();
-            foreach (var btn in existing)
+            // Clear old dynamic items
+            var existing = panel.Controls.OfType<Panel>()
+                .Where(p => p.Tag?.ToString() == "DynamicItem")
+                .ToList();
+
+            foreach (var ctrl in existing)
             {
-                panel.Controls.Remove(btn);
-                btn.Dispose();
+                panel.Controls.Remove(ctrl);
+                ctrl.Dispose();
             }
 
-            // Define colors
+            // Define colors matching TeamLead theme
             Color defaultBack = Color.Transparent;
-            Color hoverBack = Color.FromArgb(28, 151, 234);   // Dark gray
-            Color activeBack = Color.FromArgb(28, 151, 234); // Blue
+            Color hoverBack = Color.FromArgb(59, 130, 246);   // Cool blue hover
+            Color activeBack = Color.FromArgb(37, 99, 235);   // Deeper blue accent
 
-            // Add new buttons for items
             int i = 0;
             foreach (var item in items)
             {
+                Panel pn = new Panel
+                {
+                    Size = new Size(panel.Width - 5, 40),
+                    Dock = DockStyle.Top,
+                    Tag = "DynamicItem",
+                };
+
                 Button btn = new Button
                 {
-                    Dock = DockStyle.Top,
                     FlatStyle = FlatStyle.Flat,
                     FlatAppearance = { BorderSize = 0 },
                     Font = new Font("Segoe UI", 9F, FontStyle.Bold),
-                    ForeColor = Color.LightGray,
+                    ForeColor = Color.FromArgb(156, 163, 175),
+                    Text = names[i],
+                    TextAlign = ContentAlignment.MiddleLeft,
                     Padding = new Padding(35, 0, 0, 0),
                     Height = 40,
-                    Text = names[i].ToString(),
-                    TextAlign = ContentAlignment.MiddleLeft,
+                    Dock = DockStyle.Fill,
                     BackColor = defaultBack,
-                    Tag = "inactive" // track active state
+                    Tag = "inactive"
                 };
 
                 // Hover events
@@ -140,75 +144,58 @@ namespace Bira
                     if (btn.Tag.ToString() != "active")
                         btn.BackColor = hoverBack;
                 };
-
                 btn.MouseLeave += (s, e) =>
                 {
                     if (btn.Tag.ToString() != "active")
                         btn.BackColor = defaultBack;
                 };
 
-                // Click (active state)
+                // Active click
                 btn.Click += (s, e) =>
                 {
-                    // Reset all buttons in panel to default
-                    foreach (Control c in panel.Controls.OfType<Button>())
+                    foreach (var otherPn in panel.Controls.OfType<Panel>().Where(p => p.Tag?.ToString() == "DynamicItem"))
                     {
-                        if (c != showMoreBtn)
+                        foreach (var otherBtn in otherPn.Controls.OfType<Button>().Where(b => b.Dock == DockStyle.Fill))
                         {
-                            c.Tag = "inactive";
-                            c.BackColor = defaultBack;
+                            otherBtn.Tag = "inactive";
+                            otherBtn.BackColor = defaultBack;
+                            otherBtn.ForeColor = Color.FromArgb(156, 163, 175);
                         }
                     }
 
-                    // Mark this one active
                     btn.Tag = "active";
                     btn.BackColor = activeBack;
+                    btn.ForeColor = Color.White;
 
-                    // Call provided click action
                     onClick(item);
                 };
 
-                panel.Controls.Add(btn);
-                panel.Controls.SetChildIndex(btn, panel.Controls.GetChildIndex(showMoreBtn));
+                pn.Controls.Add(btn);
+                panel.Controls.Add(pn);
+                panel.Controls.SetChildIndex(pn, 0);
                 i++;
             }
 
-            // Ensure "Show More" button stays at bottom
-            panel.Controls.SetChildIndex(showMoreBtn, 0);
-
             await Task.CompletedTask;
         }
-
         #endregion
-        private Panel CreateAvatar(string name, Color bgColor)
+
+        #region Helper Methods
+        private Color GetPriorityColor(string priority)
         {
-            Panel avatar = new Panel
+            switch (priority?.ToLower())
             {
-                Width = 50,
-                Height = 50,
-                BackColor = bgColor,
-                Margin = new Padding(10),
-            };
-
-            avatar.Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, avatar.Width, avatar.Height, 50, 50));
-
-            Label lbl = new Label
-            {
-                Text = string.IsNullOrEmpty(name) ? "?" : name.Substring(0, 1).ToUpper(),
-                Dock = DockStyle.Fill,
-                Font = new Font("Segoe UI", 16, FontStyle.Bold),
-                TextAlign = ContentAlignment.MiddleCenter,
-                ForeColor = Color.White
-            };
-
-            avatar.Controls.Add(lbl);
-            return avatar;
+                case "high":
+                    return Color.FromArgb(239, 68, 68); // Red-500
+                case "medium":
+                    return Color.FromArgb(251, 146, 60); // Orange-400
+                case "low":
+                    return Color.FromArgb(34, 197, 94); // Green-500
+                default:
+                    return Color.FromArgb(107, 114, 128); // Gray-500
+            }
         }
 
-        private Color GetRandomColor()
-        {
-            return Color.FromArgb(_rnd.Next(100, 256), _rnd.Next(100, 256), _rnd.Next(100, 256));
-        }
         private void Card_ClickHandler(Panel card)
         {
             if (card.Tag is ProjectModel p)
@@ -218,7 +205,9 @@ namespace Bira
             else if (card.Tag is TaskModel task)
                 OpenTask(task.TaskId, task.Name, task.ProjectName, task.Description, task.startDate, task.endDate, task.Priority, task.Status);
         }
-        #region Show More Handlers
+        #endregion
+
+        #region Show More Handlers - Enhanced with TeamLead styling
         private async void buttonProjectsShowMore_Click(object sender, EventArgs e)
         {
             var projects = await _projectService.GetProjectsAsync();
@@ -229,70 +218,106 @@ namespace Bira
             {
                 Dock = DockStyle.Fill,
                 AutoScroll = true,
-                WrapContents = true
+                WrapContents = true,
+                Padding = new Padding(20),
+                BackColor = Color.White
             };
 
             foreach (var project in projects)
             {
                 Panel card = new Panel
                 {
-                    Width = 250,
-                    Height = 180,
-                    BackColor = Color.FromArgb(40, 40, 60),
-                    Margin = new Padding(10),
-                    Padding = new Padding(10),
+                    Width = 350,
+                    Height = 300,
+                    BackColor = Color.FromArgb(248, 250, 252),
+                    Margin = new Padding(15),
+                    Padding = new Padding(20),
                     Cursor = Cursors.Hand,
-                    Tag = project // store full object for later use
+                    Tag = project
                 };
 
-                card.Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, card.Width, card.Height, 15, 15));
+                card.Region = Region.FromHrgn(
+                    CreateRoundRectRgn(0, 0, card.Width, card.Height, 20, 20)
+                );
 
-                // Avatar
-                Panel avatar = CreateAvatar(project.Name, GetRandomColor());
+                // Add border
+                card.Paint += (s, e) =>
+                {
+                    using (Pen borderPen = new Pen(Color.FromArgb(226, 232, 240), 2))
+                    {
+                        e.Graphics.DrawCustomRoundedRectangle(borderPen, new Rectangle(1, 1, card.Width - 3, card.Height - 3), 18);
+                    }
+                };
 
+                // Project Name
                 Label lblName = new Label
                 {
                     Text = project.Name,
-                    Font = new Font("Segoe UI", 12, FontStyle.Bold),
-                    ForeColor = Color.DeepSkyBlue,
-                    Dock = DockStyle.Top
-                };
-
-                Label lblDates = new Label
-                {
-                    Text = $"{project.StartDate:dd MMM} ➝ {project.EndDate:dd MMM}",
-                    Font = new Font("Segoe UI", 9),
-                    ForeColor = Color.LightGray,
-                    Dock = DockStyle.Top
-                };
-
-                Label lblDesc = new Label
-                {
-                    Text = project.Description,
-                    Font = new Font("Segoe UI", 9),
-                    ForeColor = Color.White,
-                    Dock = DockStyle.Fill,
+                    Font = new Font("Segoe UI", 18F, FontStyle.Bold),
+                    ForeColor = Color.FromArgb(30, 41, 59),
+                    Dock = DockStyle.Top,
+                    Height = 50,
                     AutoEllipsis = true
                 };
 
-                card.Controls.Add(lblDesc);
-                card.Controls.Add(lblDates);
-                card.Controls.Add(lblName);
-                card.Controls.Add(avatar);
-
-                // 🔹 Card Click → OpenProject
-                card.Click += (s, ev) =>
+                // Dates
+                Label lblDates = new Label
                 {
-                    var p = (ProjectModel)((Panel)s).Tag;
-                    OpenProject(p.ProjectId, p.Name, p.Description, p.StartDate, p.EndDate);
+                    Text = $"{project.StartDate:dd MMM yyyy} ➝ {project.EndDate:dd MMM yyyy}",
+                    Font = new Font("Segoe UI", 10F, FontStyle.Regular),
+                    ForeColor = Color.FromArgb(71, 85, 105),
+                    Dock = DockStyle.Top,
+                    Height = 25,
+                    AutoEllipsis = true
                 };
 
-                // 🔹 Make inner labels clickable too
+                // Description
+                Label lblDesc = new Label
+                {
+                    Text = project.Description,
+                    Font = new Font("Segoe UI", 11F, FontStyle.Regular),
+                    ForeColor = Color.FromArgb(71, 85, 105),
+                    Dock = DockStyle.Fill,
+                    Padding = new Padding(0, 5, 0, 5),
+                    AutoEllipsis = true
+                };
+
+                // Footer
+                Panel footerPanel = new Panel
+                {
+                    Dock = DockStyle.Bottom,
+                    Height = 30
+                };
+
+                Label lblId = new Label
+                {
+                    Text = $"ID: {project.ProjectId}",
+                    Font = new Font("Segoe UI", 10F, FontStyle.Regular),
+                    ForeColor = Color.FromArgb(59, 130, 246),
+                    Dock = DockStyle.Left,
+                    AutoSize = true
+                };
+
+                footerPanel.Controls.Add(lblId);
+
+                card.Controls.Add(lblDesc);
+                card.Controls.Add(footerPanel);
+                card.Controls.Add(lblDates);
+                card.Controls.Add(lblName);
+
+                // Make the entire card clickable
+                card.Click += (s, ev) => Card_ClickHandler(card);
                 foreach (Control ctrl in card.Controls)
                 {
                     ctrl.Click += (s, ev) => Card_ClickHandler(card);
+                    if (ctrl is Panel p)
+                    {
+                        foreach (Control inner in p.Controls)
+                        {
+                            inner.Click += (s, ev) => Card_ClickHandler(card);
+                        }
+                    }
                 }
-
 
                 flow.Controls.Add(card);
             }
@@ -305,91 +330,206 @@ namespace Bira
             var teams = await _teamService.GetTeamsAsync();
 
             panelMain.Controls.Clear();
-            FlowLayoutPanel flow = new FlowLayoutPanel { Dock = DockStyle.Fill, AutoScroll = true, WrapContents = true };
+
+            FlowLayoutPanel flow = new FlowLayoutPanel
+            {
+                Dock = DockStyle.Fill,
+                AutoScroll = true,
+                WrapContents = true,
+                Padding = new Padding(20),
+                BackColor = Color.White
+            };
 
             foreach (var team in teams)
             {
                 Panel card = new Panel
                 {
-                    Width = 250,
-                    Height = 150,
-                    BackColor = Color.FromArgb(30, 80, 50),
-                    Margin = new Padding(10),
-                    Padding = new Padding(10),
+                    Width = 350,
+                    Height = 300,
+                    BackColor = Color.FromArgb(248, 250, 252),
+                    Margin = new Padding(15),
+                    Padding = new Padding(20),
                     Cursor = Cursors.Hand,
                     Tag = team
                 };
 
-                card.Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, card.Width, card.Height, 15, 15));
+                card.Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, card.Width, card.Height, 20, 20));
 
-                Panel avatar = CreateAvatar(team.Name, GetRandomColor());
-                Label lblName = new Label { Text = team.Name, Font = new Font("Segoe UI", 12, FontStyle.Bold), ForeColor = Color.White, Dock = DockStyle.Top };
-                Label lblCount = new Label { Text = $"Members: {team.Members.Count}", Font = new Font("Segoe UI", 9), ForeColor = Color.LightGray, Dock = DockStyle.Top };
-
-                card.Controls.Add(lblCount);
-                card.Controls.Add(lblName);
-                card.Controls.Add(avatar);
-
-                // 🔹 Card Click → OpenTeam
-                card.Click += (s, ev) =>
+                // Add border
+                card.Paint += (s, e) =>
                 {
-                    var t = (TeamModel)((Panel)s).Tag;
-                    OpenTeam(t.TeamId, t.Name, t.Members);
+                    using (Pen borderPen = new Pen(Color.FromArgb(226, 232, 240), 2))
+                    {
+                        e.Graphics.DrawCustomRoundedRectangle(borderPen, new Rectangle(1, 1, card.Width - 3, card.Height - 3), 18);
+                    }
                 };
+
+                // Header
+                Label lblName = new Label
+                {
+                    Text = team.Name,
+                    Font = new Font("Segoe UI", 18F, FontStyle.Bold),
+                    ForeColor = Color.FromArgb(30, 41, 59),
+                    Dock = DockStyle.Top,
+                    Height = 50,
+                    AutoEllipsis = true
+                };
+
+                // Members count
+                Label lblMembers = new Label
+                {
+                    Text = $"Members: {team.Members.Count}",
+                    Font = new Font("Segoe UI", 11F, FontStyle.Regular),
+                    ForeColor = Color.FromArgb(71, 85, 105),
+                    Dock = DockStyle.Fill,
+                    Padding = new Padding(0, 5, 0, 5)
+                };
+
+                // Footer
+                Panel footerPanel = new Panel { Dock = DockStyle.Bottom, Height = 30 };
+
+                Label lblId = new Label
+                {
+                    Text = $"Team ID: {team.TeamId}",
+                    Font = new Font("Segoe UI", 10F, FontStyle.Regular),
+                    ForeColor = Color.FromArgb(59, 130, 246),
+                    Dock = DockStyle.Left,
+                    AutoSize = true
+                };
+
+                footerPanel.Controls.Add(lblId);
+
+                // Add to card
+                card.Controls.Add(lblMembers);
+                card.Controls.Add(footerPanel);
+                card.Controls.Add(lblName);
+
+                // Click event
+                card.Click += (s, ev) => Card_ClickHandler(card);
                 foreach (Control ctrl in card.Controls)
                 {
                     ctrl.Click += (s, ev) => Card_ClickHandler(card);
+                    if (ctrl is Panel p)
+                        foreach (Control inner in p.Controls)
+                            inner.Click += (s, ev) => Card_ClickHandler(card);
                 }
-
 
                 flow.Controls.Add(card);
             }
 
             panelMain.Controls.Add(flow);
         }
+
         private async void buttonTasksShowMore_Click(object sender, EventArgs e)
         {
             var tasks = await _taskService.GetTasksAsync();
 
             panelMain.Controls.Clear();
-            FlowLayoutPanel flow = new FlowLayoutPanel { Dock = DockStyle.Fill, AutoScroll = true, WrapContents = true };
+
+            FlowLayoutPanel flow = new FlowLayoutPanel
+            {
+                Dock = DockStyle.Fill,
+                AutoScroll = true,
+                WrapContents = true,
+                Padding = new Padding(20),
+                BackColor = Color.White
+            };
 
             foreach (var task in tasks)
             {
                 Panel card = new Panel
                 {
-                    Width = 250,
-                    Height = 170,
-                    BackColor = Color.FromArgb(80, 40, 40),
-                    Margin = new Padding(10),
-                    Padding = new Padding(10),
+                    Width = 350,
+                    Height = 300,
+                    BackColor = Color.FromArgb(248, 250, 252),
+                    Margin = new Padding(15),
+                    Padding = new Padding(20),
                     Cursor = Cursors.Hand,
                     Tag = task
                 };
 
-                card.Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, card.Width, card.Height, 15, 15));
+                card.Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, card.Width, card.Height, 20, 20));
 
-                Panel avatar = CreateAvatar(task.Name, GetRandomColor());
-                Label lblName = new Label { Text = task.Name, Font = new Font("Segoe UI", 12, FontStyle.Bold), ForeColor = Color.White, Dock = DockStyle.Top };
-                Label lblProject = new Label { Text = $"📂 {task.ProjectName}", Font = new Font("Segoe UI", 9), ForeColor = Color.LightGray, Dock = DockStyle.Top };
-                Label lblStatus = new Label { Text = $"✅ {task.Status}", Font = new Font("Segoe UI", 9), ForeColor = Color.LightGreen, Dock = DockStyle.Top };
+                // Add border
+                card.Paint += (s, e) =>
+                {
+                    using (Pen borderPen = new Pen(Color.FromArgb(226, 232, 240), 2))
+                    {
+                        e.Graphics.DrawCustomRoundedRectangle(borderPen, new Rectangle(1, 1, card.Width - 3, card.Height - 3), 18);
+                    }
+                };
 
-                card.Controls.Add(lblStatus);
+                // Header
+                Label lblName = new Label
+                {
+                    Text = task.Name,
+                    Font = new Font("Segoe UI", 18F, FontStyle.Bold),
+                    ForeColor = Color.FromArgb(30, 41, 59),
+                    Dock = DockStyle.Top,
+                    Height = 50,
+                    AutoEllipsis = true
+                };
+
+                // Project
+                Label lblProject = new Label
+                {
+                    Text = $"📂 {task.ProjectName}",
+                    Font = new Font("Segoe UI", 11F, FontStyle.Regular),
+                    ForeColor = Color.FromArgb(71, 85, 105),
+                    Dock = DockStyle.Top,
+                    Height = 25,
+                    AutoEllipsis = true
+                };
+
+                Label lblDesc = new Label
+                {
+                    Text = task.Description,
+                    Font = new Font("Segoe UI", 11F, FontStyle.Regular),
+                    ForeColor = Color.FromArgb(71, 85, 105),
+                    Dock = DockStyle.Fill,
+                    Padding = new Padding(0, 5, 0, 5),
+                    AutoEllipsis = true
+                };
+
+                // Footer (Status + Priority)
+                Panel footerPanel = new Panel { Dock = DockStyle.Bottom, Height = 30 };
+
+                Label lblStatus = new Label
+                {
+                    Text = $"Status: {task.Status}",
+                    Font = new Font("Segoe UI", 10F),
+                    ForeColor = Color.FromArgb(59, 130, 246),
+                    Dock = DockStyle.Left,
+                    AutoSize = true
+                };
+
+                Label lblPriority = new Label
+                {
+                    Text = $"Priority: {task.Priority}",
+                    Font = new Font("Segoe UI", 10F, FontStyle.Bold),
+                    ForeColor = GetPriorityColor(task.Priority),
+                    Dock = DockStyle.Right,
+                    AutoSize = true
+                };
+
+                footerPanel.Controls.Add(lblStatus);
+                footerPanel.Controls.Add(lblPriority);
+
+                // Add to card
+                card.Controls.Add(lblDesc);
+                card.Controls.Add(footerPanel);
                 card.Controls.Add(lblProject);
                 card.Controls.Add(lblName);
-                card.Controls.Add(avatar);
 
-                // 🔹 Card Click → OpenTask
-                card.Click += (s, ev) =>
-                {
-                    var t = (TaskModel)((Panel)s).Tag;
-                    OpenTask(t.TaskId, t.Name, t.ProjectName, t.Description, t.startDate, t.endDate, t.Priority, t.Status);
-                };
+                // Click event
+                card.Click += (s, ev) => Card_ClickHandler(card);
                 foreach (Control ctrl in card.Controls)
                 {
                     ctrl.Click += (s, ev) => Card_ClickHandler(card);
+                    if (ctrl is Panel p)
+                        foreach (Control inner in p.Controls)
+                            inner.Click += (s, ev) => Card_ClickHandler(card);
                 }
-
 
                 flow.Controls.Add(card);
             }
@@ -401,47 +541,137 @@ namespace Bira
         #region Item Click Handlers
         private void OpenProject(int projectId, string projectName, string desc, DateTime startDate, DateTime endDate)
         {
-            DisplayProjectCard(projectId, projectName, startDate, endDate, desc, Color.FromArgb(52, 152, 219));
+            DisplayProjectCard(projectId, projectName, startDate, endDate, desc, Color.FromArgb(37, 99, 235));
         }
 
-        //Example for Teams
         private void OpenTeam(int teamId, string teamName, List<MemberModel> members)
         {
-            DisplayTeamCard(teamId, teamName, members, Color.FromArgb(46, 204, 113));
+            DisplayTeamCard(teamId, teamName, members, Color.FromArgb(16, 185, 129));
         }
 
-        //Example for Tasks
         private void OpenTask(int taskId, string taskName, string projectName, string desc, DateTime startDate, DateTime endDate, string priority, string status)
         {
-            DisplayTaskCard(taskId, taskName, projectName, desc, startDate, endDate, priority, status, Color.FromArgb(231, 76, 60));
+            DisplayTaskCard(taskId, taskName, projectName, desc, startDate, endDate, priority, status, Color.FromArgb(139, 92, 246));
         }
+        #endregion
 
-        private void DisplayTeamCard(int teamId, string teamName, List<MemberModel> teamMembers, Color color)
+        #region Detailed View Display Methods - Enhanced with TeamLead styling
+        private void DisplayProjectCard(int projectId, string projectName, DateTime startDate, DateTime endDate, string desc, Color baseColor)
         {
             panelMain.Controls.Clear();
 
             Panel card = new Panel
             {
-                Width = panelMain.Width - 20,
-                Height = 300,
-                BackColor = color,
-                Padding = new Padding(15),
-                Margin = new Padding(10),
+                Dock = DockStyle.Fill,
+                BackColor = Color.White,
+                Padding = new Padding(20),
+                BorderStyle = BorderStyle.None
+            };
+
+            card.Resize += (s, e) =>
+            {
+                card.Region = Region.FromHrgn(
+                    CreateRoundRectRgn(0, 0, card.Width, card.Height, 20, 20));
+            };
+
+            Label lblProjectName = new Label
+            {
+                Text = projectName,
+                Font = new Font("Segoe UI", 20, FontStyle.Bold),
+                ForeColor = Color.FromArgb(37, 99, 235),
+                Dock = DockStyle.Top,
+                Height = 50,
+                TextAlign = ContentAlignment.MiddleCenter
+            };
+
+            Label lblProjectId = new Label
+            {
+                Text = $"Project ID: {projectId}",
+                Font = new Font("Segoe UI", 12, FontStyle.Regular),
+                ForeColor = Color.FromArgb(71, 85, 105),
+                Dock = DockStyle.Top,
+                Height = 30,
+                TextAlign = ContentAlignment.MiddleCenter
+            };
+
+            TableLayoutPanel datesPanel = new TableLayoutPanel
+            {
+                Dock = DockStyle.Top,
+                Height = 40,
+                ColumnCount = 2,
+                BackColor = Color.Transparent
+            };
+            datesPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50));
+            datesPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50));
+
+            Label lblStart = new Label
+            {
+                Text = $"🟢 Start: {startDate:dd MMM yyyy}",
+                Font = new Font("Segoe UI", 11),
+                ForeColor = Color.FromArgb(16, 185, 129),
+                Dock = DockStyle.Fill,
+                TextAlign = ContentAlignment.MiddleLeft
+            };
+
+            Label lblEnd = new Label
+            {
+                Text = $"🔴 End: {endDate:dd MMM yyyy}",
+                Font = new Font("Segoe UI", 11),
+                ForeColor = Color.FromArgb(239, 68, 68),
+                Dock = DockStyle.Fill,
+                TextAlign = ContentAlignment.MiddleRight
+            };
+
+            datesPanel.Controls.Add(lblStart, 0, 0);
+            datesPanel.Controls.Add(lblEnd, 1, 0);
+
+            TextBox txtDesc = new TextBox
+            {
+                Text = desc,
+                Font = new Font("Segoe UI", 12),
+                ForeColor = Color.FromArgb(30, 41, 59),
+                BackColor = Color.FromArgb(248, 250, 252),
+                Multiline = true,
+                ReadOnly = true,
+                BorderStyle = BorderStyle.None,
+                ScrollBars = ScrollBars.Vertical,
+                Dock = DockStyle.Fill
+            };
+
+            card.Controls.Add(txtDesc);
+            card.Controls.Add(datesPanel);
+            card.Controls.Add(lblProjectId);
+            card.Controls.Add(lblProjectName);
+
+            panelMain.Controls.Add(card);
+        }
+
+        private void DisplayTeamCard(int teamId, string teamName, List<MemberModel> teamMembers, Color baseColor)
+        {
+            panelMain.Controls.Clear();
+
+            Panel card = new Panel
+            {
+                Dock = DockStyle.Fill,
+                BackColor = Color.White,
+                Padding = new Padding(20),
                 BorderStyle = BorderStyle.None,
                 AutoScroll = true
             };
 
-            card.Region = Region.FromHrgn(
-                WinApi.CreateRoundRectRgn(0, 0, card.Width, card.Height, 20, 20)
-            );
+            card.Resize += (s, e) =>
+            {
+                card.Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, card.Width, card.Height, 20, 20));
+            };
 
             Label lblTeamTitle = new Label
             {
                 Text = $"👥 Team: {teamName} (ID: {teamId})",
-                Font = new Font("Segoe UI", 14, FontStyle.Bold),
-                ForeColor = Color.White,
+                Font = new Font("Segoe UI", 20, FontStyle.Bold),
+                ForeColor = Color.FromArgb(30, 41, 59),
                 Dock = DockStyle.Top,
-                Height = 40
+                Height = 50,
+                TextAlign = ContentAlignment.MiddleCenter
             };
 
             FlowLayoutPanel membersPanel = new FlowLayoutPanel
@@ -449,44 +679,67 @@ namespace Bira
                 Dock = DockStyle.Fill,
                 AutoScroll = true,
                 WrapContents = true,
-                BackColor = Color.FromArgb(50, color)
+                Padding = new Padding(10),
+                BackColor = Color.FromArgb(248, 250, 252)
             };
 
             foreach (var member in teamMembers)
             {
                 Panel memberCard = new Panel
                 {
-                    Width = 200,
-                    Height = 80,
-                    BackColor = Color.FromArgb(80, color),
-                    Margin = new Padding(5),
-                    Padding = new Padding(5)
+                    Width = 250,
+                    Height = 100,
+                    BackColor = Color.White,
+                    Margin = new Padding(10),
+                    Padding = new Padding(10),
+                    Cursor = Cursors.Hand
                 };
 
-                memberCard.Region = Region.FromHrgn(
-                    WinApi.CreateRoundRectRgn(0, 0, memberCard.Width, memberCard.Height, 15, 15)
-                );
+                memberCard.Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, memberCard.Width, memberCard.Height, 15, 15));
+
+                // Add border to member card
+                memberCard.Paint += (s, e) =>
+                {
+                    using (Pen borderPen = new Pen(Color.FromArgb(226, 232, 240), 2))
+                    {
+                        e.Graphics.DrawCustomRoundedRectangle(borderPen, new Rectangle(1, 1, memberCard.Width - 3, memberCard.Height - 3), 13);
+                    }
+                };
 
                 Label lblMemberName = new Label
                 {
                     Text = $"👤 {member.Name}",
-                    Font = new Font("Segoe UI", 11, FontStyle.Bold),
-                    ForeColor = Color.White,
+                    Font = new Font("Segoe UI", 12, FontStyle.Bold),
+                    ForeColor = Color.FromArgb(37, 99, 235),
                     Dock = DockStyle.Top,
-                    Height = 30
+                    Height = 30,
+                    AutoEllipsis = true
                 };
 
                 Label lblMemberRole = new Label
                 {
                     Text = $"🔧 {member.Role}",
-                    Font = new Font("Segoe UI", 10, FontStyle.Regular),
-                    ForeColor = Color.White,
-                    Dock = DockStyle.Top,
-                    Height = 25
+                    Font = new Font("Segoe UI", 11, FontStyle.Regular),
+                    ForeColor = Color.FromArgb(71, 85, 105),
+                    Dock = DockStyle.Fill,
+                    AutoEllipsis = true
                 };
 
                 memberCard.Controls.Add(lblMemberRole);
                 memberCard.Controls.Add(lblMemberName);
+
+                memberCard.Click += (s, e) =>
+                {
+                    MessageBox.Show($"Member profile: {member.Name}", "Member Info");
+                };
+
+                foreach (Control ctrl in memberCard.Controls)
+                {
+                    ctrl.Click += (s, e) =>
+                    {
+                        MessageBox.Show($"Member profile: {member.Name}", "Member Info");
+                    };
+                }
 
                 membersPanel.Controls.Add(memberCard);
             }
@@ -497,225 +750,139 @@ namespace Bira
             panelMain.Controls.Add(card);
         }
 
-
-        private void DisplayProjectCard(int projectId, string projectName, DateTime startDate, DateTime endDate, string desc, Color color)
+        private void DisplayTaskCard(int taskId, string taskName, string projectName, string desc, DateTime startDate, DateTime endDate, string priority, string status, Color baseColor)
         {
             panelMain.Controls.Clear();
 
-            // Card container
             Panel card = new Panel
             {
-                BackColor = Color.FromArgb(4, 40, 55),
                 Dock = DockStyle.Fill,
-                Padding = new Padding(20)
+                BackColor = Color.White,
+                Padding = new Padding(20),
+                BorderStyle = BorderStyle.None,
+                AutoScroll = true
             };
 
-            // Rounded corners
-            card.Region = System.Drawing.Region.FromHrgn(
-                CreateRoundRectRgn(0, 0, card.Width, card.Height, 20, 20)
-            );
             card.Resize += (s, e) =>
             {
-                card.Region = System.Drawing.Region.FromHrgn(
-                    CreateRoundRectRgn(0, 0, card.Width, card.Height, 20, 20)
-                );
-            };
-
-            // 🔹 Layout to center everything
-            TableLayoutPanel layout = new TableLayoutPanel
-            {
-                Dock = DockStyle.Fill,
-                ColumnCount = 1,
-                RowCount = 4,
-                BackColor = Color.Transparent
-            };
-
-            layout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100));
-            layout.RowStyles.Add(new RowStyle(SizeType.AutoSize)); // Project Name
-            layout.RowStyles.Add(new RowStyle(SizeType.AutoSize)); // Project ID
-            layout.RowStyles.Add(new RowStyle(SizeType.AutoSize)); // Dates
-            layout.RowStyles.Add(new RowStyle(SizeType.Percent, 100)); // Description (fills)
-
-            layout.Padding = new Padding(0);
-            layout.Margin = new Padding(0);
-
-            // 🔹 Title
-            Label lblProjectName = new Label
-            {
-                Text = $"📁 {projectName}",
-                Font = new Font("Segoe UI Emoji", 20, FontStyle.Bold),
-                ForeColor = Color.DeepSkyBlue,
-                AutoSize = true,
-                Anchor = AnchorStyles.None,
-                TextAlign = ContentAlignment.MiddleCenter
-            };
-
-            // 🔹 Project ID
-            Label lblProjectId = new Label
-            {
-                Text = $"🔑 Project ID: {projectId}",
-                Font = new Font("Segoe UI Emoji", 12, FontStyle.Italic),
-                ForeColor = Color.Silver,
-                AutoSize = true,
-                Anchor = AnchorStyles.None,
-                TextAlign = ContentAlignment.MiddleCenter
-            };
-
-            // 🔹 Dates
-            FlowLayoutPanel datesPanel = new FlowLayoutPanel
-            {
-                FlowDirection = FlowDirection.LeftToRight,
-                AutoSize = true,
-                Anchor = AnchorStyles.None,
-                WrapContents = false,
-                BackColor = Color.Transparent,
-                Margin = new Padding(0, 10, 0, 10)
-            };
-
-            Label lblStart = new Label
-            {
-                Text = $"🟢 Start: {startDate:dd MMM yyyy}",
-                Font = new Font("Segoe UI Emoji", 12, FontStyle.Regular),
-                ForeColor = Color.LightGreen,
-                AutoSize = true
-            };
-
-            Label lblEnd = new Label
-            {
-                Text = $"⏰ End: {endDate:dd MMM yyyy}",
-                Font = new Font("Segoe UI Emoji", 12, FontStyle.Regular),
-                ForeColor = Color.IndianRed,
-                AutoSize = true,
-                Margin = new Padding(20, 0, 0, 0)
-            };
-
-            datesPanel.Controls.Add(lblStart);
-            datesPanel.Controls.Add(lblEnd);
-
-            // 🔹 Description (fills remaining space)
-            Label lblDesc = new Label
-            {
-                Text = $"📝 {desc}",
-                Font = new Font("Segoe UI Emoji", 12, FontStyle.Regular),
-                ForeColor = Color.White,
-                Dock = DockStyle.Fill,
-                TextAlign = ContentAlignment.MiddleCenter,
-                AutoEllipsis = true
-            };
-
-            // Add to layout
-            layout.Controls.Add(lblProjectName, 0, 0);
-            layout.Controls.Add(lblProjectId, 0, 1);
-            layout.Controls.Add(datesPanel, 0, 2);
-            layout.Controls.Add(lblDesc, 0, 3);
-
-            // Center content inside card
-            layout.CellBorderStyle = TableLayoutPanelCellBorderStyle.None;
-
-            card.Controls.Add(layout);
-            panelMain.Controls.Add(card);
-        }
-
-
-
-
-        // helper for rounded corners
-        [System.Runtime.InteropServices.DllImport("Gdi32.dll", EntryPoint = "CreateRoundRectRgn")]
-        private static extern IntPtr CreateRoundRectRgn(
-            int nLeftRect, int nTopRect, int nRightRect, int nBottomRect,
-            int nWidthEllipse, int nHeightEllipse);
-
-        private void DisplayTaskCard(int taskId, string taskName, string projectName,
-      string desc, DateTime startDate, DateTime endDate, string priority,
-      string status, Color color)
-        {
-            panelMain.Controls.Clear();
-
-            Panel card = new Panel
-            {
-                Width = panelMain.Width - 20,
-                Height = 220,
-                BackColor = color,
-                Padding = new Padding(15),
-                Margin = new Padding(10),
-                BorderStyle = BorderStyle.None
-            };
-
-            // Rounded corners
-            card.Region = Region.FromHrgn(
-                WinApi.CreateRoundRectRgn(0, 0, card.Width, card.Height, 20, 20)
-            );
-
-            FlowLayoutPanel contentPanel = new FlowLayoutPanel
-            {
-                Dock = DockStyle.Fill,
-                FlowDirection = FlowDirection.TopDown,
-                AutoScroll = true
+                card.Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, card.Width, card.Height, 20, 20));
             };
 
             Label lblTaskName = new Label
             {
-                Text = $"📝 {taskName}",
-                Font = new Font("Segoe UI", 14, FontStyle.Bold),
-                ForeColor = Color.White,
-                AutoSize = true
+                Text = $"📝 {taskName} (ID: {taskId})",
+                Font = new Font("Segoe UI", 20, FontStyle.Bold),
+                ForeColor = Color.FromArgb(30, 41, 59),
+                Dock = DockStyle.Top,
+                Height = 50,
+                TextAlign = ContentAlignment.MiddleCenter
             };
 
-            Label lblTaskProject = new Label
+            TableLayoutPanel infoPanel = new TableLayoutPanel
+            {
+                Dock = DockStyle.Top,
+                Height = 40,
+                ColumnCount = 2,
+                BackColor = Color.Transparent
+            };
+            infoPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50));
+            infoPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50));
+
+            Label lblProject = new Label
             {
                 Text = $"📂 Project: {projectName}",
-                Font = new Font("Segoe UI", 12, FontStyle.Italic),
-                ForeColor = Color.White,
-                AutoSize = true
+                Font = new Font("Segoe UI", 12, FontStyle.Regular),
+                ForeColor = Color.FromArgb(59, 130, 246),
+                Dock = DockStyle.Fill,
+                TextAlign = ContentAlignment.MiddleLeft
             };
 
-            Label lblTaskDesc = new Label
-            {
-                Text = $"📖 {desc}",
-                Font = new Font("Segoe UI", 11, FontStyle.Regular),
-                ForeColor = Color.White,
-                AutoSize = true
-            };
-
-            Label lblTaskDates = new Label
+            Label lblDates = new Label
             {
                 Text = $"⏳ {startDate:dd MMM yyyy} ➝ {endDate:dd MMM yyyy}",
-                Font = new Font("Segoe UI", 11, FontStyle.Regular),
-                ForeColor = Color.White,
-                AutoSize = true
+                Font = new Font("Segoe UI", 12, FontStyle.Regular),
+                ForeColor = Color.FromArgb(71, 85, 105),
+                Dock = DockStyle.Fill,
+                TextAlign = ContentAlignment.MiddleRight
             };
 
-            Label lblTaskPriority = new Label
+            infoPanel.Controls.Add(lblProject, 0, 0);
+            infoPanel.Controls.Add(lblDates, 1, 0);
+
+            TextBox txtDesc = new TextBox
+            {
+                Text = desc,
+                Font = new Font("Segoe UI", 12),
+                ForeColor = Color.FromArgb(30, 41, 59),
+                BackColor = Color.FromArgb(248, 250, 252),
+                Multiline = true,
+                ReadOnly = true,
+                BorderStyle = BorderStyle.None,
+                ScrollBars = ScrollBars.Vertical,
+                Dock = DockStyle.Fill
+            };
+
+            Panel footerPanel = new Panel
+            {
+                Dock = DockStyle.Bottom,
+                Height = 45
+            };
+
+            Label lblPriority = new Label
             {
                 Text = $"⚡ Priority: {priority}",
-                Font = new Font("Segoe UI", 11, FontStyle.Bold),
-                ForeColor = Color.Gold,
+                Font = new Font("Segoe UI", 12, FontStyle.Bold),
+                ForeColor = GetPriorityColor(priority),
+                Dock = DockStyle.Left,
                 AutoSize = true
             };
 
-            Label lblTaskStatus = new Label
+            Label lblStatus = new Label
             {
                 Text = $"✅ Status: {status}",
-                Font = new Font("Segoe UI", 11, FontStyle.Bold),
-                ForeColor = Color.LightGreen,
+                Font = new Font("Segoe UI", 12, FontStyle.Bold),
+                ForeColor = Color.FromArgb(16, 185, 129),
+                Dock = DockStyle.Right,
                 AutoSize = true
             };
 
-            contentPanel.Controls.Add(lblTaskName);
-            contentPanel.Controls.Add(lblTaskProject);
-            contentPanel.Controls.Add(lblTaskDesc);
-            contentPanel.Controls.Add(lblTaskDates);
-            contentPanel.Controls.Add(lblTaskPriority);
-            contentPanel.Controls.Add(lblTaskStatus);
+            footerPanel.Controls.Add(lblPriority);
+            footerPanel.Controls.Add(lblStatus);
 
-            card.Controls.Add(contentPanel);
+            card.Controls.Add(txtDesc);
+            card.Controls.Add(footerPanel);
+            card.Controls.Add(infoPanel);
+            card.Controls.Add(lblTaskName);
+
             panelMain.Controls.Add(card);
         }
+        #endregion
 
+        #region Overview Dashboard
+        private void LoadMemberOverview()
+        {
+            panelMain.Controls.Clear();
+
+            ForYouDashboard overviewDashboard = new ForYouDashboard
+            {
+                TopLevel = false,
+                FormBorderStyle = FormBorderStyle.None,
+                Dock = DockStyle.Fill
+            };
+
+            panelMain.Controls.Add(overviewDashboard);
+            overviewDashboard.Show();
+        }
+
+        private void buttonOverview_Click(object sender, EventArgs e)
+        {
+            LoadMemberOverview();
+        }
         #endregion
 
         private void buttonLogout_Click(object sender, EventArgs e)
         {
+            SystemSounds.Hand.Play();
             DialogResult result = MessageBox.Show(
                 "Are you sure you want to log out?",
                 "Confirm Logout",
@@ -725,29 +892,41 @@ namespace Bira
 
             if (result == DialogResult.Yes)
             {
-                // Close current dashboard
                 this.Hide();
-
-                // Open Login form again
                 Login loginForm = new Login();
                 loginForm.Show();
+                this.Close();
+            }
+        }
+    }
 
-                // Optionally dispose the current form
-              
+    // Extension method for drawing rounded rectangles (same as TeamLead)
+    public static class GraphicsExtensionsMember
+    {
+        public static void DrawRoundedRectangle(this Graphics graphics, Pen pen, Rectangle rect, int radius)
+        {
+            using (GraphicsPath path = GetRoundedPath(rect, radius))
+            {
+                graphics.DrawPath(pen, path);
             }
         }
 
-    }
-    public static class WinApi
-    {
-        [DllImport("gdi32.dll", EntryPoint = "CreateRoundRectRgn")]
-        public static extern IntPtr CreateRoundRectRgn(
-            int nLeftRect,
-            int nTopRect,
-            int nRightRect,
-            int nBottomRect,
-            int nWidthEllipse,
-            int nHeightEllipse
-        );
+        private static GraphicsPath GetRoundedPath(Rectangle rect, int radius)
+        {
+            GraphicsPath path = new GraphicsPath();
+            int diameter = radius * 2;
+
+            // Top left corner
+            path.AddArc(rect.X, rect.Y, diameter, diameter, 180, 90);
+            // Top right corner  
+            path.AddArc(rect.Right - diameter, rect.Y, diameter, diameter, 270, 90);
+            // Bottom right corner
+            path.AddArc(rect.Right - diameter, rect.Bottom - diameter, diameter, diameter, 0, 90);
+            // Bottom left corner
+            path.AddArc(rect.X, rect.Bottom - diameter, diameter, diameter, 90, 90);
+
+            path.CloseFigure();
+            return path;
+        }
     }
 }
